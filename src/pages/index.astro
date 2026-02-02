@@ -2,19 +2,19 @@
 import Layout from '@/layouts/Layout.astro';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Clock, MapPin, ChevronRight, Mic, Users, Info } from "lucide-react";
+import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
 
-// 型定義（TypeScriptを使っている場合、明確にしておくと安全です）
+// 型定義
 type ScheduleItem = {
   time: string;
   title: string;
   type: 'ceremony' | 'group' | 'poster';
-  place?: string; // ポスターなど場所が違う場合のみ指定
+  place?: string;
   description?: string;
-  children?: { // 入れ子の発表項目用
+  children?: {
     title: string;
     speaker: string;
-    id: string; // リンク用ID
+    id: string;
   }[];
 };
 
@@ -57,7 +57,7 @@ const schedule: ScheduleItem[] = [
     time: "14:00",
     title: "ポスター発表",
     type: "poster",
-    place: "体育館", // ここだけ場所が違うので明記
+    place: "体育館",
     description: "体育館にて各ブースでの発表を行います。自由に回ってご覧ください。"
   },
   {
@@ -112,7 +112,7 @@ const schedule: ScheduleItem[] = [
                   {item.type === 'poster' ? 'ポスター' : item.type === 'group' ? '全体発表' : '式典'}
                 </Badge>
                 
-                {/* 場所が指定されている場合のみ表示（ポスターなど） */}
+                {/* 場所が指定されている場合のみ表示 */}
                 {item.place && (
                   <div class="flex items-center text-xs text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded">
                     <MapPin className="w-3 h-3 mr-1" />
