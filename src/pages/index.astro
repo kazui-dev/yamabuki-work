@@ -6,32 +6,27 @@ import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
 
 const schedule = [
   {
-    time: "12:30 - 12:40",
     title: "開会式",
     type: "ceremony",
   },
   {
-    time: "09:45 - 10:15",
     title: "情報科における生成AIの活用",
     speaker: "3年次 Aさん",
     type: "presentation", // 全体発表
     id: "ai-usage", // 詳細ページのファイル名に対応させる予定
   },
   {
-    time: "10:30 - 11:30",
     title: "ポスターセッション",
     description: "体育館にて各ブースでの発表を行います。",
     type: "poster", // ポスター発表
   },
   {
-    time: "13:00 - 13:30",
     title: "Webデザインのトレンド分析",
     speaker: "2年次 Bチーム",
     type: "presentation",
     id: "web-design",
   },
   {
-    time: "15:00",
     title: "閉会式",
     type: "ceremony",
   }
@@ -50,11 +45,6 @@ const schedule = [
       {schedule.map((item) => (
         <div class="relative pl-6 pb-2 border-l-2 border-slate-200 last:border-0">
           <div class="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white"></div>
-          
-          <div class="flex items-center text-sm text-slate-500 mb-1">
-            <Clock className="w-3 h-3 mr-1" />
-            {item.time}
-          </div>
 
           <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-4 hover:shadow-md transition-shadow">
             
