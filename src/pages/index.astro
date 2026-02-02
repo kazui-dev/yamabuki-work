@@ -4,13 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
 
-// タイムテーブルのデータ（後でCMSや別ファイルに分離できます）
 const schedule = [
   {
-    time: "09:30 - 09:45",
+    time: "12:30 - 12:40",
     title: "開会式",
-    type: "ceremony", // 式典
-    place: "大ホール"
+    type: "ceremony",
   },
   {
     time: "09:45 - 10:15",
@@ -18,14 +16,12 @@ const schedule = [
     speaker: "3年次 Aさん",
     type: "presentation", // 全体発表
     id: "ai-usage", // 詳細ページのファイル名に対応させる予定
-    place: "大ホール"
   },
   {
     time: "10:30 - 11:30",
     title: "ポスターセッション",
     description: "体育館にて各ブースでの発表を行います。",
     type: "poster", // ポスター発表
-    place: "体育館"
   },
   {
     time: "13:00 - 13:30",
@@ -33,13 +29,11 @@ const schedule = [
     speaker: "2年次 Bチーム",
     type: "presentation",
     id: "web-design",
-    place: "大ホール"
   },
   {
     time: "15:00",
     title: "閉会式",
     type: "ceremony",
-    place: "大ホール"
   }
 ];
 ---
@@ -48,7 +42,7 @@ const schedule = [
   <main class="min-h-screen bg-slate-50 py-8 px-4">
     <div class="max-w-md mx-auto mb-8 text-center space-y-2">
       <h1 class="text-2xl font-bold text-slate-900">新宿山吹高校<br>情報科発表会</h1>
-      <p class="text-slate-500 text-sm">2026.02.XX (Sat)</p>
+      <p class="text-slate-500 text-sm">2026.03.13 (Fri) 12:00開場</p>
     </div>
 
     <div class="max-w-md mx-auto space-y-4">
@@ -68,10 +62,6 @@ const schedule = [
               <Badge variant={item.type === 'poster' ? "default" : "secondary"} className="text-xs">
                 {item.type === 'poster' ? 'ポスター' : item.type === 'presentation' ? '全体発表' : 'その他'}
               </Badge>
-              <div class="flex items-center text-xs text-slate-400">
-                <MapPin className="w-3 h-3 mr-1" />
-                {item.place}
-              </div>
             </div>
 
             <h2 class="text-lg font-bold text-slate-800 mb-1 leading-snug">
@@ -86,7 +76,7 @@ const schedule = [
               </p>
             )}
 
-            {/* ポスターセッションの説明 */}
+            {/* 説明 */}
             {item.description && (
               <p class="text-sm text-slate-600 mb-3">
                 {item.description}
