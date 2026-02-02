@@ -8,7 +8,7 @@ import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
 type ScheduleItem = {
   time: string;
   title: string;
-  type: 'ceremony' | 'group' | 'poster';
+  type?: 'group' | 'poster';
   place?: string;
   description?: string;
   children?: {
@@ -23,13 +23,12 @@ const schedule: ScheduleItem[] = [
   {
     time: "12:30",
     title: "開会式",
-    type: "ceremony"
   },
   {
     time: "12:40",
     title: "全体発表",
-    type: "group",
     description: "情報科3年次生による口頭発表です。（順不同）",
+	type: "group",
     children: [
       {
         title: "情報科における生成AIの活用",
@@ -56,14 +55,13 @@ const schedule: ScheduleItem[] = [
   {
     time: "14:00",
     title: "ポスター発表",
-    type: "poster",
+	type: "poster",
     place: "体育館",
     description: "体育館にて各ブースでの発表を行います。自由に回ってご覧ください。"
   },
   {
     time: "14:50",
     title: "閉会式",
-    type: "ceremony"
   }
 ];
 ---
@@ -108,9 +106,6 @@ const schedule: ScheduleItem[] = [
             {/* カードヘッダー部分 */}
             <div class="p-4 pb-3">
               <div class="flex justify-between items-start mb-1">
-                <Badge variant={item.type === 'poster' ? "default" : "secondary"} className="text-xs mb-2">
-                  {item.type === 'poster' ? 'ポスター' : item.type === 'group' ? '全体発表' : '式典'}
-                </Badge>
                 
                 {/* 場所が指定されている場合のみ表示 */}
                 {item.place && (
