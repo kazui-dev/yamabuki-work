@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"; // インポートを追加
-import { Clock, Mic, Image as ImageIcon } from "lucide-react";
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Clock, Mic } from "lucide-react";
 
 // 1. 型定義を拡張：詳細情報（画像とテキスト）を追加
 type TimetableItem = {
@@ -82,40 +84,34 @@ export const Timetable = () => {
         <div key={index} className="relative pl-6 border-l-2 border-slate-200 last:border-transparent pb-2">
           {item.time && (
             <>
-                <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
-                <div className="flex items-center gap-1.5 leading-none text-sm text-slate-500 font-bold mb-2">
-                    <Clock size={16}/>
-                    {item.time}
-                </div>
+              <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
+              <div className="flex items-center gap-1.5 leading-none text-sm text-slate-500 font-bold mb-2">
+                <Clock size={16} />
+                {item.time}
+              </div>
             </>
           )}
 
           <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
             <div className="p-4 pb-3">
-
               <h2 className="text-lg font-bold text-slate-800 leading-snug">
                 {item.title}
               </h2>
-              
               {item.speaker && (
                 <p className="flex items-center gap-1.5 leading-none text-sm text-slate-600 mt-1">
-                  <Mic size={16}/>
+                  <Mic size={16} />
                   {item.speaker}
                 </p>
               )}
-
               {item.description && (
                 <p className="text-xs text-slate-500 mt-1">
                   {item.description}
                 </p>
               )}
-
               {item.action && (
                 <div className="mt-3">
                   <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
-                    <a href={item.action.url}>
-                      {item.action.label}
-                    </a>
+                    <a href={item.action.url}>{item.action.label}</a>
                   </Button>
                 </div>
               )}
@@ -136,44 +132,50 @@ export const Timetable = () => {
                       </p>
                     )}
 
+                    {/* ▼ ドロワー実装部分 ▼ */}
                     {child.details ? (
-                      <Dialog>
-                        <DialogTrigger asChild>
+                      <Drawer>
+                        <DrawerTrigger asChild>
                           <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1">
                             詳細を見る
                           </Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
-                          <DialogHeader>
-                            <DialogTitle>{child.title}</DialogTitle>
-                            {child.speaker && (
-                              <DialogDescription className="flex items-center gap-1">
-                                <Mic size={14} /> {child.speaker}
-                              </DialogDescription>
-                            )}
-                          </DialogHeader>
-                          
-                          <div className="space-y-4 mt-2">
-                            {/* 画像がある場合のみ表示 */}
-                            {child.details.imageUrl && (
-                              <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video flex items-center justify-center relative">
-                                <img 
-                                  src={child.details.imageUrl} 
-                                  alt={`${child.title}の画像`}
-                                  className="object-cover w-full h-full" 
-                                />
-                              </div>
-                            )}
+                        </DrawerTrigger>
+                        <DrawerContent>
+                          <div className="mx-auto w-full max-w-md">
+                            <DrawerHeader>
+                              <DrawerTitle>{child.title}</DrawerTitle>
+                              {child.speaker && (
+                                <DrawerDescription className="flex items-center justify-center gap-1">
+                                  <Mic size={14} /> {child.speaker}
+                                </DrawerDescription>
+                              )}
+                            </DrawerHeader>
                             
-                            {/* 詳細テキスト */}
-                            <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
-                              {child.details.description}
+                            {/* スクロール可能なコンテンツエリア */}
+                            <div className="p-4 overflow-y-auto max-h-[60vh]">
+                              {child.details.imageUrl && (
+                                <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video mb-4 relative">
+                                  <img 
+                                    src={child.details.imageUrl} 
+                                    alt={child.title}
+                                    className="object-cover w-full h-full" 
+                                  />
+                                </div>
+                              )}
+                              <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                                {child.details.description}
+                              </div>
                             </div>
+
+                            <DrawerFooter>
+                              <DrawerClose asChild>
+                                <Button variant="outline">閉じる</Button>
+                              </DrawerClose>
+                            </DrawerFooter>
                           </div>
-                        </DialogContent>
-                      </Dialog>
+                        </DrawerContent>
+                      </Drawer>
                     ) : child.action ? (
-                      // 従来のリンクボタン（detailsがない場合）
                       <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1" asChild>
                         <a href={child.action.url}>{child.action.label}</a>
                       </Button>
