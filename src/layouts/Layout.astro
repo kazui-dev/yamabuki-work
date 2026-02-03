@@ -3,18 +3,42 @@ import "@/styles/global.css";
 
 interface Props {
 	title: string;
+	description?: string;
+	image?: string;
 }
 
-const { title } = Astro.props;
+const { 
+	title, 
+	description = "新宿山吹高校 第9回情報科発表会 特設Webサイト", 
+	image = "/ogp-image.png"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "http://localhost:4321");
+const ogImageURL = new URL(image, Astro.site || "http://localhost:4321");
 ---
 
 <!doctype html>
-<html lang="ja"> <head>
+<html lang="ja">
+	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title> </head>
+		
+		<title>{title}</title>
+		<meta name="description" content={description} />
+
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:image" content={ogImageURL} />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageURL} />
+		</head>
 	<body>
 		<slot />
 	</body>
