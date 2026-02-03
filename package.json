@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "push": "git add . && git commit -m 'fix' && git push",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
