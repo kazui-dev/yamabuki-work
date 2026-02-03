@@ -9,7 +9,10 @@ type ScheduleItem = {
   title: string;
   place?: string;
   description?: string;
-  link?: string;
+  action?: {
+	label: string;
+	url: string;
+  };
   children?: {
     title: string;
     speaker: string;
@@ -53,7 +56,11 @@ const schedule: ScheduleItem[] = [
   {
     time: "14:00",
     title: "ポスター発表",
-	link: "/posters",
+	action: {
+	  label: "フロアマップを見る",
+	  url: "/posters"
+	}
+	,
     description: "ここに説明を入れる"
   },
   {
@@ -144,11 +151,11 @@ const schedule: ScheduleItem[] = [
             )}
 
             {/* ポスター発表のアクション */}
-            {item.link && (
+            {item.action && (
               <div class="px-4 pb-4">
                 <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
-                  <a href={item.link} class="text-white flex justify-center items-center">
-                    会場マップを見る <Users className="w-4 h-4 ml-1" />
+                  <a href={item.action.url} class="text-white flex justify-center items-center">
+                    {item.action.label} <Users className="w-4 h-4 ml-1" />
                   </a>
                 </Button>
               </div>
