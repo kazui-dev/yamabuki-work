@@ -70,7 +70,7 @@ export const Timetable = () => {
             <>
               <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
               <div className="flex items-center text-sm font-bold text-slate-500 mb-2">
-                <Clock className="w-3 h-3 mr-1 align-middle" />
+                <Clock className="w-3 h-3 mr-1" />
                 {item.time}
               </div>
             </>
@@ -80,7 +80,7 @@ export const Timetable = () => {
             <div className="p-4 pb-3">
               {item.place && (
                 <div className="inline-flex items-center text-xs text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded mb-2">
-                  <MapPin className="w-3 h-3 mr-1 align-middle" />
+                  <MapPin className="w-3 h-3 mr-1" />
                   {item.place}
                 </div>
               )}
@@ -91,7 +91,7 @@ export const Timetable = () => {
               
               {item.speaker && (
                 <p className="text-sm text-slate-600 mt-1 flex items-center">
-                  <Mic className="w-3 h-3 mr-1 align-middle" />
+                  <Mic className="w-3 h-3 mr-1" />
                   {item.speaker}
                 </p>
               )}
@@ -106,7 +106,7 @@ export const Timetable = () => {
                 <div className="mt-3">
                   <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
                     <a href={item.action.url}>
-                      {item.action.label} <Users className="w-4 h-4 ml-1 align-middle" />
+                      {item.action.label} <Users className="w-4 h-4 ml-1" />
                     </a>
                   </Button>
                 </div>
@@ -123,7 +123,7 @@ export const Timetable = () => {
 
                     {child.speaker && (
                       <p className="text-xs text-slate-600 mb-2 flex items-center">
-                        <Mic className="w-3 h-3 mr-1 align-middle" />
+                        <Mic className="w-3 h-3 mr-1" />
                         {child.speaker}
                       </p>
                     )}
@@ -131,7 +131,7 @@ export const Timetable = () => {
                     {child.action && (
                       <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1" asChild>
                         <a href={child.action.url}>
-                          {child.action.label} <ChevronRight className="w-3 h-3 ml-1 align-middle" />
+                          {child.action.label} <ChevronRight className="w-3 h-3 ml-1" />
                         </a>
                       </Button>
                     )}
