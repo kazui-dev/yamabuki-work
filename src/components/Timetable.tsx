@@ -75,7 +75,7 @@ const timetableData: TimetableItem[] = [
     description: "ここに説明を入れる",
     action: {
       label: "フロアマップ（未実装）",
-      url: "/posters"
+      url: "/"
     }
   },
   {
@@ -141,7 +141,7 @@ export const Timetable = () => {
                     </h3>
 
                     {session.speaker && (
-                      <p className="flex items-center gap-1.5 leading-none text-xs text-slate-600 mb-2">
+                      <p className="flex items-center gap-2 leading-none text-xs text-slate-600 mb-2">
                         <Speech size={14} />
                         {session.speaker}
                       </p>
