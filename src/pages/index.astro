@@ -3,15 +3,13 @@ import Layout from '@/layouts/Layout.astro';
 import { Button } from "@/components/ui/button";
 import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
 
-// 拡張性を高めた再帰的な型定義
 type ScheduleItem = {
   title: string;
-  time?: string;        // 親だけ時間を持ち、子は持たないパターンに対応
+  time?: string;
   place?: string;
-  speaker?: string;     // 発表者情報
+  speaker?: string;
   description?: string;
   
-  // 遷移先（IDではなく、ラベルとURLで管理）
   action?: {
     label: string;
     url: string;
