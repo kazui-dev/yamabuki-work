@@ -86,13 +86,13 @@ const timetableData: TimetableItem[] = [
 
 export const Timetable = () => {
   return (
-    <div className="max-w-md mx-auto space-y-6">
+    <div className="max-w-md mx-auto space-y-8">
       {timetableData.map((item, index) => (
-        <div key={index} className="relative pl-6 border-l-2 border-slate-200 last:border-transparent pb-2">
+        <div key={index} className="relative pl-6 border-l-2 border-slate-200 last:border-transparent pb-4">
           {item.time && (
             <>
               <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
-              <div className="flex items-center gap-1.5 leading-none text-sm text-slate-500 font-bold mb-2">
+              <div className="flex items-center gap-2 leading-none text-sm text-slate-500 font-bold mb-3">
                 <Clock size={16} />
                 {item.time}
               </div>
@@ -100,23 +100,23 @@ export const Timetable = () => {
           )}
 
           <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-            <div className="p-4 pb-3">
+            <div className="p-5 pb-4">
               <h2 className="text-lg font-bold text-slate-800 leading-snug">
                 {item.title}
               </h2>
               {item.speaker && (
-                <p className="flex items-center gap-1.5 leading-none text-sm text-slate-600 mt-1">
+                <p className="flex items-center gap-2 leading-none text-sm text-slate-600 mt-2">
                   <Speech size={14} />
                   {item.speaker}
                 </p>
               )}
               {item.description && (
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-slate-500 mt-2">
                   {item.description}
                 </p>
               )}
               {item.action && (
-                <div className="mt-3">
+                <div className="mt-4">
                   <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
                     <a href={item.action.url}>{item.action.label}</a>
                   </Button>
@@ -127,14 +127,14 @@ export const Timetable = () => {
             {item.children && (
               <div className="border-t border-slate-100 bg-slate-50/50">
                 {item.children.map((child, childIndex) => (
-                  <div key={childIndex} className="p-4 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors">
-                    <h3 className="font-bold text-slate-800 text-sm mb-1">
+                  <div key={childIndex} className="p-5 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors">
+                    <h3 className="font-bold text-slate-800 text-sm mb-2">
                       {child.title}
                     </h3>
 
                     {child.speaker && (
-                      <p className="text-xs text-slate-600 mb-2 flex items-center leading-none">
-                        <Speech className="mr-1" size={14} />
+                      <p className="text-xs text-slate-600 mb-3 flex items-center leading-none">
+                        <Speech className="mr-1.5" size={14} />
                         {child.speaker}
                       </p>
                     )}
@@ -142,7 +142,7 @@ export const Timetable = () => {
                     {child.details ? (
                       <Drawer>
                         <DrawerTrigger asChild>
-                          <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1">
+                          <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-3">
                             詳細を見る
                           </Button>
                         </DrawerTrigger>
@@ -158,12 +158,12 @@ export const Timetable = () => {
                             </DrawerHeader>
                             
                             {/* コンテンツエリア */}
-                            <div className="p-4 overflow-y-auto max-h-[60vh]">
-                              <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                            <div className="p-5 overflow-y-auto max-h-[60vh]">
+                              <div className="text-sm text-slate-700 whitespace-pre-wrap">
                                 {child.details.description}
                               </div>              
                               {child.details.image && (
-                                <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-3">
+                                <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-4">
                                   <img 
                                     src={child.details.image.src} 
                                     alt={child.title}
@@ -182,7 +182,7 @@ export const Timetable = () => {
                         </DrawerContent>
                       </Drawer>
                     ) : child.action ? (
-                      <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1" asChild>
+                      <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-3" asChild>
                         <a href={child.action.url}>{child.action.label}</a>
                       </Button>
                     ) : null}
