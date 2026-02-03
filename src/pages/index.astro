@@ -1,7 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { Button } from "@/components/ui/button";
-import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
+import { Clock, MapPin } from "lucide-react";
 import { Timetable } from '@/components/Timetable.tsx';
 ---
 <Layout title="タイムテーブル">
@@ -14,18 +13,18 @@ import { Timetable } from '@/components/Timetable.tsx';
       <div class="inline-flex flex-col items-center gap-1 text-sm text-slate-600 bg-white px-6 py-3 rounded-xl border border-slate-200 shadow-sm">
         <div class="font-medium text-lg text-slate-800">2026.03.13 (Fri)</div>
         <div class="flex items-center gap-3 text-xs sm:text-sm mt-1">
-          <span class="flex items-center">
-            <Clock className="w-3 h-3 mr-1" />
+          <span class="flex items-center gap-1 leading-none">
+            <Clock size={12} />
             12:00 受付開始
           </span>
           <span class="w-px h-3 bg-slate-300"></span>
-          <span class="flex items-center font-medium text-blue-600">
-            <MapPin className="w-3 h-3 mr-1" />
+          <span class="flex items-center gap-1 leading-none">
+            <MapPin size={12} />
             大講義室
           </span>
         </div>
       </div>
     </div>
-	<Timetable />
+  <Timetable client:load />
   </main>
 </Layout>

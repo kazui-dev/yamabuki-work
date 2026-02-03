@@ -1,16 +1,29 @@
 import { Button } from "@/components/ui/button";
-import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"; // インポートを追加
+import { Clock, Mic, Image as ImageIcon } from "lucide-react";
 
+// 1. 型定義を拡張：詳細情報（画像とテキスト）を追加
 type TimetableItem = {
   title: string;
   time?: string;
   speaker?: string;
   description?: string;
+  details?: {
+    description: string; // 詳細な説明文
+    imageUrl?: string;   // 画像のパス
+  };
+  children?: TimetableItem[];
   action?: {
     label: string;
     url: string;
   };
-  children?: TimetableItem[];
 };
 
 const timetableData: TimetableItem[] = [
@@ -26,7 +39,9 @@ const timetableData: TimetableItem[] = [
       {
         title: "タイトル",
         speaker: "○○チーム",
-        action: { label: "詳細", url: "/presentations/id_1" }
+        details: {
+          description: "ここに詳細を入れる",
+        }
       },
       {
         title: "タイトル",
@@ -50,7 +65,7 @@ const timetableData: TimetableItem[] = [
     title: "ポスター発表",
     description: "ここに説明を入れる",
     action: {
-      label: "フロアマップを見る",
+      label: "フロアマップ",
       url: "/posters"
     }
   },
@@ -64,14 +79,14 @@ export const Timetable = () => {
   return (
     <div className="max-w-md mx-auto space-y-6">
       {timetableData.map((item, index) => (
-        <div key={index} className="relative pl-6 border-l-2 border-slate-200 last:border-0 pb-2">
+        <div key={index} className="relative pl-6 border-l-2 border-slate-200 last:border-transparent pb-2">
           {item.time && (
             <>
-              <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
-              <div className="flex items-center text-sm font-bold text-slate-500 mb-2 leading-none">
-                <Clock className="mr-1" size={14} />
-                {item.time}
-              </div>
+                <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
+                <div className="flex items-center gap-1.5 leading-none text-sm text-slate-500 font-bold mb-2">
+                    <Clock size={16}/>
+                    {item.time}
+                </div>
             </>
           )}
 
@@ -83,8 +98,8 @@ export const Timetable = () => {
               </h2>
               
               {item.speaker && (
-                <p className="text-sm text-slate-600 mt-1 flex items-center leading-none">
-                  <Mic className="mr-1" size={14}/>
+                <p className="flex items-center gap-1.5 leading-none text-sm text-slate-600 mt-1">
+                  <Mic size={16}/>
                   {item.speaker}
                 </p>
               )}
@@ -99,7 +114,7 @@ export const Timetable = () => {
                 <div className="mt-3">
                   <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
                     <a href={item.action.url}>
-                      {item.action.label} <Users className="ml-1" size={14} />
+                      {item.action.label}
                     </a>
                   </Button>
                 </div>
@@ -109,7 +124,7 @@ export const Timetable = () => {
             {item.children && (
               <div className="border-t border-slate-100 bg-slate-50/50">
                 {item.children.map((child, childIndex) => (
-                  <div key={childIndex} className="p-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
+                  <div key={childIndex} className="p-4 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors">
                     <h3 className="font-bold text-slate-800 text-sm mb-1">
                       {child.title}
                     </h3>
@@ -121,18 +136,54 @@ export const Timetable = () => {
                       </p>
                     )}
 
-                    {child.action && (
+                    {/* 3. モーダル実装部分 */}
+                    {child.details ? (
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1">
+                            詳細を見る
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+                          <DialogHeader>
+                            <DialogTitle>{child.title}</DialogTitle>
+                            {child.speaker && (
+                              <DialogDescription className="flex items-center gap-1">
+                                <Mic size={14} /> {child.speaker}
+                              </DialogDescription>
+                            )}
+                          </DialogHeader>
+                          
+                          <div className="space-y-4 mt-2">
+                            {/* 画像がある場合のみ表示 */}
+                            {child.details.imageUrl && (
+                              <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video flex items-center justify-center relative">
+                                {/* Next.jsのImageコンポーネント推奨ですが、ここではimgタグで例示 */}
+                                <img 
+                                  src={child.details.imageUrl} 
+                                  alt={`${child.title}の画像`}
+                                  className="object-cover w-full h-full" 
+                                />
+                              </div>
+                            )}
+                            
+                            {/* 詳細テキスト */}
+                            <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                              {child.details.description}
+                            </div>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                    ) : child.action ? (
+                      // 従来のリンクボタン（detailsがない場合）
                       <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1" asChild>
-                        <a href={child.action.url}>
-                          {child.action.label} <ChevronRight className="ml-1" size={14} />
-                        </a>
+                        <a href={child.action.url}>{child.action.label}</a>
                       </Button>
-                    )}
+                    ) : null}
                   </div>
                 ))}
               </div>
             )}
-
           </div>
         </div>
       ))}
