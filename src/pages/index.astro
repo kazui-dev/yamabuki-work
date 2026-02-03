@@ -1,7 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
 
 // 型定義
@@ -105,16 +104,13 @@ const schedule: ScheduleItem[] = [
             
             {/* カードヘッダー部分 */}
             <div class="p-4 pb-3">
-              <div class="flex justify-between items-start mb-1">
-                
-                {/* 場所が指定されている場合のみ表示 */}
+				         
                 {item.place && (
                   <div class="flex items-center text-xs text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded">
                     <MapPin className="w-3 h-3 mr-1" />
                     {item.place}
                   </div>
                 )}
-              </div>
 
               <h2 class="text-lg font-bold text-slate-800">
                 {item.title}
