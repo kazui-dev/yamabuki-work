@@ -9,7 +9,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Clock, Mic } from "lucide-react";
+import { Clock, Speech } from "lucide-react";
 import image1 from "@/assets/images/image1.jpg";
 
 type TimetableItem = {
@@ -50,7 +50,7 @@ const timetableData: TimetableItem[] = [
         title: "タイトル",
         speaker: "情報科○部○組 ○○",
         details: {
-          description: "ここに詳細を入れる",
+          description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         }
       },
       {
@@ -106,7 +106,7 @@ export const Timetable = () => {
               </h2>
               {item.speaker && (
                 <p className="flex items-center gap-1.5 leading-none text-sm text-slate-600 mt-1">
-                  <Mic size={16} />
+                  <Speech size={14} />
                   {item.speaker}
                 </p>
               )}
@@ -134,7 +134,7 @@ export const Timetable = () => {
 
                     {child.speaker && (
                       <p className="text-xs text-slate-600 mb-2 flex items-center leading-none">
-                        <Mic className="mr-1" size={14} />
+                        <Speech className="mr-1" size={14} />
                         {child.speaker}
                       </p>
                     )}
@@ -152,7 +152,7 @@ export const Timetable = () => {
                               <DrawerTitle>{child.title}</DrawerTitle>
                               {child.speaker && (
                                 <DrawerDescription className="flex items-center justify-center gap-1">
-                                  <Mic size={14} /> {child.speaker}
+                                  <Speech size={14} /> {child.speaker}
                                 </DrawerDescription>
                               )}
                             </DrawerHeader>
