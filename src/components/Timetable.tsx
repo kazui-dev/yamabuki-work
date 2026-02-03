@@ -60,6 +60,7 @@ const timetableData: TimetableItem[] = [
     title: "閉会式",
   }
 ];
+
 export const Timetable = () => {
   return (
     <div className="max-w-md mx-auto space-y-6">
@@ -67,11 +68,8 @@ export const Timetable = () => {
         <div key={index} className="relative pl-6 border-l-2 border-slate-200 last:border-0 pb-2">
           {item.time && (
             <>
-              {/* 修正1: top-0 を top-0.5 に変更し、text-sm(20px高)の中心(10px)と h-4(16px高)の中心を合わせる */}
-              <div className="absolute -left-2.25 top-0.5 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
-              
-              <div className="flex items-center text-sm font-bold text-slate-500 mb-2 leading-5">
-                {/* 微調整: アイコンが小さい(w-3)ため、視覚的に少し上げたい場合は mb-0.5 などで調整可能ですが、基本はitems-centerでOK */}
+              <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
+              <div className="flex items-center text-sm font-bold text-slate-500 mb-2">
                 <Clock className="w-3 h-3 mr-1" />
                 {item.time}
               </div>
@@ -92,17 +90,14 @@ export const Timetable = () => {
               </h2>
               
               {item.speaker && (
-                /* 修正2: items-center を items-start に変更し、長文対応。
-                   text-sm (line-height: 20px) に対し、アイコン(12px)を中央に置くため mt-1 (4px) を追加 
-                   ((20px - 12px) / 2 = 4px) */
-                <p className="text-sm text-slate-600 mt-1 flex items-start">
-                  <Mic className="w-3 h-3 mr-1 mt-1 shrink-0" />
-                  <span>{item.speaker}</span>
+                <p className="text-sm text-slate-600 mt-1 flex items-center">
+                  <Mic className="w-3 h-3 mr-1" />
+                  {item.speaker}
                 </p>
               )}
 
               {item.description && (
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                <p className="text-xs text-slate-500 mt-1">
                   {item.description}
                 </p>
               )}
@@ -110,7 +105,7 @@ export const Timetable = () => {
               {item.action && (
                 <div className="mt-3">
                   <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
-                    <a href={item.action.url} className="flex items-center justify-center">
+                    <a href={item.action.url}>
                       {item.action.label} <Users className="w-4 h-4 ml-1" />
                     </a>
                   </Button>
@@ -127,17 +122,15 @@ export const Timetable = () => {
                     </h3>
 
                     {child.speaker && (
-                      /* 修正3: children内のスピーカーも同様に items-start + mt-0.5 (text-xs用) に修正 
-                         text-xs (line-height: 16px) - icon(12px) = 4px余り / 2 = 2px (mt-0.5) */
-                      <p className="text-xs text-slate-600 mb-2 flex items-start">
-                        <Mic className="w-3 h-3 mr-1 mt-0.5 shrink-0" />
-                        <span>{child.speaker}</span>
+                      <p className="text-xs text-slate-600 mb-2 flex items-center">
+                        <Mic className="w-3 h-3 mr-1" />
+                        {child.speaker}
                       </p>
                     )}
 
                     {child.action && (
                       <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1" asChild>
-                        <a href={child.action.url} className="flex items-center justify-center">
+                        <a href={child.action.url}>
                           {child.action.label} <ChevronRight className="w-3 h-3 ml-1" />
                         </a>
                       </Button>
