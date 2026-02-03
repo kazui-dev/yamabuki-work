@@ -48,17 +48,23 @@ const timetableData: TimetableItem[] = [
       {
         title: "タイトル",
         speaker: "情報科○部○組 ○○",
-        action: { label: "詳細", url: "/presentations/id_2" }
+        details: {
+          description: "ここに詳細を入れる",
+        }
       },
       {
         title: "タイトル",
         speaker: "情報科○部○組 ○○",
-        action: { label: "詳細", url: "/presentations/id_3" }
+        details: {
+          description: "ここに詳細を入れる",
+        }
       },
       {
         title: "タイトル",
         speaker: "情報科○部○組 ○○",
-        action: { label: "詳細", url: "/presentations/id_4" }
+        details: {
+          description: "ここに詳細を入れる",
+        }
       }
     ]
   },
@@ -67,7 +73,7 @@ const timetableData: TimetableItem[] = [
     title: "ポスター発表",
     description: "ここに説明を入れる",
     action: {
-      label: "フロアマップ",
+      label: "フロアマップはこちら",
       url: "/posters"
     }
   },
@@ -132,7 +138,6 @@ export const Timetable = () => {
                       </p>
                     )}
 
-                    {/* ▼ ドロワー実装部分 ▼ */}
                     {child.details ? (
                       <Drawer>
                         <DrawerTrigger asChild>
