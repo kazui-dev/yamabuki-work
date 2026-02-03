@@ -92,7 +92,7 @@ export const Timetable = () => {
           {item.time && (
             <>
               <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
-              <div className="flex items-center gap-2 leading-none text-sm text-slate-500 font-bold mb-3">
+              <div className="flex items-center gap-1.5 leading-none text-sm text-slate-500 font-bold mb-3">
                 <Clock size={16} />
                 {item.time}
               </div>
@@ -133,8 +133,8 @@ export const Timetable = () => {
                     </h3>
 
                     {child.speaker && (
-                      <p className="text-xs text-slate-600 mb-3 flex items-center leading-none">
-                        <Speech className="mr-1.5" size={14} />
+                      <p className="flex items-center gap-2 leading-none text-xs text-slate-600 mb-3">
+                        <Speech size={14} />
                         {child.speaker}
                       </p>
                     )}
@@ -151,7 +151,7 @@ export const Timetable = () => {
                             <DrawerHeader>
                               <DrawerTitle>{child.title}</DrawerTitle>
                               {child.speaker && (
-                                <DrawerDescription className="flex items-center justify-center gap-1">
+                                <DrawerDescription className="flex items-center justify-center gap-2">
                                   <Speech size={14} /> {child.speaker}
                                 </DrawerDescription>
                               )}
