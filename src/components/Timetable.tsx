@@ -10,16 +10,16 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Clock, Mic } from "lucide-react";
+import image1 from "@/assets/images/image1.jpg";
 
-// 1. 型定義を拡張：詳細情報（画像とテキスト）を追加
 type TimetableItem = {
   title: string;
   time?: string;
   speaker?: string;
   description?: string;
   details?: {
-    description: string; // 詳細な説明文
-    imageUrl?: string;   // 画像のパス
+    description: string;
+    image?: ImageMetadata;
   };
   children?: TimetableItem[];
   action?: {
@@ -42,7 +42,8 @@ const timetableData: TimetableItem[] = [
         title: "タイトル",
         speaker: "○○チーム",
         details: {
-          description: "ここに詳細を入れる",
+          description: "東京都立新宿山吹高等学校（とうきょうとりつ しんじゅく やまぶき こうとうがっこう、英: Shinjuku Yamabuki High School）は、東京都新宿区山吹町に所在する東京都立高等学校。",
+          image: image1
         }
       },
       {
@@ -156,20 +157,20 @@ export const Timetable = () => {
                               )}
                             </DrawerHeader>
                             
-                            {/* スクロール可能なコンテンツエリア */}
+                            {/* コンテンツエリア */}
                             <div className="p-4 overflow-y-auto max-h-[60vh]">
-                              {child.details.imageUrl && (
-                                <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video mb-4 relative">
+                              <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                                {child.details.description}
+                              </div>              
+                              {child.details.image && (
+                                <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-3">
                                   <img 
-                                    src={child.details.imageUrl} 
+                                    src={child.details.image.src} 
                                     alt={child.title}
                                     className="object-cover w-full h-full" 
                                   />
                                 </div>
                               )}
-                              <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
-                                {child.details.description}
-                              </div>
                             </div>
 
                             <DrawerFooter>
