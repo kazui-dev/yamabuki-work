@@ -154,8 +154,8 @@ const schedule: ScheduleItem[] = [
             {item.action && (
               <div class="px-4 pb-4">
                 <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
-                  <a href={item.action.url} class="text-white flex justify-center items-center">
-                    {item.action.label} <Users className="w-4 h-4 ml-1" />
+                  <a href={item.action.url}>
+                    {item.action.label} <ChevronRight className="w-3 h-3 ml-1" />
                   </a>
                 </Button>
               </div>
