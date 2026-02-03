@@ -3,21 +3,22 @@ import Layout from '@/layouts/Layout.astro';
 import { Button } from "@/components/ui/button";
 import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
 
-// 型定義
+// 拡張性を高めた再帰的な型定義
 type ScheduleItem = {
-  time: string;
   title: string;
+  time?: string;        // 子要素では省略可能に
   place?: string;
   description?: string;
+  speaker?: string;     // 発表者情報
+  
+  // 遷移先（IDではなく、ラベルとURLで管理）
   action?: {
-	label: string;
-	url: string;
+    label: string;
+    url: string;
   };
-  children?: {
-    title: string;
-    speaker: string;
-    id: string;
-  }[];
+
+  // 再帰構造：子要素もまたScheduleItem型
+  children?: ScheduleItem[];
 };
 
 // スケジュールデータ
@@ -29,39 +30,39 @@ const schedule: ScheduleItem[] = [
   {
     time: "12:40",
     title: "全体発表",
-    description: "ここに説明を入れる",
+    description: "情報科3年次生による口頭発表です。（順不同）",
     children: [
       {
-        title: "タイトル",
-        speaker: "○○チーム",
-        id: "id_1"
+        title: "情報科における生成AIの活用",
+        speaker: "3年次 Aさん",
+        action: { label: "詳細", url: "/presentations/ai-usage" }
       },
       {
-        title: "タイトル",
-        speaker: "情報科○部○組 ○○",
-        id: "id_2"
+        title: "Webデザインのトレンド分析",
+        speaker: "3年次 Bチーム",
+        // 詳細ページがまだない場合はactionを省略できる
       },
       {
-        title: "タイトル",
-        speaker: "情報科○部○組 ○○",
-        id: "id_3"
+        title: "Unityを用いた3Dゲーム制作",
+        speaker: "3年次 Cさん",
+        action: { label: "詳細", url: "/presentations/unity-game" }
       },
       {
-        title: "タイトル",
-        speaker: "情報科○部○組 ○○",
-        id: "id_4"
+        title: "学校生活を便利にするアプリ開発",
+        speaker: "3年次 Dチーム",
+        action: { label: "詳細", url: "/presentations/school-app" }
       }
     ]
   },
   {
     time: "14:00",
     title: "ポスター発表",
-	action: {
-	  label: "フロアマップを見る",
-	  url: "/posters"
-	}
-	,
-    description: "ここに説明を入れる"
+    place: "体育館",
+    description: "体育館にて各ブースでの発表を行います。",
+    action: {
+      label: "会場マップを見る",
+      url: "/posters"
+    }
   },
   {
     time: "14:50",
@@ -85,7 +86,7 @@ const schedule: ScheduleItem[] = [
             12:00 受付開始
           </span>
           <span class="w-px h-3 bg-slate-300"></span>
-          <span class="flex items-center font-medium">
+          <span class="flex items-center font-medium text-blue-600">
             <MapPin className="w-3 h-3 mr-1" />
             大講義室
           </span>
@@ -97,67 +98,92 @@ const schedule: ScheduleItem[] = [
       
       {schedule.map((item) => (
         <div class="relative pl-6 border-l-2 border-slate-200 last:border-0 pb-2">
-          <div class="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
-          
-          <div class="flex items-center text-sm font-bold text-slate-500 mb-2">
-            <Clock className="w-3 h-3 mr-1" />
-            {item.time}
-          </div>
+          {/* 親の時間がある場合のみタイムラインを表示 */}
+          {item.time && (
+            <>
+              <div class="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
+              <div class="flex items-center text-sm font-bold text-slate-500 mb-2">
+                <Clock className="w-3 h-3 mr-1" />
+                {item.time}
+              </div>
+            </>
+          )}
 
           {/* コンテンツカード */}
           <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
             
-            {/* カードヘッダー部分 */}
+            {/* --- 親要素エリア --- */}
             <div class="p-4 pb-3">
+              
+              {/* 場所バッジ */}
+              {item.place && (
+                <div class="inline-flex items-center text-xs text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded mb-2">
+                  <MapPin className="w-3 h-3 mr-1" />
+                  {item.place}
+                </div>
+              )}
 
-                {item.place && (
-                  <div class="flex items-center text-xs text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded">
-                    <MapPin className="w-3 h-3 mr-1" />
-                    {item.place}
-                  </div>
-                )}
-
-              <h2 class="text-lg font-bold text-slate-800">
+              {/* タイトル */}
+              <h2 class="text-lg font-bold text-slate-800 leading-snug">
                 {item.title}
               </h2>
               
+              {/* 発表者（親要素にある場合） */}
+              {item.speaker && (
+                <p class="text-sm text-slate-600 mt-1 flex items-center">
+                  <Mic className="w-3 h-3 mr-1" />
+                  {item.speaker}
+                </p>
+              )}
+
+              {/* 説明文 */}
               {item.description && (
                 <p class="text-xs text-slate-500 mt-1">
                   {item.description}
                 </p>
               )}
+
+              {/* 親要素のアクションボタン */}
+              {item.action && (
+                <div class="mt-3">
+                  <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
+                    <a href={item.action.url}>
+                      {item.action.label} <Users className="w-4 h-4 ml-1" />
+                    </a>
+                  </Button>
+                </div>
+              )}
             </div>
 
-            {/* 全体発表のリスト表示（入れ子部分） */}
+            {/* --- 子要素エリア（再帰的なリスト表示） --- */}
             {item.children && (
               <div class="border-t border-slate-100 bg-slate-50/50">
                 {item.children.map((child) => (
                   <div class="p-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
+                    
+                    {/* 子タイトル */}
                     <h3 class="font-bold text-slate-800 text-sm mb-1">
                       {child.title}
                     </h3>
-                    <p class="text-xs text-slate-600 mb-3 flex items-center">
-                      <Mic className="w-3 h-3 mr-1" />
-                      {child.speaker}
-                    </p>
-                    <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white" asChild>
-                      <a href={`/presentations/${child.id}`}>
-                        詳細 <ChevronRight className="w-3 h-3 ml-1" />
-                      </a>
-                    </Button>
+
+                    {/* 子発表者 */}
+                    {child.speaker && (
+                      <p class="text-xs text-slate-600 mb-2 flex items-center">
+                        <Mic className="w-3 h-3 mr-1" />
+                        {child.speaker}
+                      </p>
+                    )}
+
+                    {/* 子アクションボタン */}
+                    {child.action && (
+                      <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1" asChild>
+                        <a href={child.action.url}>
+                          {child.action.label} <ChevronRight className="w-3 h-3 ml-1" />
+                        </a>
+                      </Button>
+                    )}
                   </div>
                 ))}
-              </div>
-            )}
-
-            {/* ポスター発表のアクション */}
-            {item.action && (
-              <div class="px-4 pb-4">
-                <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
-                  <a href={item.action.url}>
-                    {item.action.label} <ChevronRight className="w-3 h-3 ml-1" />
-                  </a>
-                </Button>
               </div>
             )}
 
