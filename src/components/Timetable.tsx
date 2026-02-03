@@ -9,7 +9,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Clock, Speech } from "lucide-react";
+import { Clock, User } from "lucide-react";
 import image1 from "@/assets/images/image1.jpg";
 
 type TimetableItem = {
@@ -106,7 +106,7 @@ export const Timetable = () => {
               </h2>
               {item.speaker && (
                 <p className="flex items-center gap-1.5 leading-none text-sm text-slate-600 mt-1">
-                  <Speech size={14} />
+                  <User size={14} />
                   {item.speaker}
                 </p>
               )}
@@ -134,7 +134,7 @@ export const Timetable = () => {
 
                     {child.speaker && (
                       <p className="text-xs text-slate-600 mb-2 flex items-center leading-none">
-                        <Speech className="mr-1" size={14} />
+                        <User className="mr-1" size={14} />
                         {child.speaker}
                       </p>
                     )}
@@ -152,7 +152,7 @@ export const Timetable = () => {
                               <DrawerTitle>{child.title}</DrawerTitle>
                               {child.speaker && (
                                 <DrawerDescription className="flex items-center justify-center gap-1">
-                                  <Speech size={14} /> {child.speaker}
+                                  <User size={14} /> {child.speaker}
                                 </DrawerDescription>
                               )}
                             </DrawerHeader>
