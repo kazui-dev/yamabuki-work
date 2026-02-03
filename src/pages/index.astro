@@ -6,10 +6,10 @@ import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
 // 拡張性を高めた再帰的な型定義
 type ScheduleItem = {
   title: string;
-  time?: string;        // 子要素では省略可能に
+  time?: string;        // 親だけ時間を持ち、子は持たないパターンに対応
   place?: string;
-  description?: string;
   speaker?: string;     // 発表者情報
+  description?: string;
   
   // 遷移先（IDではなく、ラベルとURLで管理）
   action?: {
@@ -21,7 +21,7 @@ type ScheduleItem = {
   children?: ScheduleItem[];
 };
 
-// スケジュールデータ
+// スケジュールデータ（内容は元のテキストを維持し、idをaction形式に変換）
 const schedule: ScheduleItem[] = [
   {
     time: "12:30",
@@ -30,37 +30,37 @@ const schedule: ScheduleItem[] = [
   {
     time: "12:40",
     title: "全体発表",
-    description: "情報科3年次生による口頭発表です。（順不同）",
+    description: "ここに説明を入れる",
     children: [
       {
-        title: "情報科における生成AIの活用",
-        speaker: "3年次 Aさん",
-        action: { label: "詳細", url: "/presentations/ai-usage" }
+        title: "タイトル",
+        speaker: "○○チーム",
+        action: { label: "詳細", url: "/presentations/id_1" }
       },
       {
-        title: "Webデザインのトレンド分析",
-        speaker: "3年次 Bチーム",
-        // 詳細ページがまだない場合はactionを省略できる
+        title: "タイトル",
+        speaker: "情報科○部○組 ○○",
+        action: { label: "詳細", url: "/presentations/id_2" }
       },
       {
-        title: "Unityを用いた3Dゲーム制作",
-        speaker: "3年次 Cさん",
-        action: { label: "詳細", url: "/presentations/unity-game" }
+        title: "タイトル",
+        speaker: "情報科○部○組 ○○",
+        action: { label: "詳細", url: "/presentations/id_3" }
       },
       {
-        title: "学校生活を便利にするアプリ開発",
-        speaker: "3年次 Dチーム",
-        action: { label: "詳細", url: "/presentations/school-app" }
+        title: "タイトル",
+        speaker: "情報科○部○組 ○○",
+        action: { label: "詳細", url: "/presentations/id_4" }
       }
     ]
   },
   {
     time: "14:00",
     title: "ポスター発表",
-    place: "体育館",
-    description: "体育館にて各ブースでの発表を行います。",
+    description: "ここに説明を入れる",
+    // 親アイテム自体にリンクを持たせるパターン
     action: {
-      label: "会場マップを見る",
+      label: "フロアマップを見る",
       url: "/posters"
     }
   },
@@ -115,7 +115,7 @@ const schedule: ScheduleItem[] = [
             {/* --- 親要素エリア --- */}
             <div class="p-4 pb-3">
               
-              {/* 場所バッジ */}
+              {/* 場所バッジ (データにある場合のみ) */}
               {item.place && (
                 <div class="inline-flex items-center text-xs text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded mb-2">
                   <MapPin className="w-3 h-3 mr-1" />
