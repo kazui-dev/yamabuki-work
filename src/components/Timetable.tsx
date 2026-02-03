@@ -136,7 +136,6 @@ export const Timetable = () => {
                       </p>
                     )}
 
-                    {/* 3. モーダル実装部分 */}
                     {child.details ? (
                       <Dialog>
                         <DialogTrigger asChild>
@@ -158,7 +157,6 @@ export const Timetable = () => {
                             {/* 画像がある場合のみ表示 */}
                             {child.details.imageUrl && (
                               <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video flex items-center justify-center relative">
-                                {/* Next.jsのImageコンポーネント推奨ですが、ここではimgタグで例示 */}
                                 <img 
                                   src={child.details.imageUrl} 
                                   alt={`${child.title}の画像`}
