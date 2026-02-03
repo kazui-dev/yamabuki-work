@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { Clock, MapPin, ChevronRight, Mic, Users } from "lucide-react";
 
@@ -106,7 +105,7 @@ export const Timetable = () => {
               {item.action && (
                 <div className="mt-3">
                   <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
-                    <a href={item.action.url}>
+                    <a href={item.action.url} className="flex items-center justify-center">
                       {item.action.label} <Users className="w-4 h-4 ml-1" />
                     </a>
                   </Button>
@@ -131,7 +130,7 @@ export const Timetable = () => {
 
                     {child.action && (
                       <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-1" asChild>
-                        <a href={child.action.url}>
+                        <a href={child.action.url} className="flex items-center justify-center">
                           {child.action.label} <ChevronRight className="w-3 h-3 ml-1" />
                         </a>
                       </Button>
