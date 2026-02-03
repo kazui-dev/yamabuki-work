@@ -57,7 +57,7 @@ const timetableData: TimetableItem[] = [
         title: "タイトル",
         speaker: "情報科○部○組 ○○",
         details: {
-          description: "ここに詳細を入れる",
+          description: "あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。",
         }
       },
       {
