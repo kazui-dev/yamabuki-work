@@ -68,9 +68,12 @@ export const Timetable = () => {
           {item.time && (
             <>
               <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
-              <div className="flex items-center text-sm font-bold text-slate-500 mb-2">
-                <Clock className="mr-1" size={14} />
-                {item.time}
+              {/* 変更点: flex items-center を削除 */}
+              <div className="text-sm font-bold text-slate-500 mb-2">
+                {/* 変更点: inline align-middle を追加 */}
+                <Clock className="mr-1 inline align-middle" size={14} />
+                {/* 変更点: テキストの位置合わせのために span align-middle でラップ */}
+                <span className="align-middle">{item.time}</span>
               </div>
             </>
           )}
@@ -83,9 +86,12 @@ export const Timetable = () => {
               </h2>
               
               {item.speaker && (
-                <p className="text-sm text-slate-600 mt-1 flex items-center">
-                  <Mic className="mr-1" size={14}/>
-                  {item.speaker}
+                /* 変更点: flex items-center を削除 */
+                <p className="text-sm text-slate-600 mt-1">
+                  {/* 変更点: inline align-middle を追加 */}
+                  <Mic className="mr-1 inline align-middle" size={14}/>
+                  {/* 変更点: span align-middle でラップ */}
+                  <span className="align-middle">{item.speaker}</span>
                 </p>
               )}
 
@@ -115,9 +121,12 @@ export const Timetable = () => {
                     </h3>
 
                     {child.speaker && (
-                      <p className="text-xs text-slate-600 mb-2 flex items-center">
-                        <Mic className="mr-1" size={14} />
-                        {child.speaker}
+                      /* 変更点: flex items-center を削除 */
+                      <p className="text-xs text-slate-600 mb-2">
+                         {/* 変更点: inline align-middle を追加 */}
+                        <Mic className="mr-1 inline align-middle" size={14} />
+                        {/* 変更点: span align-middle でラップ */}
+                        <span className="align-middle">{child.speaker}</span>
                       </p>
                     )}
 
