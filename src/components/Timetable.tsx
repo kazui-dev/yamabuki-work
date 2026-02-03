@@ -69,9 +69,8 @@ export const Timetable = () => {
           {item.time && (
             <>
               <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
-              {/* ▼ ここを変更: items-center -> items-baseline */}
-              <div className="flex items-baseline text-sm font-bold text-slate-500 mb-2">
-                <Clock className="w-3 h-3 mr-1 translate-y-[1.5px]" />
+              <div className="flex items-center text-sm font-bold text-slate-500 mb-2">
+                <Clock className="w-3 h-3 mr-1" />
                 {item.time}
               </div>
             </>
@@ -80,8 +79,8 @@ export const Timetable = () => {
           <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
             <div className="p-4 pb-3">
               {item.place && (
-                <div className="inline-flex items-baseline text-xs text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded mb-2">
-                  <MapPin className="w-3 h-3 mr-1 translate-y-[1.5px]" />
+                <div className="inline-flex items-center text-xs text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded mb-2">
+                  <MapPin className="w-3 h-3 mr-1" />
                   {item.place}
                 </div>
               )}
@@ -91,8 +90,8 @@ export const Timetable = () => {
               </h2>
               
               {item.speaker && (
-                <p className="text-sm text-slate-600 mt-1 flex items-baseline">
-                  <Mic className="w-3 h-3 mr-1 translate-y-[1.5px]" />
+                <p className="text-sm text-slate-600 mt-1 flex items-center">
+                  <Mic className="w-3 h-3 mr-1" />
                   {item.speaker}
                 </p>
               )}
@@ -123,8 +122,8 @@ export const Timetable = () => {
                     </h3>
 
                     {child.speaker && (
-                      <p className="text-xs text-slate-600 mb-2 flex items-baseline">
-                        <Mic className="w-3 h-3 mr-1 translate-y-[1.5px]" />
+                      <p className="text-xs text-slate-600 mb-2 flex items-center">
+                        <Mic className="w-3 h-3 mr-1" />
                         {child.speaker}
                       </p>
                     )}
