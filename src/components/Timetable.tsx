@@ -21,7 +21,7 @@ type TimetableItem = {
     description: string;
     image?: ImageMetadata;
   };
-  children?: TimetableItem[];
+  sessions?: TimetableItem[];
   action?: {
     label: string;
     url: string;
@@ -37,7 +37,7 @@ const timetableData: TimetableItem[] = [
     time: "12:40",
     title: "全体発表",
     description: "ここに説明を入れる",
-    children: [
+    sessions: [
       {
         title: "タイトル",
         speaker: "○○チーム",
@@ -74,7 +74,7 @@ const timetableData: TimetableItem[] = [
     title: "ポスター発表",
     description: "ここに説明を入れる",
     action: {
-      label: "フロアマップはこちら",
+      label: "フロアマップ（未実装）",
       url: "/posters"
     }
   },
@@ -101,7 +101,7 @@ export const Timetable = () => {
 
           <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
             <div className="p-5 pb-4">
-              <h2 className="text-lg font-bold text-slate-800 leading-snug">
+              <h2 className="text-lg font-bold text-slate-800">
                 {item.title}
               </h2>
               {item.speaker && (
@@ -124,22 +124,36 @@ export const Timetable = () => {
               )}
             </div>
 
-            {item.children && (
+            {item.sessions && (
               <div className="border-t border-slate-100 bg-slate-50/50">
-                {item.children.map((child, childIndex) => (
-                  <div key={childIndex} className="p-5 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors">
+                {item.sessions.map((session, sessionIndex) => (
+                  <div key={sessionIndex} className="p-5 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors">
+                    
+                    {session.time && (
+                      <div className="flex items-center gap-1.5 leading-none text-xs text-slate-500 font-bold mb-2">
+                        <Clock size={12} />
+                        {session.time}
+                      </div>
+                    )}
+
                     <h3 className="font-bold text-slate-800 text-sm mb-2">
-                      {child.title}
+                      {session.title}
                     </h3>
 
-                    {child.speaker && (
-                      <p className="flex items-center gap-2 leading-none text-xs text-slate-600 mb-3">
+                    {session.speaker && (
+                      <p className="flex items-center gap-1.5 leading-none text-xs text-slate-600 mb-2">
                         <Speech size={14} />
-                        {child.speaker}
+                        {session.speaker}
                       </p>
                     )}
 
-                    {child.details ? (
+                    {session.description && (
+                      <p className="text-xs text-slate-500 mb-2">
+                        {session.description}
+                      </p>
+                    )}
+
+                    {session.details ? (
                       <Drawer>
                         <DrawerTrigger asChild>
                           <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-3">
@@ -149,24 +163,23 @@ export const Timetable = () => {
                         <DrawerContent>
                           <div className="mx-auto w-full max-w-md">
                             <DrawerHeader>
-                              <DrawerTitle>{child.title}</DrawerTitle>
-                              {child.speaker && (
+                              <DrawerTitle>{session.title}</DrawerTitle>
+                              {session.speaker && (
                                 <DrawerDescription className="flex items-center justify-center gap-2">
-                                  <Speech size={14} /> {child.speaker}
+                                  <Speech size={14} /> {session.speaker}
                                 </DrawerDescription>
                               )}
                             </DrawerHeader>
                             
-                            {/* コンテンツエリア */}
                             <div className="p-5 overflow-y-auto max-h-[60vh]">
                               <div className="text-sm text-slate-700 whitespace-pre-wrap">
-                                {child.details.description}
+                                {session.details.description}
                               </div>              
-                              {child.details.image && (
+                              {session.details.image && (
                                 <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-4">
                                   <img 
-                                    src={child.details.image.src} 
-                                    alt={child.title}
+                                    src={session.details.image.src} 
+                                    alt={session.title}
                                     className="object-cover w-full h-full" 
                                   />
                                 </div>
@@ -181,9 +194,9 @@ export const Timetable = () => {
                           </div>
                         </DrawerContent>
                       </Drawer>
-                    ) : child.action ? (
+                    ) : session.action ? (
                       <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white mt-3" asChild>
-                        <a href={child.action.url}>{child.action.label}</a>
+                        <a href={session.action.url}>{session.action.label}</a>
                       </Button>
                     ) : null}
                   </div>
