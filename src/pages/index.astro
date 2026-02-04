@@ -1,27 +1,40 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { Clock, MapPin } from "lucide-react";
+import { Clock, MapPin, CalendarDays } from "lucide-react";
 import { Timetable } from '@/components/Timetable.tsx';
 ---
 <Layout title="情報科発表会">
-  <main class="min-h-screen bg-slate-50 py-8 px-4">
-    <div class="max-w-md mx-auto mb-10 text-center space-y-3">
-      <h1 class="text-2xl font-bold text-slate-900 leading-tight">
-        新宿山吹高校<br>情報科発表会
+  <main class="p-6 mb-16">
+    <div class="max-w-md mx-auto mb-8 text-center">
+      <h1 class="text-3xl sm:text-4xl font-extrabold mb-6">
+        新宿山吹高校<br class="sm:hidden" />
+        <span class="inline-block">情報科発表会</span>
       </h1>
       
-      <div class="inline-flex flex-col items-center gap-1 text-sm text-slate-600 bg-white px-6 py-3 rounded-xl border border-slate-200 shadow-sm">
-        <div class="font-medium text-lg text-slate-800">2026.03.13 (Fri)</div>
-        <div class="flex items-center gap-3 text-xs sm:text-sm mt-1">
-          <span class="flex items-center gap-1 leading-none">
-            <Clock size={12} />
-            12:00 受付開始
-          </span>
-          <span class="w-px h-3 bg-slate-300"></span>
-          <span class="flex items-center gap-1 leading-none">
-            <MapPin size={12} />
-            大講義室
-          </span>
+      <div class="inline-flex flex-col bg-white rounded-xl border border-slate-200 shadow-sm p-5 transition-shadow hover:shadow-md">
+        <time datetime="2026-03-13" class="flex items-center justify-center gap-2 text-xl font-bold mb-3">
+          <CalendarDays className="text-slate-400" size={24} />
+          2026.03.13 <span class="text-slate-400 text-sm">(Fri)</span>
+        </time>
+
+        <div class="w-full h-px bg-slate-100 mb-3"></div>
+
+        <div class="flex items-center justify-center gap-3 text-sm text-slate-600">
+          
+          <div class="flex items-center gap-1">
+            <div class="p-1.5 bg-slate-50 rounded-full">
+              <Clock size={16} />
+            </div>
+            <span class="font-medium">12:00 受付開始</span>
+          </div>
+          
+          <div class="flex items-center gap-1">
+            <div class="p-1.5 bg-slate-50 rounded-full">
+              <MapPin size={16} />
+            </div>
+            <span class="font-medium">大講義室</span>
+          </div>
+
         </div>
       </div>
     </div>

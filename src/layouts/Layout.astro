@@ -38,8 +38,8 @@ const ogImageURL = new URL(image, Astro.site || "http://localhost:4321");
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImageURL} />
-		</head>
-	<body>
+	</head>
+	<body class="min-h-screen bg-slate-50 selection:bg-slate-400/30 text-slate-900 antialiased">
 		<slot />
 	</body>
 </html>
