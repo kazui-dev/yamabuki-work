@@ -1,20 +1,18 @@
 ---
 import "@/styles/global.css";
+import { DEFAULT_LAYOUT_PROPS, SITE_CONFIG } from "@/constants/config";
+import { LAYOUT_STYLES } from "@/constants/styleConstants";
+import type { LayoutProps } from "@/types";
 
-interface Props {
-	title: string;
-	description?: string;
-	image?: string;
-}
-
+const props = Astro.props as LayoutProps;
 const { 
 	title, 
-	description = "新宿山吹高校 第9回情報科発表会 特設サイト", 
-	image = "/ogp-image.png"
-} = Astro.props;
+	description = DEFAULT_LAYOUT_PROPS.description, 
+	image = DEFAULT_LAYOUT_PROPS.image
+} = { ...DEFAULT_LAYOUT_PROPS, ...props };
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || "http://localhost:4321");
-const ogImageURL = new URL(image, Astro.site || "http://localhost:4321");
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || SITE_CONFIG.baseUrl);
+const ogImageURL = new URL(image || DEFAULT_LAYOUT_PROPS.image!, Astro.site || SITE_CONFIG.baseUrl);
 ---
 
 <!doctype html>
@@ -22,7 +20,7 @@ const ogImageURL = new URL(image, Astro.site || "http://localhost:4321");
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={SITE_CONFIG.faviconUrl} />
 		<meta name="generator" content={Astro.generator} />
 		
 		<title>{title}</title>
@@ -39,7 +37,7 @@ const ogImageURL = new URL(image, Astro.site || "http://localhost:4321");
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImageURL} />
 	</head>
-	<body class="min-h-screen bg-slate-50 selection:bg-slate-400/30 text-slate-900 antialiased">
+	<body class={LAYOUT_STYLES.body}>
 		<slot />
 	</body>
 </html>
