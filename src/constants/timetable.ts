@@ -1,21 +1,5 @@
-
 import image1 from "@/assets/images/image1.jpg";
-
-type TimetableItem = {
-  title: string;
-  time?: string;
-  speaker?: string;
-  description?: string;
-  details?: {
-    description: string;
-    image?: ImageMetadata;
-  };
-  sessions?: TimetableItem[];
-  action?: {
-    label: string;
-    url: string;
-  };
-};
+import type { TimetableItem } from "@/types";
 
 export const timetable: TimetableItem[] = [
   {
