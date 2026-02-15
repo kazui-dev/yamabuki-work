@@ -1,12 +1,8 @@
 import React from 'react';
+import type { RoomMapProps } from "./types";
 
-interface ClassroomMapProps {
-  roomId: string;
-  className?: string;
-}
-
-export const ClassroomMap: React.FC<ClassroomMapProps> = ({ roomId, className = '' }) => {
-  return (
+export const Room317: React.FC<RoomMapProps> = ({ className = '' }) => {
+    return (
     <svg
       viewBox="-2 -2 464 264"
       className={`w-full h-auto ${className}`}
@@ -34,7 +30,7 @@ export const ClassroomMap: React.FC<ClassroomMapProps> = ({ roomId, className = 
 
       <g id="posters">
         <rect x="150" y="24" width="160" height="60" />
-        <text x="230" y="58">ポスターA</text>
+        <text x="230" y="58">317</text>
 
         <rect x="360" y="50" width="60" height="160" />
         <text x="390" y="135" transform="rotate(90 390,130)">ポスターB</text>

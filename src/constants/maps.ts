@@ -143,30 +143,30 @@ export const ROOM_DATA: RoomData[] = [
     name: "第3パソコン室",
     posters: [
       {
-        id: "poster_pc3_01",
+        id: "poster_pc_3_01",
         title: "タイトル",
         author: "情報科○部○組 ○○",
         description: "ここに説明を入れる",
         details: {
-          description: "ここに説明を入れる",
+          description: "1",
         },
       },
       {
-        id: "poster_pc3_02",
+        id: "poster_pc_3_02",
         title: "タイトル",
         author: "情報科○部○組 ○○",
         description: "ここに説明を入れる",
         details: {
-          description: "ここに説明を入れる",
+          description: "2",
         },
       },
       {
-        id: "poster_pc3_03",
+        id: "poster_pc_3_03",
         title: "タイトル",
         author: "情報科○部○組 ○○",
         description: "ここに説明を入れる",
         details: {
-          description: "ここに説明を入れる",
+          description: "3",
         },
       },
     ],

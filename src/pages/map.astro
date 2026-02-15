@@ -1,7 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { FloorMap } from '@/components/map/FloorMap';
-import { RoomSection } from '@/components/map/RoomSection.tsx';
+import { Maps } from '@/components/map/maps';
 import { ROOM_DATA } from '@/constants/maps';
 ---
 
@@ -24,7 +24,7 @@ import { ROOM_DATA } from '@/constants/maps';
 
     <div class="space-y-8">
       {ROOM_DATA.map((room) => (
-        <RoomSection 
+        <Maps 
           id={room.id}
           name={room.name}
           posters={room.posters}
