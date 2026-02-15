@@ -2,10 +2,11 @@ import React from 'react';
 
 type Props = {
   className?: string;
-  onRoomSelect?: (roomId: string) => void; 
+  onRoomSelect?: (roomId: string) => void;
+  activeRoomId?: string | null;
 };
 
-export const FloorMap: React.FC<Props> = ({ className, onRoomSelect }) => {
+export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomId }) => {
   const handleClick = (e: React.MouseEvent<SVGGElement>) => {
     const roomId = (e.target as SVGElement).getAttribute('data-room-id');
     if (roomId && onRoomSelect) {
@@ -20,7 +21,7 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect }) => {
       onClick={handleClick}
     >
         <style>{`
-            #active-area rect { cursor: pointer; transition: opacity 0.2s; fill: #ffff0044 }
+            #active-area rect { cursor: pointer; transition: all 0.2s ease; fill: #ffff0044; }
             #active-area rect:hover { fill-opacity: 0.5; }
             rect, polygon, path {
                 fill: #ffffff;
