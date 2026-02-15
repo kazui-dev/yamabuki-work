@@ -1,0 +1,45 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Clock, MapPin, CalendarDays } from "lucide-react";
+import { FloorMap } from '@/components/map/FloorMap';
+import { EVENT_INFO } from '@/constants/config';
+import { LAYOUT_STYLES } from '@/constants/styleConstants';
+---
+<Layout title="情報科発表会">
+  <main class={LAYOUT_STYLES.main}>
+    <div class={LAYOUT_STYLES.headerContainer}>
+      <h1 class={LAYOUT_STYLES.title}>
+        新宿山吹高校<br class="sm:hidden" />
+        <span class="inline-block">情報科発表会</span>
+      </h1>
+      
+      <div class={LAYOUT_STYLES.eventCard}>
+        <time datetime={EVENT_INFO.date} class={LAYOUT_STYLES.eventTime}>
+          <CalendarDays className="text-slate-400" size={24} />
+          {EVENT_INFO.dateJP} <span class="text-slate-400 text-sm">(Fri)</span>
+        </time>
+
+        <div class={LAYOUT_STYLES.divider}></div>
+
+        <div class={LAYOUT_STYLES.eventDetails}>
+          
+          <div class="flex items-center gap-1">
+            <div class="p-1.5 bg-slate-50 rounded-full">
+              <Clock size={16} />
+            </div>
+            <span class="font-medium">{EVENT_INFO.startTime} 受付開始</span>
+          </div>
+          
+          <div class="flex items-center gap-1">
+            <div class="p-1.5 bg-slate-50 rounded-full">
+              <MapPin size={16} />
+            </div>
+            <span class="font-medium">{EVENT_INFO.location}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  <FloorMap className='p-6' onRoomClick={(roomId) => console.log('Clicked room:', roomId)} />
+  </main>
+</Layout>
