@@ -23,6 +23,9 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
         <style>{`
             #active-area rect { cursor: pointer; transition: all 0.2s ease; fill: #ffff0044; }
             #active-area rect:hover { fill-opacity: 0.5; }
+            
+            ${activeRoomId ? `#active-area rect[data-room-id="${activeRoomId}"] { fill: #ff8000 !important; fill-opacity: 0.5 !important; }` : ''}
+
             rect, polygon, path {
                 fill: #ffffff;
                 stroke: #333333;
