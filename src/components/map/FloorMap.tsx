@@ -36,8 +36,8 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
             <rect id="base" width="453.5" height="255.1"/>
         </g>
         <g id="passive-area">
-            <rect id="room_wc_4" x="21" y="87.9" width="33.1" height="50" transform="translate(75.1 225.8) rotate(180)"/>
-            <rect id="room_wc_3" x="21" y="137.9" width="33.1" height="29.6" transform="translate(75.1 305.4) rotate(180)"/>
+            <rect id="room_wc_4" x="0" y="87.9" width="54.1" height="39.8" transform="translate(54.1 215.6) rotate(180)"/>
+            <rect id="room_wc_3" x="0" y="127.7" width="54.1" height="39.8" transform="translate(54.1 295.2) rotate(180)"/>
             <polygon id="room_wc_2" points="375 126.5 375 87.9 431.3 87.9 431.3 117.8 404.9 117.8 404.9 126.5 375 126.5"/>
             <polygon id="room_wc_1" points="375 167.5 375 126.5 404.9 126.5 404.9 144 431.3 144 431.3 167.5 375 167.5"/>
             <rect id="stairs" x="54.1" y="87.9" width="42.5" height="66.1" transform="translate(150.7 241.8) rotate(180)"/>
@@ -45,11 +45,9 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
             <rect id="EV_1" x="404.9" y="117.8" width="26.4" height="26.3" transform="translate(836.1 261.8) rotate(180)"/>
             <rect id="room_pc_ll" x="0" y="196.7" width="96.6" height="58.4" transform="translate(96.6 451.8) rotate(180)"/>
             <rect id="room_pc_2" x="375" y="196.7" width="78.5" height="58.4" transform="translate(828.5 451.8) rotate(180)"/>
-            <rect id="room_314" x="0" y="117.6" width="21" height="49.9" transform="translate(21 285.1) rotate(180)"/>
             <rect id="room_311" x="179" y="196.7" width="56.5" height="58.4" transform="translate(414.6 451.8) rotate(180)"/>
             <rect id="room_310" x="235.6" y="196.7" width="39.4" height="58.4" transform="translate(510.5 451.8) rotate(180)"/>
-            <rect id="room_309" x="275" y="196.7" width="100" height="58.4" transform="translate(650 451.8) rotate(180)"/>
-            <rect id="room_machine" x="0" y="87.9" width="21" height="29.7" transform="translate(21 205.5) rotate(180)"/>
+            <rect id="room_309" x="275" y="196.7" width="100" height="58.4" transform="translate(650 451.8) rotate(180)"/>      
             <rect id="top_light" x="179" y="87.9" width="196" height="79.6" transform="translate(554 255.3) rotate(180)"/>
         </g>
         <g id="active-area">

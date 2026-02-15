@@ -140,7 +140,7 @@ export const ROOM_DATA: RoomData[] = [
   },
   {
     id: "room_pc_3",
-    name: "第3パソコン室",
+    name: "第3パソコン教室",
     posters: [
       {
         id: "poster_pc_3_01",

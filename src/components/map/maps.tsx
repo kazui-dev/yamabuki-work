@@ -19,29 +19,40 @@ interface MapsProps {
 export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [activeRoomId, setActiveRoomId] = useState<string | null>(roomsData[0]?.id || null);
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     if (!api) return;
-    api.on("select", () => {
-      const currentIndex = api.selectedScrollSnap();
-      const room = roomsData[currentIndex];
+
+    const updateState = () => {
+      const index = api.selectedScrollSnap();
+      setCurrent(index);
+      const room = roomsData[index];
       if (room) {
         setActiveRoomId(room.id);
       }
-    });
+    };
+
+    api.on("select", updateState);
+    return () => {
+      api.off("select", updateState);
+    };
   }, [api, roomsData]);
+
+  const scrollTo = useCallback((index: number) => {
+    api?.scrollTo(index);
+  }, [api]);
 
   const handleMapClick = useCallback((roomId: string) => {
     const index = roomsData.findIndex(r => r.id === roomId);
-    if (index !== -1 && api) {
-      api.scrollTo(index);
-      setActiveRoomId(roomId);
+    if (index !== -1) {
+      scrollTo(index);
     }
-  }, [api, roomsData]);
+  }, [roomsData, scrollTo]);
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <section className="mb-6">
+      <section className="p-4 mb-8">
         <div className="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-sm">
           <FloorMap 
             className="p-2" 
@@ -56,16 +67,33 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
         className="w-full" 
         opts={{ align: "center" }}
       >
-        <div className="flex items-center justify-end gap-2 mb-4 px-4">
-          <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white hover:bg-slate-50"/>
-          <CarouselNext className="static translate-y-0 translate-x-0 bg-white hover:bg-slate-50"/>
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white border-slate-200 h-9 w-9 shadow-sm" />
+          
+          <div className="flex gap-2">
+            {roomsData.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollTo(index)}
+                className={`h-2.5 w-2.5 rounded-full border transition-colors ${
+                  index === current 
+                    ? "bg-slate-800 border-slate-800" 
+                    : "bg-white border-slate-300 hover:border-slate-400"
+                }`}
+                aria-label={`Go to room ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          <CarouselNext className="static translate-y-0 translate-x-0 bg-white border-slate-200 h-9 w-9 shadow-sm" />
         </div>
+
         <CarouselContent className="items-start">
           {roomsData.map((room) => {
             const RoomMapComponent = getRoomMapComponent(room.id);
             return (
-              <CarouselItem key={room.id} className="pl-4 md:basis-full">
-                <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+              <CarouselItem key={room.id} className="pl-4">
+                <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-4">
                   <div className="p-4 sm:p-6">
                     <h2 className="text-lg font-bold text-slate-800">{room.name}</h2>
                     {RoomMapComponent && <RoomMapComponent roomId={room.id} />}
@@ -85,6 +113,5 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
         </CarouselContent>
       </Carousel>
     </div>
-    
   );
 };
