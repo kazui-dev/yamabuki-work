@@ -8,7 +8,6 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Speech } from "lucide-react";
-import { DRAWER_STYLES } from "@/constants/styleConstants";
 import type { SessionDetails } from "@/types";
 
 interface SessionDetailProps {
@@ -20,7 +19,7 @@ interface SessionDetailProps {
 export const SessionDetail = ({ title, author, details }: SessionDetailProps) => {
   return (
     <DrawerContent>
-      <div className={DRAWER_STYLES.container}>
+      <div className="mx-auto w-full max-w-md">
         <DrawerHeader>
           <DrawerTitle>{title}</DrawerTitle>
           {author && (
@@ -30,12 +29,12 @@ export const SessionDetail = ({ title, author, details }: SessionDetailProps) =>
           )}
         </DrawerHeader>
 
-        <div className={DRAWER_STYLES.contentArea}>
-          <div className={DRAWER_STYLES.contentText}>
+        <div className="p-5 overflow-y-auto max-h-[60vh]">
+          <div className="text-sm text-slate-700 whitespace-pre-wrap">
             {details.description}
           </div>
           {details.image && (
-            <div className={DRAWER_STYLES.imageContainer}>
+            <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-4">
               <img
                 src={details.image.src}
                 alt={title}

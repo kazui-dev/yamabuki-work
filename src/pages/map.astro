@@ -3,14 +3,13 @@ import Layout from '@/layouts/Layout.astro';
 import { FloorMap } from '@/components/map/FloorMap';
 import { RoomSection } from '@/components/map/RoomSection.tsx';
 import { ROOM_DATA } from '@/constants/maps';
-import { LAYOUT_STYLES } from '@/constants/styleConstants';
 ---
 
 <Layout title="ポスター発表 | 情報科発表会">
-  <main class={LAYOUT_STYLES.main}>
-    <div class={LAYOUT_STYLES.headerContainer}>
+  <main class="p-6 mb-16">
+    <div class="max-w-md mx-auto mb-8 text-center">
       <a href="/">
-        <h1 class={LAYOUT_STYLES.title}>
+        <h1 class="text-3xl sm:text-4xl font-extrabold mb-6">
           新宿山吹高校<br class="sm:hidden" />
           <span class="inline-block">情報科発表会</span>
         </h1>
@@ -29,6 +28,7 @@ import { LAYOUT_STYLES } from '@/constants/styleConstants';
           id={room.id}
           name={room.name}
           posters={room.posters}
+          client:load
         />
       ))}
     </div>

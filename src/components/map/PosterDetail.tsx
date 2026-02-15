@@ -7,7 +7,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { Speech } from "lucide-react";
+import { User } from "lucide-react";
 import type { Poster } from "@/types";
 
 interface PosterDetailProps {
@@ -22,7 +22,7 @@ export const PosterDetail = ({ poster }: PosterDetailProps) => {
           <DrawerTitle>{poster.title}</DrawerTitle>
           {poster.author && (
             <DrawerDescription className="flex items-center justify-center gap-2">
-              <Speech size={14} /> {poster.author}
+              <User size={14} /> {poster.author}
             </DrawerDescription>
           )}
         </DrawerHeader>

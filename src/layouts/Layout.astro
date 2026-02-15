@@ -1,7 +1,6 @@
 ---
 import "@/styles/global.css";
 import { DEFAULT_LAYOUT_PROPS, SITE_CONFIG } from "@/constants/config";
-import { LAYOUT_STYLES } from "@/constants/styleConstants";
 import type { LayoutProps } from "@/types";
 
 const props = Astro.props as LayoutProps;
@@ -37,7 +36,7 @@ const ogImageURL = new URL(image || DEFAULT_LAYOUT_PROPS.image!, Astro.site || S
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImageURL} />
 	</head>
-	<body class={LAYOUT_STYLES.body}>
+	<body class="min-h-screen bg-slate-50 selection:bg-slate-400/30 text-slate-900 antialiased">
 		<slot />
 	</body>
 </html>
