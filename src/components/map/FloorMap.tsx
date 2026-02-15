@@ -2,13 +2,14 @@ import React from 'react';
 
 type Props = {
   className?: string;
+  onRoomSelect?: (roomId: string) => void; 
 };
 
-export const FloorMap: React.FC<Props> = ({ className }) => {
+export const FloorMap: React.FC<Props> = ({ className, onRoomSelect }) => {
   const handleClick = (e: React.MouseEvent<SVGGElement>) => {
     const roomId = (e.target as SVGElement).getAttribute('data-room-id');
-    if (roomId) {
-      document.getElementById(roomId)?.scrollIntoView({ behavior: 'smooth' });
+    if (roomId && onRoomSelect) {
+      onRoomSelect(roomId);
     }
   };
 

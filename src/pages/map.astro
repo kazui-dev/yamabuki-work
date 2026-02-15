@@ -1,6 +1,5 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { FloorMap } from '@/components/map/FloorMap';
 import { Maps } from '@/components/map/maps';
 import { ROOM_DATA } from '@/constants/maps';
 ---
@@ -16,21 +15,7 @@ import { ROOM_DATA } from '@/constants/maps';
       </a>
     </div>
 
-    <section class="mb-8 max-w-md mx-auto">
-      <div class="border border-slate-200 rounded-lg overflow-hidden">
-        <FloorMap client:load className="p-2" />
-      </div>
-    </section>
+    <Maps client:load roomsData={ROOM_DATA} />
 
-    <div class="space-y-8">
-      {ROOM_DATA.map((room) => (
-        <Maps 
-          id={room.id}
-          name={room.name}
-          posters={room.posters}
-          client:load
-        />
-      ))}
-    </div>
   </main>
 </Layout>
