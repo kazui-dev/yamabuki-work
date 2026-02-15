@@ -26,10 +26,10 @@ export const SessionCard = ({ session }: SessionCardProps) => {
         {session.title}
       </h3>
 
-      {session.speaker && (
-        <p className={SESSION_STYLES.speakerText}>
+      {session.author && (
+        <p className={SESSION_STYLES.authorText}>
           <Speech size={14} />
-          {session.speaker}
+          {session.author}
         </p>
       )}
 
@@ -49,7 +49,7 @@ export const SessionCard = ({ session }: SessionCardProps) => {
             </DrawerTrigger>
             <SessionDetail
               title={session.title}
-              speaker={session.speaker}
+              author={session.author}
               details={session.details}
             />
           </Drawer>

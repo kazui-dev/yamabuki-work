@@ -1,0 +1,36 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { FloorMap } from '@/components/map/FloorMap';
+import { RoomSection } from '@/components/map/RoomSection.tsx';
+import { ROOM_DATA } from '@/constants/maps';
+import { LAYOUT_STYLES } from '@/constants/styleConstants';
+---
+
+<Layout title="ポスター発表 | 情報科発表会">
+  <main class={LAYOUT_STYLES.main}>
+    <div class={LAYOUT_STYLES.headerContainer}>
+      <a href="/">
+        <h1 class={LAYOUT_STYLES.title}>
+          新宿山吹高校<br class="sm:hidden" />
+          <span class="inline-block">情報科発表会</span>
+        </h1>
+      </a>
+    </div>
+
+    <section class="mb-8 max-w-md mx-auto">
+      <div class="border border-slate-200 rounded-lg overflow-hidden">
+        <FloorMap client:load className="p-2" />
+      </div>
+    </section>
+
+    <div class="space-y-8">
+      {ROOM_DATA.map((room) => (
+        <RoomSection 
+          id={room.id}
+          name={room.name}
+          posters={room.posters}
+        />
+      ))}
+    </div>
+  </main>
+</Layout>

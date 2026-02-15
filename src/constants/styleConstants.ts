@@ -1,5 +1,5 @@
-// Timeline styles
-export const TIMELINE_STYLES = {
+// Timetable styles
+export const TIMETABLE_STYLES = {
   container: "max-w-md mx-auto space-y-8",
   itemContainer: "relative pl-6 border-l-2 border-slate-200 last:border-transparent pb-4",
   dot: "absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10",
@@ -7,7 +7,7 @@ export const TIMELINE_STYLES = {
   cardContainer: "bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden",
   cardContent: "p-5 pb-4",
   cardTitle: "text-lg font-bold text-slate-800",
-  speakerText: "flex items-center gap-2 leading-none text-sm text-slate-600 mt-2",
+  authorText: "flex items-center gap-2 leading-none text-sm text-slate-600 mt-2",
   descriptionText: "text-xs text-slate-500 mt-2",
   actionButtonContainer: "mt-4",
 };
@@ -18,7 +18,7 @@ export const SESSION_STYLES = {
   itemContainer: "p-5 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors",
   timeContainer: "flex items-center gap-1.5 leading-none text-xs text-slate-500 font-bold mb-2",
   sessionTitle: "font-bold text-slate-800 text-sm mb-2",
-  speakerText: "flex items-center gap-2 leading-none text-xs text-slate-600 mb-2",
+  authorText: "flex items-center gap-2 leading-none text-xs text-slate-600 mb-2",
   descriptionText: "text-xs text-slate-500 mb-2",
   detailButtonContainer: "mt-3",
 };

@@ -13,7 +13,7 @@ export interface ActionButton {
 export interface TimetableSession {
   title: string;
   time?: string;
-  speaker?: string;
+  author?: string;
   description?: string;
   details?: SessionDetails;
   action?: ActionButton;
@@ -22,7 +22,7 @@ export interface TimetableSession {
 export interface TimetableItem {
   title: string;
   time?: string;
-  speaker?: string;
+  author?: string;
   description?: string;
   details?: SessionDetails;
   sessions?: TimetableSession[];
@@ -41,4 +41,18 @@ export interface EventInfo {
   dateJP: string;
   startTime: string;
   location: string;
+}
+
+export interface Poster {
+  id: string;
+  title: string;
+  author: string;
+  description?: string;
+  details?: SessionDetails;
+}
+
+export interface RoomData {
+  id: string;
+  name: string;
+  posters: Poster[];
 }

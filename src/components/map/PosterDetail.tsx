@@ -8,37 +8,34 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Speech } from "lucide-react";
-import { DRAWER_STYLES } from "@/constants/styleConstants";
-import type { SessionDetails } from "@/types";
+import type { Poster } from "@/types";
 
-interface SessionDetailProps {
-  title: string;
-  author?: string;
-  details: SessionDetails;
+interface PosterDetailProps {
+  poster: Poster;
 }
 
-export const SessionDetail = ({ title, author, details }: SessionDetailProps) => {
+export const PosterDetail = ({ poster }: PosterDetailProps) => {
   return (
     <DrawerContent>
-      <div className={DRAWER_STYLES.container}>
+      <div className="mx-auto w-full max-w-md">
         <DrawerHeader>
-          <DrawerTitle>{title}</DrawerTitle>
-          {author && (
+          <DrawerTitle>{poster.title}</DrawerTitle>
+          {poster.author && (
             <DrawerDescription className="flex items-center justify-center gap-2">
-              <Speech size={14} /> {author}
+              <Speech size={14} /> {poster.author}
             </DrawerDescription>
           )}
         </DrawerHeader>
 
-        <div className={DRAWER_STYLES.contentArea}>
-          <div className={DRAWER_STYLES.contentText}>
-            {details.description}
+        <div className="p-5 overflow-y-auto max-h-[60vh]">
+          <div className="text-sm text-slate-700 whitespace-pre-wrap">
+            {poster.details?.description || poster.description || "詳細情報"}
           </div>
-          {details.image && (
-            <div className={DRAWER_STYLES.imageContainer}>
+          {poster.details?.image && (
+            <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-4">
               <img
-                src={details.image.src}
-                alt={title}
+                src={poster.details.image.src}
+                alt={poster.title}
                 className="object-cover w-full h-full"
               />
             </div>
