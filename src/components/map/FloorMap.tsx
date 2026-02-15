@@ -23,7 +23,7 @@ export const FloorMap: React.FC<Props> = ({ onRoomClick, className }) => {
       onClick={handleClick}
     >
         <style>{`
-            #active-area rect { cursor: pointer; transition: opacity 0.2s; fill: #ffff0044; }
+            #active-area rect { cursor: pointer; transition: opacity 0.2s; fill: #ffff0050; }
             #active-area rect:hover { fill-opacity: 0.5; }
             rect, polygon, path {
                 fill: #ffffff;
