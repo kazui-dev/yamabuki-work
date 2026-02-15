@@ -65,7 +65,7 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
       <Carousel 
         setApi={setApi} 
         className="w-full" 
-        opts={{ align: "center" }}
+        opts={{ align: "center", loop: true }}
       >
         <div className="flex items-center justify-center gap-4 mb-4">
           <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white border-slate-200 h-9 w-9 shadow-sm" />
