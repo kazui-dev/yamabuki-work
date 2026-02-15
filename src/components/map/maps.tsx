@@ -52,7 +52,7 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <section className="p-4 mb-8">
+      <section className="px-4 mb-8">
         <div className="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-sm">
           <FloorMap 
             className="p-2" 
