@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import { ClientRouter } from 'astro:transitions';
 import { DEFAULT_LAYOUT_PROPS, SITE_CONFIG } from "@/constants/config";
 import type { LayoutProps } from "@/types";
 
@@ -35,6 +36,7 @@ const ogImageURL = new URL(image || DEFAULT_LAYOUT_PROPS.image!, Astro.site || S
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImageURL} />
+		<ClientRouter />
 	</head>
 	<body class="min-h-screen bg-slate-50 selection:bg-slate-400/30 text-slate-900 antialiased">
 		<slot />
