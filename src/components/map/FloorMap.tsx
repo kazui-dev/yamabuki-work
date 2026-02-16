@@ -59,21 +59,9 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
         <rect data-room-id="room_316" x="275" y="0" width="98" height="58.4" transform="translate(648 58.4) rotate(180)"/>
         <rect data-room-id="room_315" x="373" y="0" width="80.5" height="58.4" transform="translate(826.6 58.4) rotate(180)"/>
       </g>
-      <g id="_レイヤー_5" data-name="レイヤー 5">
-        <rect class="cls-1" x="54.1" y="87.8" width="21.2" height="11.4"/>
-        <rect class="cls-1" x="75.3" y="87.8" width="21.2" height="11.4"/>
-        <rect class="cls-1" x="54.1" y="99.2" width="21.2" height="11.4"/>
-        <rect class="cls-1" x="75.3" y="99.2" width="21.2" height="11.4"/>
-        <rect class="cls-1" x="54.1" y="110.5" width="21.2" height="11.4"/>
-        <rect class="cls-1" x="75.3" y="110.5" width="21.2" height="11.4"/>
-        <rect class="cls-1" x="54.1" y="121.9" width="21.2" height="11.4"/>
-        <rect class="cls-1" x="75.3" y="121.9" width="21.2" height="11.4"/>
-        <rect class="cls-1" x="54.1" y="133.3" width="21.2" height="11.4"/>
-        <rect class="cls-1" x="75.3" y="133.3" width="21.2" height="11.4"/>
-        <polyline class="cls-1" points="54.1 156 54.1 144.6 75.3 144.6 75.3 156"/>
-        <polyline class="cls-1" points="75.3 156 75.3 144.6 96.6 144.6 96.6 156"/>
-    </g>
+	    <path id="stairs" class="cls-1" d="M96.6,87.8V156M75.3,87.8V156M54.1,87.8H96.6M54.1,99.2H96.6M54.1,110.5H96.6M54.1,121.9H96.6M54.1,133.3H96.6M54.1,144.6H96.6"/></g>  
     </svg>
   );
 
 };
+
