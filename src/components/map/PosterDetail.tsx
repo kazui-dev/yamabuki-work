@@ -21,7 +21,7 @@ export const PosterDetail = ({ poster, roomName }: PosterDetailProps) => {
       <div className="mx-auto w-full max-w-md">
         <DrawerHeader>
           <DrawerTitle>{poster.title}</DrawerTitle>
-          <DrawerDescription className="flex flex-wrap items-center w-full px-2 gap-y-2 mt-2">
+          <DrawerDescription className="flex flex-wrap items-center w-full px-6 gap-y-2 mt-2">
             {poster.author && (
               <span className="flex items-center gap-1.5">
                 <User size={14} className="text-slate-500" /> 
