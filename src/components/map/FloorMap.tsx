@@ -8,9 +8,10 @@ type Props = {
 
 export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomId }) => {
   const handleClick = (e: React.MouseEvent<SVGGElement>) => {
-    const roomId = (e.target as SVGElement).getAttribute('data-room-id');
-    if (roomId && onRoomSelect) {
-      onRoomSelect(roomId);
+    const target = e.target as SVGElement;
+    const roomElement = target.closest('[data-room-id]');
+    if (roomElement && onRoomSelect) {
+      onRoomSelect(roomElement.getAttribute('data-room-id')!);
     }
   };
 

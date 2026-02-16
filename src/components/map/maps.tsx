@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FloorMap } from "./FloorMap";
 import { PosterCard } from "./PosterCard";
+import { PosterDetail } from "./PosterDetail";
 import { getRoomMapComponent } from "./rooms";
-import type { RoomData } from "@/types";
+import type { RoomData, Poster } from "@/types";
 import {
   Carousel,
   CarouselContent,
@@ -11,6 +12,7 @@ import {
   CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { Drawer } from "@/components/ui/drawer";
 
 interface MapsProps {
   roomsData: RoomData[];
@@ -20,6 +22,22 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [activeRoomId, setActiveRoomId] = useState<string | null>(roomsData[0]?.id || null);
   const [current, setCurrent] = useState(0);
+
+  const [selectedPoster, setSelectedPoster] = useState<Poster | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleOpenDetail = useCallback((poster: Poster) => {
+    setSelectedPoster(poster);
+    setIsDrawerOpen(true);
+  }, []);
+
+  const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
+    const room = roomsData.find(r => r.id === roomId);
+    const poster = room?.posters?.find(p => p.id === posterId);
+    if (poster) {
+      handleOpenDetail(poster);
+    }
+  }, [roomsData, handleOpenDetail]);
 
   useEffect(() => {
     if (!api) return;
@@ -96,13 +114,22 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
                 <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-4">
                   <div className="p-4 sm:p-6">
                     <h2 className="text-lg font-bold text-slate-800">{room.name}</h2>
-                    {RoomMapComponent && <RoomMapComponent roomId={room.id} />}
+                    {RoomMapComponent && (
+                      <RoomMapComponent 
+                        roomId={room.id} 
+                        onPosterClick={(posterId: string) => handleMapPosterClick(room.id, posterId)} 
+                      />
+                    )}
                   </div>
 
                   {room.posters && room.posters.length > 0 && (
                     <div className="border-t border-slate-100 bg-slate-50/50 max-h-[58vh] overflow-y-auto">
                       {room.posters.map((poster) => (
-                        <PosterCard key={poster.id} poster={poster} />
+                        <PosterCard 
+                          key={poster.id} 
+                          poster={poster} 
+                          onOpen={() => handleOpenDetail(poster)} 
+                        />
                       ))}
                     </div>
                   )}
@@ -112,6 +139,10 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
           })}
         </CarouselContent>
       </Carousel>
+
+      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+        {selectedPoster && <PosterDetail poster={selectedPoster} />}
+      </Drawer>
     </div>
   );
 };
