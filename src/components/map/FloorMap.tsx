@@ -59,9 +59,10 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
         <rect data-room-id="room_316" x="275" y="0" width="98" height="58.4" transform="translate(648 58.4) rotate(180)"/>
         <rect data-room-id="room_315" x="373" y="0" width="80.5" height="58.4" transform="translate(826.6 58.4) rotate(180)"/>
       </g>
-	    <path id="stairs" class="cls-1" d="M96.6,87.8V156M75.3,87.8V156M54.1,87.8H96.6M54.1,99.2H96.6M54.1,110.5H96.6M54.1,121.9H96.6M54.1,133.3H96.6M54.1,144.6H96.6"/></g>  
+	    <path id="stairs" d="M96.6,87.8V156M75.3,87.8V156M54.1,87.8H96.6M54.1,99.2H96.6M54.1,110.5H96.6M54.1,121.9H96.6M54.1,133.3H96.6M54.1,144.6H96.6"/>  
     </svg>
   );
 
 };
+
 
