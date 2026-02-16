@@ -13,24 +13,6 @@ export const ROOM_DATA: RoomData[] = [
           description: "ここに説明を入れる",
         },
       },
-      {
-        id: "poster_hall_02",
-        title: "タイトル",
-        author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる",
-        details: {
-          description: "ここに説明を入れる",
-        },
-      },
-      {
-        id: "poster_hall_03",
-        title: "タイトル",
-        author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる",
-        details: {
-          description: "ここに説明を入れる",
-        },
-      },
     ],
   },
   {
@@ -48,6 +30,15 @@ export const ROOM_DATA: RoomData[] = [
       },
       {
         id: "poster_318_02",
+        title: "タイトル",
+        author: "情報科○部○組 ○○",
+        description: "ここに説明を入れる",
+        details: {
+          description: "ここに説明を入れる",
+        },
+      },
+      {
+        id: "poster_318_03",
         title: "タイトル",
         author: "情報科○部○組 ○○",
         description: "ここに説明を入れる",
@@ -112,6 +103,15 @@ export const ROOM_DATA: RoomData[] = [
           description: "ここに説明を入れる",
         },
       },
+      {
+        id: "poster_316_03",
+        title: "タイトル",
+        author: "情報科○部○組 ○○",
+        description: "ここに説明を入れる",
+        details: {
+          description: "ここに説明を入れる",
+        },
+      },
   ],
   },
   {
@@ -136,6 +136,15 @@ export const ROOM_DATA: RoomData[] = [
           description: "ここに説明を入れる",
         },
       },
+      {
+        id: "poster_315_03",
+        title: "タイトル",
+        author: "情報科○部○組 ○○",
+        description: "ここに説明を入れる",
+        details: {
+          description: "ここに説明を入れる",
+        },
+      },
     ],
   },
   {
@@ -148,7 +157,7 @@ export const ROOM_DATA: RoomData[] = [
         author: "情報科○部○組 ○○",
         description: "ここに説明を入れる",
         details: {
-          description: "1",
+          description: "ここに説明を入れる",
         },
       },
       {
@@ -157,7 +166,7 @@ export const ROOM_DATA: RoomData[] = [
         author: "情報科○部○組 ○○",
         description: "ここに説明を入れる",
         details: {
-          description: "2",
+          description: "ここに説明を入れる",
         },
       },
       {
@@ -166,7 +175,34 @@ export const ROOM_DATA: RoomData[] = [
         author: "情報科○部○組 ○○",
         description: "ここに説明を入れる",
         details: {
-          description: "3",
+          description: "ここに説明を入れる",
+        },
+      },
+      {
+        id: "poster_pc_3_04",
+        title: "タイトル",
+        author: "情報科○部○組 ○○",
+        description: "ここに説明を入れる",
+        details: {
+          description: "ここに説明を入れる",
+        },
+      },
+      {
+        id: "poster_pc_3_05",
+        title: "タイトル",
+        author: "情報科○部○組 ○○",
+        description: "ここに説明を入れる",
+        details: {
+          description: "ここに説明を入れる",
+        },
+      },
+      {
+        id: "poster_pc_3_06",
+        title: "タイトル",
+        author: "情報科○部○組 ○○",
+        description: "ここに説明を入れる",
+        details: {
+          description: "ここに説明を入れる",
         },
       },
     ],
