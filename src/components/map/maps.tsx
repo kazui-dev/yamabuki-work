@@ -100,7 +100,7 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
                   </div>
 
                   {room.posters && room.posters.length > 0 && (
-                    <div className="border-t border-slate-100 bg-slate-50/50">
+                    <div className="border-t border-slate-100 bg-slate-50/50 max-h-[58vh] overflow-y-auto">
                       {room.posters.map((poster) => (
                         <PosterCard key={poster.id} poster={poster} />
                       ))}
