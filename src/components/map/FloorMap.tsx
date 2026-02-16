@@ -16,7 +16,7 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
 
   return (
     <svg 
-      viewBox="-2 -2 460.5 260.1" 
+      viewBox="-2 -2 458.5 259.1" 
       className={`w-full h-auto ${className}`}
       onClick={handleClick}
     >
