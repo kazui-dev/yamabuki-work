@@ -22,7 +22,7 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
       onClick={handleClick}
     >
         <style>{`
-            rect, polygon, path, line{
+            rect, polygon, path, line, polyline{
               fill: #ffffff;
               stroke: #333333;
               stroke-width: 2px;
@@ -59,18 +59,31 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
         <rect data-room-id="room_315" x="373" y="0" width="80.5" height="58.4" transform="translate(826.6 58.4) rotate(180)"/>
       </g>
       <g id="stairs">
-		<line id="stairs_path_1" x1="96.6" y1="156" x2="96.6" y2="87.8"/>
+		{/* <line id="stairs_path_1" x1="96.6" y1="156" x2="96.6" y2="87.8"/>
 		<line id="stairs_path_2" x1="75.3" y1="156" x2="75.3" y2="87.8"/>
 		<line id="stairs_path_3" x1="54.1" y1="144.6" x2="96.6" y2="144.6"/>
 		<line id="stairs_path_4" x1="54.1" y1="133.3" x2="96.6" y2="133.3"/>
 		<line id="stairs_path_5" x1="54.1" y1="121.9" x2="96.6" y2="121.9"/>
 		<line id="stairs_path_6" x1="54.1" y1="110.5" x2="96.6" y2="110.5"/>
 		<line id="stairs_path_7" x1="54.1" y1="99.2" x2="96.6" y2="99.2"/>
-		<line id="stairs_path_8" x1="54.1" y1="87.8" x2="96.6" y2="87.8"/>
+		<line id="stairs_path_8" x1="54.1" y1="87.8" x2="96.6" y2="87.8"/> */}
+		<rect id="stairs_path_1" class="cls-4" x="54.1" y="87.8" width="21.2" height="11.37"/>
+		<rect id="stairs_path_2" class="cls-4" x="75.3" y="87.8" width="21.2" height="11.37"/>
+		<rect id="stairs_path_3" class="cls-4" x="54.1" y="99.2" width="21.2" height="11.37"/>
+		<rect id="stairs_path_4" class="cls-4" x="75.3" y="99.2" width="21.2" height="11.37"/>
+		<rect id="stairs_path_5" class="cls-4" x="54.1" y="110.5" width="21.2" height="11.37"/>
+		<rect id="stairs_path_6" class="cls-4" x="75.3" y="110.5" width="21.2" height="11.37"/>
+		<rect id="stairs_path_7" class="cls-4" x="54.1" y="121.9" width="21.2" height="11.37"/>
+		<rect id="stairs_path_8" class="cls-4" x="75.3" y="121.9" width="21.2" height="11.37"/>
+		<rect id="stairs_path_9" class="cls-4" x="54.1" y="133.3" width="21.2" height="11.37"/>
+		<rect id="stairs_path_10" class="cls-4" x="75.3" y="133.3" width="21.2" height="11.37"/>
+		<polyline id="stairs_path_11" class="cls-4" points="54.1 156 54.1 144.6 75.3 144.6 75.3 156"/>
+		<polyline id="stairs_path_12" class="cls-4" points="96.6 156 96.6 144.6 75.3 144.6 75.3 156"/>
 	  </g>
     </svg>
   );
 };
+
 
 
 
