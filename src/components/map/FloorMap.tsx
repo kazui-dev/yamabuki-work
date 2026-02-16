@@ -33,7 +33,7 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
             ${activeRoomId ? `#active_area rect[data-room-id="${activeRoomId}"] { fill: #ff8000 !important; fill-opacity: 0.5 !important; }` : ''}
         `}</style>
       <g id="base_area">
-        <rect data-room-id="base" x="0" width="453.5" height="255.1"/>
+        <rect data-room-id="base" width="453.5" height="255.1"/>
       </g>
       <g id="passive_area">
         <rect data-room-id="room_wc_4" x="0" y="127.6" width="54.1" height="39.8" transform="translate(54.1 295) rotate(180)"/>
