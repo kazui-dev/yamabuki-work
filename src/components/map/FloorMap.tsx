@@ -30,7 +30,8 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
 
         #passive_area rect, #passive_area polygon { fill: #f0f0f0; }
         #facilities rect, #facilities polygon, #facilities path { fill: #ffffff; }
-        #icons path { fill: #333333; stroke: none; }
+        #icon_man_1, #icon_man_2 { fill: #0066cc; stroke: none; }
+        #icon_woman_1, #icon_woman_2 { fill: #cc0066; stroke: none; }
         #active_area rect { cursor: pointer; transition: all 0.2s ease; fill: #ffff0044; }
         #active_area rect:hover { fill-opacity: 0.5; }
         
@@ -78,3 +79,4 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
     </svg>
   );
 };
+
