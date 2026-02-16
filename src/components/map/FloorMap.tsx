@@ -41,7 +41,6 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
         <rect data-room-id="room_wc_3" x="0" y="87.8" width="54.1" height="39.8" transform="translate(54.1 215.4) rotate(180)"/>
         <polygon data-room-id="room_wc-2" points="431.3 140.6 431.3 167.4 375 167.4 375 127.6 404.9 127.6 404.9 140.6 431.3 140.6"/>
         <polygon data-room-id="room_wc-1" points="431.3 87.8 431.3 114.5 404.9 114.5 404.9 127.6 375 127.6 375 87.8 431.3 87.8"/>
-        <rect data-room-id="stairs" x="54.1" y="87.8" width="42.5" height="66.1" transform="translate(150.7 241.6) rotate(180)"/>
         <rect data-room-id="room_pc_ll" x="0" y="196.7" width="96.6" height="58.4" transform="translate(96.6 451.9) rotate(180)"/>
         <rect data-room-id="room_pc_2" x="375" y="196.8" width="78.5" height="58.3" transform="translate(828.5 451.9) rotate(180)"/>
         <rect data-room-id="room_311" x="179" y="196.7" width="56.5" height="58.4" transform="translate(414.6 451.9) rotate(180)"/>
@@ -72,6 +71,7 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
     </svg>
   );
 };
+
 
 
 
