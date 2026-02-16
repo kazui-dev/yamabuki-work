@@ -26,7 +26,7 @@ export const SessionCard = ({ session }: SessionCardProps) => {
       </h3>
 
       {session.author && (
-        <p className="flex items-center gap-2 leading-none text-xs text-slate-600 mb-2">
+        <p className="flex items-center gap-1.5 leading-none text-xs text-slate-600 mb-2">
           <Speech size={14} />
           {session.author}
         </p>

@@ -7,24 +7,32 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { User } from "lucide-react";
+import { User, MapPin } from "lucide-react";
 import type { Poster } from "@/types";
 
 interface PosterDetailProps {
   poster: Poster;
+  roomName: string;
 }
 
-export const PosterDetail = ({ poster }: PosterDetailProps) => {
+export const PosterDetail = ({ poster, roomName }: PosterDetailProps) => {
   return (
     <DrawerContent>
       <div className="mx-auto w-full max-w-md">
         <DrawerHeader>
           <DrawerTitle>{poster.title}</DrawerTitle>
-          {poster.author && (
-            <DrawerDescription className="flex items-center justify-center gap-2">
-              <User size={14} /> {poster.author}
-            </DrawerDescription>
-          )}
+          <DrawerDescription className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 mt-1">
+            {poster.author && (
+              <span className="flex items-center gap-1.5">
+                <User size={14} className="text-slate-500" /> 
+                {poster.author}
+              </span>
+            )}
+            <span className="flex items-center gap-1.5">
+              <MapPin size={14} className="text-slate-500" /> 
+              {roomName}
+            </span>
+          </DrawerDescription>
         </DrawerHeader>
 
         <div className="p-5 overflow-y-auto max-h-[60vh]">

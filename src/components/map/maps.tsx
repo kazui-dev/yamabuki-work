@@ -19,23 +19,23 @@ interface MapsProps {
 }
 
 export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
-  const [api, setApi] = useState<CarouselApi>();
+const [api, setApi] = useState<CarouselApi>();
   const [activeRoomId, setActiveRoomId] = useState<string | null>(roomsData[0]?.id || null);
   const [current, setCurrent] = useState(0);
 
-  const [selectedPoster, setSelectedPoster] = useState<Poster | null>(null);
+  const [selectedData, setSelectedData] = useState<{ poster: Poster; roomName: string } | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const handleOpenDetail = useCallback((poster: Poster) => {
-    setSelectedPoster(poster);
+  const handleOpenDetail = useCallback((poster: Poster, roomName: string) => {
+    setSelectedData({ poster, roomName });
     setIsDrawerOpen(true);
   }, []);
 
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
     const room = roomsData.find(r => r.id === roomId);
     const poster = room?.posters?.find(p => p.id === posterId);
-    if (poster) {
-      handleOpenDetail(poster);
+    if (room && poster) {
+      handleOpenDetail(poster, room.name);
     }
   }, [roomsData, handleOpenDetail]);
 
@@ -128,7 +128,7 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
                         <PosterCard 
                           key={poster.id} 
                           poster={poster} 
-                          onOpen={() => handleOpenDetail(poster)} 
+                          onOpen={() => handleOpenDetail(poster, room.name)} 
                         />
                       ))}
                     </div>
@@ -141,7 +141,7 @@ export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
       </Carousel>
 
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-        {selectedPoster && <PosterDetail poster={selectedPoster} />}
+        {selectedData && <PosterDetail poster={selectedData.poster} roomName={selectedData.roomName} />}
       </Drawer>
     </div>
   );
