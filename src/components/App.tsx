@@ -10,30 +10,38 @@ export const App = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const page = params.get('page') as PageID;
+    const pageFromUrl = params.get('page') as PageID;
     
-    if (page === 'map') {
+    if (pageFromUrl === 'map') {
       setCurrentPage('map');
     }
 
     const handlePopState = (event: PopStateEvent) => {
-      const page = (event.state?.page as PageID) || 'timetable';
-      setCurrentPage(page);
+      const pageFromState = event.state?.page as PageID;
+      if (pageFromState) {
+        setCurrentPage(pageFromState);
+      } else {
+        const p = new URLSearchParams(window.location.search).get('page') as PageID;
+        setCurrentPage(p || 'timetable');
+      }
     };
 
     window.addEventListener('popstate', handlePopState);
-    
     setIsReady(true);
 
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  useEffect(() => {
+    if (isReady) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, [currentPage, isReady]);
+
   const handleNavigate = (page: PageID) => {
     if (page === currentPage) return;
 
     setCurrentPage(page);
-    
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
     const url = page === 'timetable' ? window.location.pathname : `?page=${page}`;
     window.history.pushState({ page }, '', url);

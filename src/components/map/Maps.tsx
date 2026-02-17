@@ -123,7 +123,6 @@ export const Maps: React.FC = () => {
                     ? "bg-slate-800 border-slate-800" 
                     : "bg-white border-slate-300 hover:border-slate-400"
                 }`}
-                aria-label={`Go to room ${index + 1}`}
               />
             ))}
           </div>
