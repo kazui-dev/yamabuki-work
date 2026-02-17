@@ -9,9 +9,10 @@ import type { TimetableSession } from "@/types";
 
 interface SessionCardProps {
   session: TimetableSession;
+  onNavigate: (view: 'timetable' | 'map') => void;
 }
 
-export const SessionCard = ({ session }: SessionCardProps) => {
+export const SessionCard = ({ session, onNavigate }: SessionCardProps) => {
   return (
     <div className="p-5 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors">
       {session.time && (
@@ -55,8 +56,17 @@ export const SessionCard = ({ session }: SessionCardProps) => {
         </div>
       ) : session.action ? (
         <div className="mt-3">
-          <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white" asChild>
-            <a href={session.action.url}>{session.action.label}</a>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="w-full h-8 text-xs bg-white" 
+            onClick={() => {
+              if (session.action) {
+                onNavigate(session.action.targetView);
+              }
+            }}
+          >
+            {session.action.label}
           </Button>
         </div>
       ) : null}

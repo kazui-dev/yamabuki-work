@@ -7,7 +7,7 @@ export interface SessionDetails {
 
 export interface ActionButton {
   label: string;
-  url: string;
+  targetView: 'timetable' | 'map';
 }
 
 export interface TimetableSession {

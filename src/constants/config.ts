@@ -15,7 +15,7 @@ export const DEFAULT_LAYOUT_PROPS: Omit<LayoutProps, "title"> = {
 
 export const SITE_CONFIG = {
   name: "新宿山吹高校 情報科発表会",
-  url: "http://localhost:4321",
+  link: "http://localhost:4321",
   baseUrl: "http://localhost:4321",
   faviconUrl: "/favicon.svg",
   ogImageUrl: "/ogp-image.png",
