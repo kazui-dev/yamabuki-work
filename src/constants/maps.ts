@@ -2,7 +2,7 @@ import type { RoomData } from "@/types";
 
 export const ROOM_DATA: RoomData[] = [
   {
-    id: "room_hall",
+    id: "hall",
     name: "大講義室",
     posters: [
       {
@@ -17,7 +17,7 @@ export const ROOM_DATA: RoomData[] = [
     ],
   },
   {
-    id: "room_318",
+    id: "318",
     name: "318",
     posters: [
       {
@@ -50,7 +50,7 @@ export const ROOM_DATA: RoomData[] = [
     ],
   },
   {
-    id: "room_317",
+    id: "317",
     name: "317",
     posters: [
       {
@@ -83,7 +83,7 @@ export const ROOM_DATA: RoomData[] = [
     ],
   },
   {
-    id: "room_316",
+    id: "316",
     name: "316",
     posters: [
       {
@@ -116,7 +116,7 @@ export const ROOM_DATA: RoomData[] = [
     ],
   },
   {
-    id: "room_315",
+    id: "315",
     name: "315",
     posters: [
       {
@@ -149,7 +149,7 @@ export const ROOM_DATA: RoomData[] = [
     ],
   },
   {
-    id: "room_pc_3",
+    id: "pc_3",
     name: "第3パソコン教室",
     posters: [
       {

@@ -3,7 +3,7 @@ import { FloorMap } from "./FloorMap";
 import { PosterCard } from "./PosterCard";
 import { PosterDetail } from "./PosterDetail";
 import { getRoomMapComponent } from "./rooms";
-import type { RoomData, Poster } from "@/types";
+import type { Poster } from "@/types";
 import {
   Carousel,
   CarouselContent,
@@ -16,25 +16,40 @@ import { Drawer } from "@/components/ui/drawer";
 import { ROOM_DATA } from "@/constants/maps";
 
 export const Maps: React.FC = () => {
-const [api, setApi] = useState<CarouselApi>();
-  const [activeRoomId, setActiveRoomId] = useState<string | null>(ROOM_DATA[0]?.id || null);
-  const [current, setCurrent] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
 
+  const getInitialRoomId = () => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const roomId = params.get('room');
+      if (roomId && ROOM_DATA.some(r => r.id === roomId)) return roomId;
+    }
+    return ROOM_DATA[0]?.id || null;
+  };
+
+  const [activeRoomId, setActiveRoomId] = useState<string | null>(getInitialRoomId());
+  const [current, setCurrent] = useState(0);
   const [selectedData, setSelectedData] = useState<{ poster: Poster; roomName: string } | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const handleOpenDetail = useCallback((poster: Poster, roomName: string) => {
-    setSelectedData({ poster, roomName });
-    setIsDrawerOpen(true);
-  }, []);
+  useEffect(() => {
+    if (!api) return;
 
-  const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
-    const room = ROOM_DATA.find(r => r.id === roomId);
-    const poster = room?.posters?.find(p => p.id === posterId);
-    if (room && poster) {
-      handleOpenDetail(poster, room.name);
+    const initialIndex = ROOM_DATA.findIndex(r => r.id === activeRoomId);
+    if (initialIndex !== -1) {
+      api.scrollTo(initialIndex, true);
+      setCurrent(initialIndex);
     }
-  }, [ROOM_DATA, handleOpenDetail]);
+  }, [api]);
+
+  useEffect(() => {
+    if (activeRoomId && typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('page', 'map');
+      url.searchParams.set('room', activeRoomId);
+      window.history.replaceState(window.history.state, '', url.toString());
+    }
+  }, [activeRoomId]);
 
   useEffect(() => {
     if (!api) return;
@@ -52,7 +67,20 @@ const [api, setApi] = useState<CarouselApi>();
     return () => {
       api.off("select", updateState);
     };
-  }, [api, ROOM_DATA]);
+  }, [api]);
+
+  const handleOpenDetail = useCallback((poster: Poster, roomName: string) => {
+    setSelectedData({ poster, roomName });
+    setIsDrawerOpen(true);
+  }, []);
+
+  const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
+    const room = ROOM_DATA.find(r => r.id === roomId);
+    const poster = room?.posters?.find(p => p.id === posterId);
+    if (room && poster) {
+      handleOpenDetail(poster, room.name);
+    }
+  }, [handleOpenDetail]);
 
   const scrollTo = useCallback((index: number) => {
     api?.scrollTo(index);
@@ -63,7 +91,7 @@ const [api, setApi] = useState<CarouselApi>();
     if (index !== -1) {
       scrollTo(index);
     }
-  }, [ROOM_DATA, scrollTo]);
+  }, [scrollTo]);
 
   return (
     <div className="w-full max-w-md mx-auto">
