@@ -29,7 +29,7 @@ export const PosterCard = ({ poster, onOpen }: PosterCardProps) => {
 
       <div className="mt-3">
         <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white" onClick={onOpen}>
-          詳細を見る
+          詳細を開く
         </Button>
       </div>
     </div>

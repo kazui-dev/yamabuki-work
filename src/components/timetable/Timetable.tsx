@@ -1,12 +1,20 @@
 import { Button } from "@/components/ui/button";
+import { EventCard } from "./EventCard";
 import { Clock, Speech } from "lucide-react";
 import { timetable } from "@/constants/timetable";
 import { SessionCard } from "./SessionCard";
 import type { TimetableItem } from "@/types";
 
-export const Timetable = () => {
+interface TimetableProps {
+  onNavigate: (view: 'timetable' | 'map') => void;
+}
+
+export const Timetable = ({ onNavigate }: TimetableProps) => {
   return (
     <div className="max-w-md mx-auto space-y-8">
+      <div className="flex justify-center w-full">
+        <EventCard />
+      </div>
       {timetable.map((item: TimetableItem, index) => (
         <div key={index} className="relative pl-6 border-l-2 border-slate-200 last:border-transparent pb-4">
           {item.time && (
@@ -40,8 +48,16 @@ export const Timetable = () => {
 
               {item.action && (
                 <div className="mt-4">
-                  <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700" asChild>
-                    <a href={item.action.url}>{item.action.label}</a>
+                  <Button 
+                    size="sm" 
+                    className="w-full bg-blue-600 hover:bg-blue-700" 
+                    onClick={() => {
+                      if (item.action) {
+                        onNavigate(item.action.targetView);
+                      }
+                    }}
+                  >
+                    {item.action.label}
                   </Button>
                 </div>
               )}
@@ -50,7 +66,7 @@ export const Timetable = () => {
             {item.sessions && (
               <div className="border-t border-slate-100 bg-slate-50/50">
                 {item.sessions.map((session, sIndex) => (
-                  <SessionCard key={sIndex} session={session} />
+                  <SessionCard key={sIndex} session={session} onNavigate={onNavigate} />
                 ))}
               </div>
             )}

@@ -9,12 +9,12 @@ import { RoomHall } from './RoomHall';
 import { RoomPC3 } from './RoomPC3';
 
 const roomComponentRegistry: Record<string, React.FC<RoomMapProps>> = {
-  'room_315': Room315,
-  'room_316': Room316,
-  'room_317': Room317,
-  'room_318': Room318,
-  'room_hall': RoomHall,
-  'room_pc_3': RoomPC3,
+  '315': Room315,
+  '316': Room316,
+  '317': Room317,
+  '318': Room318,
+  'hall': RoomHall,
+  'pc_3': RoomPC3,
 };
 
 export const getRoomMapComponent = (roomId: string): React.FC<RoomMapProps> => {
