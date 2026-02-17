@@ -28,19 +28,12 @@ export const Maps: React.FC = () => {
   };
 
   const [activeRoomId, setActiveRoomId] = useState<string | null>(getInitialRoomId());
-  const [current, setCurrent] = useState(0);
+  
+  const [initialIndex] = useState(() => Math.max(0, ROOM_DATA.findIndex(r => r.id === getInitialRoomId())));
+  const [current, setCurrent] = useState(initialIndex);
+  
   const [selectedData, setSelectedData] = useState<{ poster: Poster; roomName: string } | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  useEffect(() => {
-    if (!api) return;
-
-    const initialIndex = ROOM_DATA.findIndex(r => r.id === activeRoomId);
-    if (initialIndex !== -1) {
-      api.scrollTo(initialIndex, true);
-      setCurrent(initialIndex);
-    }
-  }, [api]);
 
   useEffect(() => {
     if (activeRoomId && typeof window !== 'undefined') {
@@ -108,7 +101,7 @@ export const Maps: React.FC = () => {
       <Carousel 
         setApi={setApi} 
         className="w-full" 
-        opts={{ align: "center", loop: true }}
+        opts={{ align: "center", loop: true, startIndex: initialIndex }}
       >
         <div className="flex items-center justify-center gap-4 mb-4">
           <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white border-slate-200 h-9 w-9 shadow-sm" />
