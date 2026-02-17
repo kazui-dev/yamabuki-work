@@ -19,11 +19,9 @@ export const Maps: React.FC = () => {
   const [api, setApi] = useState<CarouselApi>();
 
   const getInitialRoomId = () => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const roomId = params.get('room');
-      if (roomId && ROOM_DATA.some(r => r.id === roomId)) return roomId;
-    }
+    const params = new URLSearchParams(window.location.search);
+    const roomId = params.get('room');
+    if (roomId && ROOM_DATA.some(r => r.id === roomId)) return roomId;
     return ROOM_DATA[0]?.id || null;
   };
 
@@ -36,7 +34,7 @@ export const Maps: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
-    if (activeRoomId && typeof window !== 'undefined') {
+    if (activeRoomId) {
       const url = new URL(window.location.href);
       url.searchParams.set('page', 'map');
       url.searchParams.set('room', activeRoomId);
