@@ -60,10 +60,32 @@ export const Maps: React.FC = () => {
     };
   }, [api]);
 
+  const handleDrawerChange = useCallback((open: boolean) => {
+    if (open) {
+      window.history.pushState({ isDrawer: true }, '');
+      setIsDrawerOpen(true);
+    } else {
+      if (window.history.state?.isDrawer) {
+        window.history.back();
+      }
+      setIsDrawerOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (isDrawerOpen) {
+        setIsDrawerOpen(false);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isDrawerOpen]);
+
   const handleOpenDetail = useCallback((poster: Poster, roomName: string) => {
     setSelectedData({ poster, roomName });
-    setIsDrawerOpen(true);
-  }, []);
+    handleDrawerChange(true);
+  }, [handleDrawerChange]);
 
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
     const room = ROOM_DATA.find(r => r.id === roomId);
@@ -155,7 +177,7 @@ export const Maps: React.FC = () => {
         </CarouselContent>
       </Carousel>
 
-      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+      <Drawer open={isDrawerOpen} onOpenChange={handleDrawerChange}>
         {selectedData && <PosterDetail poster={selectedData.poster} roomName={selectedData.roomName} />}
       </Drawer>
     </div>
