@@ -19,9 +19,11 @@ export const Maps: React.FC = () => {
   const [api, setApi] = useState<CarouselApi>();
 
   const getInitialRoomId = () => {
-    const params = new URLSearchParams(window.location.search);
-    const roomId = params.get('room');
-    if (roomId && ROOM_DATA.some(r => r.id === roomId)) return roomId;
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const roomId = params.get('room');
+      if (roomId && ROOM_DATA.some(r => r.id === roomId)) return roomId;
+    }
     return ROOM_DATA[0]?.id || null;
   };
 
@@ -34,7 +36,7 @@ export const Maps: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
-    if (activeRoomId) {
+    if (activeRoomId && typeof window !== 'undefined') {
       const url = new URL(window.location.href);
       url.searchParams.set('page', 'map');
       url.searchParams.set('room', activeRoomId);
@@ -60,32 +62,10 @@ export const Maps: React.FC = () => {
     };
   }, [api]);
 
-  const handleDrawerChange = useCallback((open: boolean) => {
-    if (open) {
-      window.history.pushState({ isDrawer: true }, '');
-      setIsDrawerOpen(true);
-    } else {
-      if (window.history.state?.isDrawer) {
-        window.history.back();
-      }
-      setIsDrawerOpen(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    const handlePopState = () => {
-      if (isDrawerOpen) {
-        setIsDrawerOpen(false);
-      }
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, [isDrawerOpen]);
-
   const handleOpenDetail = useCallback((poster: Poster, roomName: string) => {
     setSelectedData({ poster, roomName });
-    handleDrawerChange(true);
-  }, [handleDrawerChange]);
+    setIsDrawerOpen(true);
+  }, []);
 
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
     const room = ROOM_DATA.find(r => r.id === roomId);
@@ -177,7 +157,7 @@ export const Maps: React.FC = () => {
         </CarouselContent>
       </Carousel>
 
-      <Drawer open={isDrawerOpen} onOpenChange={handleDrawerChange}>
+      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
         {selectedData && <PosterDetail poster={selectedData.poster} roomName={selectedData.roomName} />}
       </Drawer>
     </div>
