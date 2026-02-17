@@ -9,6 +9,10 @@ export const App = () => {
   const [currentPage, setCurrentPage] = useState<PageID>('timetable');
 
   useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
     const params = new URLSearchParams(window.location.search);
     const pageFromUrl = params.get('page') as PageID;
     
@@ -18,12 +22,19 @@ export const App = () => {
 
     const handlePopState = (event: PopStateEvent) => {
       const pageFromState = event.state?.page as PageID;
+      
       if (pageFromState) {
         setCurrentPage(pageFromState);
       } else {
         const p = new URLSearchParams(window.location.search).get('page') as PageID;
         setCurrentPage(p || 'timetable');
       }
+
+      const savedScrollY = event.state?.scrollY || 0;
+      
+      setTimeout(() => {
+        window.scrollTo({ top: savedScrollY, left: 0, behavior: 'instant' });
+      }, 0);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -32,19 +43,23 @@ export const App = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  useEffect(() => {
-    if (isReady) {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    }
-  }, [currentPage, isReady]);
-
   const handleNavigate = (page: PageID) => {
     if (page === currentPage) return;
+
+    window.history.replaceState(
+      { ...window.history.state, scrollY: window.scrollY }, 
+      ''
+    );
 
     setCurrentPage(page);
 
     const url = page === 'timetable' ? window.location.pathname : `?page=${page}`;
-    window.history.pushState({ page }, '', url);
+    
+    window.history.pushState({ page, scrollY: 0 }, '', url);
+
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, 0);
   };
 
   if (!isReady) {
