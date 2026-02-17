@@ -44,16 +44,23 @@ export const Maps: React.FC = () => {
         url.searchParams.set('page', 'map');
         url.searchParams.set('room', activeRoomId);
 
-        window.history.replaceState(
-          { ...window.history.state, scrollY: window.scrollY }, 
-          ''
-        );
-
-        window.history.pushState(
-          { page: 'map', room: activeRoomId, scrollY: window.scrollY }, 
-          '', 
-          url.toString()
-        );
+        if (!currentUrlRoom) {
+          window.history.replaceState(
+            { ...window.history.state, page: 'map', room: activeRoomId }, 
+            '', 
+            url.toString()
+          );
+        } else {
+          window.history.replaceState(
+            { ...window.history.state, scrollY: window.scrollY }, 
+            ''
+          );
+          window.history.pushState(
+            { page: 'map', room: activeRoomId, scrollY: window.scrollY }, 
+            '', 
+            url.toString()
+          );
+        }
       }
     }
   }, [activeRoomId]);
