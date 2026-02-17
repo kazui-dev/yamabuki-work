@@ -9,7 +9,7 @@ export const App = () => {
 
   const handleNavigate = (view: ViewState) => {
     setCurrentView(view);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'instant' }); // スクロールする場合は 'smooth' に変更
   };
 
   return (
