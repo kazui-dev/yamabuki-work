@@ -47,7 +47,7 @@ export const timetable: TimetableItem[] = [
     title: "ポスター発表",
     description: "ここに説明を入れる",
     action: {
-      label: "フロアマップを見る",
+      label: "フロアマップを開く",
       targetView: "map"
     }
   },

@@ -44,7 +44,7 @@ export const SessionCard = ({ session, onNavigate }: SessionCardProps) => {
           <Drawer>
             <DrawerTrigger asChild>
               <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white">
-                詳細を見る
+                詳細を開く
               </Button>
             </DrawerTrigger>
             <SessionDetail
