@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Timetable } from './timetable/Timetable';
 import { Maps } from './map/Maps';
-import { ROOM_DATA } from '@/constants/maps';
 
 export type ViewState = 'timetable' | 'map';
 
@@ -25,7 +24,7 @@ export const App = () => {
       {currentView === 'timetable' ? (
         <Timetable onNavigate={handleNavigate} />
       ) : (
-        <Maps roomsData={ROOM_DATA} />
+        <Maps />
       )}
     </main>
   );
