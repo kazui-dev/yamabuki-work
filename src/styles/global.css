@@ -127,3 +127,13 @@
     scroll-margin-top: 4rem;
   }
 }
+
+.lucide rect,
+.lucide path,
+.lucide circle,
+.lucide polygon,
+.lucide line,
+.lucide polyline {
+  fill: none !important;
+  stroke: currentColor !important;
+}

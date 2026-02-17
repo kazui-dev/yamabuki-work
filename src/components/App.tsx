@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Timetable } from './timetable/Timetable';
 import { Maps } from './map/Maps';
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CalendarDays, Map as MapIcon } from "lucide-react";
 
 export type PageID = 'timetable' | 'map';
 
@@ -67,22 +69,49 @@ export const App = () => {
   }
 
   return (
-    <main className="p-6 mb-16">
-      <div 
-        className="max-w-md mx-auto mb-4 text-center cursor-pointer hover:opacity-80 transition-opacity" 
-        onClick={() => handleNavigate('timetable')}
-      >
-        <h1 className="text-3xl sm:text-4xl font-extrabold mb-6">
-          新宿山吹高校<br className="sm:hidden" />
-          <span className="inline-block">情報科発表会</span>
-        </h1>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <header className="sticky top-0 z-50 w-full bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 py-3">
+        <div className="max-w-md mx-auto flex items-center justify-between gap-3">
+          <h1 
+            className="text-sm sm:text-base font-extrabold text-slate-800 cursor-pointer hover:opacity-80 transition-opacity shrink-0 leading-tight"
+            onClick={() => handleNavigate('timetable')}
+          >
+            新宿山吹高校<br />
+            情報科発表会
+          </h1>
+          
+          <Tabs 
+            value={currentPage} 
+            onValueChange={(value) => handleNavigate(value as PageID)} 
+            className="w-24 sm:w-28 shrink-0"
+          >
+            <TabsList className="grid w-full grid-cols-2 h-9 bg-slate-200/50">
+              <TabsTrigger 
+                value="timetable" 
+                className="flex items-center justify-center px-0"
+                aria-label="タイムテーブル"
+              >
+                <CalendarDays size={18} />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="map" 
+                className="flex items-center justify-center px-0"
+                aria-label="マップ"
+              >
+                <MapIcon size={18} />
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+      </header>
 
-      {currentPage === 'timetable' ? (
-        <Timetable onNavigate={handleNavigate} />
-      ) : (
-        <Maps />
-      )}
-    </main>
+      <main className="p-4 sm:p-6 mb-16 flex-1 w-full max-w-md mx-auto">
+        {currentPage === 'timetable' ? (
+          <Timetable onNavigate={handleNavigate} />
+        ) : (
+          <Maps />
+        )}
+      </main>
+    </div>
   );
 };
