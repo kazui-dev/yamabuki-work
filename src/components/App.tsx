@@ -5,24 +5,26 @@ import { Maps } from './map/Maps';
 export type PageID = 'timetable' | 'map';
 
 export const App = () => {
-  const getInitialPage = (): PageID => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const page = params.get('page');
-      if (page === 'map') return 'map';
-    }
-    return 'timetable';
-  };
-
-  const [currentPage, setCurrentPage] = useState<PageID>(getInitialPage());
+  const [isReady, setIsReady] = useState(false);
+  const [currentPage, setCurrentPage] = useState<PageID>('timetable');
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get('page') as PageID;
+    
+    if (page === 'map') {
+      setCurrentPage('map');
+    }
+
     const handlePopState = (event: PopStateEvent) => {
       const page = (event.state?.page as PageID) || 'timetable';
       setCurrentPage(page);
     };
 
     window.addEventListener('popstate', handlePopState);
+    
+    setIsReady(true);
+
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
@@ -36,6 +38,10 @@ export const App = () => {
     const url = page === 'timetable' ? window.location.pathname : `?page=${page}`;
     window.history.pushState({ page }, '', url);
   };
+
+  if (!isReady) {
+    return <div className="min-h-screen bg-slate-50" />;
+  }
 
   return (
     <main className="p-6 mb-16">
