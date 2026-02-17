@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Timetable } from './timetable/Timetable';
 import { Maps } from './map/Maps';
 import { ROOM_DATA } from '@/constants/maps';

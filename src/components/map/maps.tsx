@@ -13,14 +13,11 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Drawer } from "@/components/ui/drawer";
+import { ROOM_DATA } from "@/constants/maps";
 
-interface MapsProps {
-  roomsData: RoomData[];
-}
-
-export const Maps: React.FC<MapsProps> = ({ roomsData }) => {
+export const Maps: React.FC = () => {
 const [api, setApi] = useState<CarouselApi>();
-  const [activeRoomId, setActiveRoomId] = useState<string | null>(roomsData[0]?.id || null);
+  const [activeRoomId, setActiveRoomId] = useState<string | null>(ROOM_DATA[0]?.id || null);
   const [current, setCurrent] = useState(0);
 
   const [selectedData, setSelectedData] = useState<{ poster: Poster; roomName: string } | null>(null);
@@ -32,12 +29,12 @@ const [api, setApi] = useState<CarouselApi>();
   }, []);
 
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
-    const room = roomsData.find(r => r.id === roomId);
+    const room = ROOM_DATA.find(r => r.id === roomId);
     const poster = room?.posters?.find(p => p.id === posterId);
     if (room && poster) {
       handleOpenDetail(poster, room.name);
     }
-  }, [roomsData, handleOpenDetail]);
+  }, [ROOM_DATA, handleOpenDetail]);
 
   useEffect(() => {
     if (!api) return;
@@ -45,7 +42,7 @@ const [api, setApi] = useState<CarouselApi>();
     const updateState = () => {
       const index = api.selectedScrollSnap();
       setCurrent(index);
-      const room = roomsData[index];
+      const room = ROOM_DATA[index];
       if (room) {
         setActiveRoomId(room.id);
       }
@@ -55,18 +52,18 @@ const [api, setApi] = useState<CarouselApi>();
     return () => {
       api.off("select", updateState);
     };
-  }, [api, roomsData]);
+  }, [api, ROOM_DATA]);
 
   const scrollTo = useCallback((index: number) => {
     api?.scrollTo(index);
   }, [api]);
 
   const handleMapClick = useCallback((roomId: string) => {
-    const index = roomsData.findIndex(r => r.id === roomId);
+    const index = ROOM_DATA.findIndex(r => r.id === roomId);
     if (index !== -1) {
       scrollTo(index);
     }
-  }, [roomsData, scrollTo]);
+  }, [ROOM_DATA, scrollTo]);
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -89,7 +86,7 @@ const [api, setApi] = useState<CarouselApi>();
           <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white border-slate-200 h-9 w-9 shadow-sm" />
           
           <div className="flex gap-2">
-            {roomsData.map((_, index) => (
+            {ROOM_DATA.map((_, index) => (
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
@@ -107,7 +104,7 @@ const [api, setApi] = useState<CarouselApi>();
         </div>
 
         <CarouselContent className="items-start">
-          {roomsData.map((room) => {
+          {ROOM_DATA.map((room) => {
             const RoomMapComponent = getRoomMapComponent(room.id);
             return (
               <CarouselItem key={room.id} className="pl-4">
