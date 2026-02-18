@@ -52,16 +52,6 @@ export const RoomHall: React.FC<RoomMapProps> = ({ className = '', onPosterClick
               <rect x="150" y="24" width="160" height="60" />
               <text x="230" y="58">ポスターA</text>
             </g>
-
-            <g data-poster-id="poster_hall_02">
-              <rect x="270" y="150" width="160" height="60" />
-              <text x="350" y="184">ポスターB</text>
-            </g>
-
-            <g data-poster-id="poster_hall_03">
-              <rect x="30" y="150" width="160" height="60" />
-              <text x="110" y="184">ポスターC</text>
-            </g>
         </g>
     </svg>
   );
