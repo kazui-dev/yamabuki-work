@@ -36,7 +36,7 @@ export const SessionDetail = ({ title, author, details }: SessionDetailProps) =>
           {details.image && (
             <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-4">
               <img
-                src={details.image.src}
+                src={details.image}
                 alt={title}
                 className="object-cover w-full h-full"
               />
