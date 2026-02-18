@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { Timetable } from './timetable/Timetable';
 import { Maps } from './map/Maps';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -6,9 +6,14 @@ import { CalendarDays, Map as MapIcon } from "lucide-react";
 
 export type PageID = 'timetable' | 'map';
 
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 export const App = () => {
   const [isReady, setIsReady] = useState(false);
   const [currentPage, setCurrentPage] = useState<PageID>('timetable');
+  
+  const scrollPositions = useRef<{ timetable: number; map: number }>({ timetable: 0, map: 0 });
+  const mapParams = useRef<string>('');
 
   useEffect(() => {
     if ('scrollRestoration' in history) {
@@ -20,23 +25,22 @@ export const App = () => {
     
     if (pageFromUrl === 'map') {
       setCurrentPage('map');
+      mapParams.current = window.location.search;
     }
 
     const handlePopState = (event: PopStateEvent) => {
       const pageFromState = event.state?.page as PageID;
-      
-      if (pageFromState) {
-        setCurrentPage(pageFromState);
-      } else {
-        const p = new URLSearchParams(window.location.search).get('page') as PageID;
-        setCurrentPage(p || 'timetable');
-      }
+      const p = new URLSearchParams(window.location.search).get('page') as PageID;
+      const targetPage = pageFromState || p || 'timetable';
 
       const savedScrollY = event.state?.scrollY || 0;
       
-      setTimeout(() => {
-        window.scrollTo({ top: savedScrollY, left: 0, behavior: 'instant' });
-      }, 0);
+      scrollPositions.current[targetPage] = savedScrollY;
+      if (targetPage === 'map') {
+        mapParams.current = window.location.search;
+      }
+      
+      setCurrentPage(targetPage);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -45,23 +49,34 @@ export const App = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  useIsomorphicLayoutEffect(() => {
+    if (isReady) {
+      const targetScrollY = scrollPositions.current[currentPage] || 0;
+      window.scrollTo({ top: targetScrollY, left: 0, behavior: 'instant' });
+    }
+  }, [currentPage, isReady]);
+
   const handleNavigate = (page: PageID) => {
     if (page === currentPage) return;
+
+    scrollPositions.current[currentPage] = window.scrollY;
+    if (currentPage === 'map') {
+      mapParams.current = window.location.search;
+    }
 
     window.history.replaceState(
       { ...window.history.state, scrollY: window.scrollY }, 
       ''
     );
 
-    setCurrentPage(page);
-
-    const url = page === 'timetable' ? window.location.pathname : `?page=${page}`;
+    const url = page === 'timetable' 
+      ? window.location.pathname 
+      : (mapParams.current || '?page=map');
     
-    window.history.pushState({ page, scrollY: 0 }, '', url);
+    const targetScrollY = scrollPositions.current[page] || 0;
 
-    setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    }, 0);
+    window.history.pushState({ page, scrollY: targetScrollY }, '', url);
+    setCurrentPage(page);
   };
 
   if (!isReady) {
