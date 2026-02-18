@@ -99,17 +99,17 @@ export const App = () => {
             onValueChange={(value) => handleNavigate(value as PageID)} 
             className="w-24 sm:w-28 shrink-0"
           >
-            <TabsList className="grid w-full grid-cols-2 h-8 bg-slate-200/50">
+            <TabsList className="grid w-full grid-cols-2 h-9 p-1 bg-slate-200/50">
               <TabsTrigger 
                 value="timetable" 
-                className="flex items-center justify-center px-0"
+                className="flex items-center justify-center h-full px-0 data-[state=active]:shadow-none"
                 aria-label="タイムテーブル"
               >
                 <CalendarDays size={16} />
               </TabsTrigger>
               <TabsTrigger 
                 value="map" 
-                className="flex items-center justify-center px-0"
+                className="flex items-center justify-center h-full px-0 data-[state=active]:shadow-none"
                 aria-label="マップ"
               >
                 <MapIcon size={16} />
