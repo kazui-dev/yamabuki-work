@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { Timetable } from './timetable/Timetable';
 import { Maps } from './map/Maps';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CalendarDays, Map as MapIcon } from "lucide-react";
+import { CalendarDays, MapPinned as MapIcon } from "lucide-react";
 
 export type PageID = 'timetable' | 'map';
 
@@ -128,4 +128,5 @@ export const App = () => {
       </main>
     </div>
   );
+
 };
