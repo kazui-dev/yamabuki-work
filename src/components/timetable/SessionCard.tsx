@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Clock, Speech } from "lucide-react";
+import { Clock, Speech, ChevronUp } from "lucide-react";
 import type { TimetableSession } from "@/types";
 
 interface SessionCardProps {
@@ -43,6 +43,7 @@ export const SessionCard = ({ session, onNavigate, onOpenDetail }: SessionCardPr
             className="w-full h-8 text-xs bg-white"
             onClick={() => onOpenDetail?.(session)}
           >
+            <ChevronUp size={14} />
             詳細を開く
           </Button>
         </div>

@@ -4,6 +4,7 @@ export interface SessionDetails {
 }
 
 export interface ActionButton {
+  icon?: React.ComponentType<{ size: number; className?: string }>;
   label: string;
   targetView: 'timetable' | 'map';
 }
