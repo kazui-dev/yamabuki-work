@@ -93,13 +93,13 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
       </g>
 
       <g id="room_labels" className="room_label">
-        <text x="48.3" y="29.2" textAnchor="middle" dominantBaseline="central" fontSize="14">大講義室</text>
-        <text x="137.8" y="29.2" textAnchor="middle" dominantBaseline="central" fontSize="14">318</text>
-        <text x="227" y="29.2" textAnchor="middle" dominantBaseline="central" fontSize="14">317</text>
-        <text x="324" y="29.2" textAnchor="middle" dominantBaseline="central" fontSize="14">316</text>
-        <text x="413.3" y="29.2" textAnchor="middle" dominantBaseline="central" fontSize="14">315</text>
-        <text x="137.8" y="220" textAnchor="middle" dominantBaseline="central" fontSize="4">第3パソコン</text>
-        <text x="137.8" y="232" textAnchor="middle" dominantBaseline="central" fontSize="4">教室</text>
+        <text x="48.3" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>大講義室</text>
+        <text x="137.8" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>318</text>
+        <text x="227" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>317</text>
+        <text x="324" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>316</text>
+        <text x="413.3" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>315</text>
+                <text x="137.8" y="218" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '12px' }}>第3パソコン</text>
+        <text x="137.8" y="234" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '12px' }}>教室</text>
       </g>
     </svg>
   );
