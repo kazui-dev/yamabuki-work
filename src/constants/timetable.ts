@@ -48,7 +48,7 @@ export const timetable: TimetableItem[] = [
     description: "ここに説明を入れる",
     action: {
       icon: MapPinned,
-      label: "フロアマップを開く",
+      label: "フロアマップを見る",
       targetView: "map"
     }
   },

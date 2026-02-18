@@ -44,7 +44,7 @@ export const SessionCard = ({ session, onNavigate, onOpenDetail }: SessionCardPr
             onClick={() => onOpenDetail?.(session)}
           >
             <ChevronUp size={14} />
-            詳細を開く
+            詳細を見る
           </Button>
         </div>
       ) : session.action ? (
