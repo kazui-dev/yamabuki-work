@@ -36,13 +36,54 @@ export const Maps: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
-    if (activeRoomId && typeof window !== 'undefined') {
+    if (activeRoomId) {
       const url = new URL(window.location.href);
-      url.searchParams.set('page', 'map');
-      url.searchParams.set('room', activeRoomId);
-      window.history.replaceState(window.history.state, '', url.toString());
+      const currentUrlRoom = url.searchParams.get('room');
+      
+      if (currentUrlRoom !== activeRoomId) {
+        url.searchParams.set('page', 'map');
+        url.searchParams.set('room', activeRoomId);
+
+        if (!currentUrlRoom) {
+          window.history.replaceState(
+            { ...window.history.state, page: 'map', room: activeRoomId }, 
+            '', 
+            url.toString()
+          );
+        } else {
+          window.history.replaceState(
+            { ...window.history.state, scrollY: window.scrollY }, 
+            ''
+          );
+          window.history.pushState(
+            { page: 'map', room: activeRoomId, scrollY: window.scrollY }, 
+            '', 
+            url.toString()
+          );
+        }
+      }
     }
   }, [activeRoomId]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const roomId = params.get('room');
+      const page = params.get('page');
+
+      if (page === 'map' && roomId && roomId !== activeRoomId) {
+        const index = ROOM_DATA.findIndex(r => r.id === roomId);
+        if (index !== -1) {
+          setActiveRoomId(roomId);
+          setCurrent(index);
+          api?.scrollTo(index);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [activeRoomId, api]);
 
   useEffect(() => {
     if (!api) return;
@@ -51,7 +92,8 @@ export const Maps: React.FC = () => {
       const index = api.selectedScrollSnap();
       setCurrent(index);
       const room = ROOM_DATA[index];
-      if (room) {
+      
+      if (room && room.id !== activeRoomId) {
         setActiveRoomId(room.id);
       }
     };
@@ -60,7 +102,7 @@ export const Maps: React.FC = () => {
     return () => {
       api.off("select", updateState);
     };
-  }, [api]);
+  }, [api, activeRoomId]);
 
   const handleOpenDetail = useCallback((poster: Poster, roomName: string) => {
     setSelectedData({ poster, roomName });

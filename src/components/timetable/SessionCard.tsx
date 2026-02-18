@@ -1,23 +1,19 @@
 import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { Clock, Speech } from "lucide-react";
-import { SessionDetail } from "./SessionDetail";
 import type { TimetableSession } from "@/types";
 
 interface SessionCardProps {
   session: TimetableSession;
   onNavigate: (view: 'timetable' | 'map') => void;
+  onOpenDetail?: (session: TimetableSession) => void;
 }
 
-export const SessionCard = ({ session, onNavigate }: SessionCardProps) => {
+export const SessionCard = ({ session, onNavigate, onOpenDetail }: SessionCardProps) => {
   return (
     <div className="p-5 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors">
       {session.time && (
         <div className="flex items-center gap-1.5 leading-none text-xs text-slate-500 font-bold mb-2">
-          <Clock />
+          <Clock size={14} />
           {session.time}
         </div>
       )}
@@ -41,18 +37,14 @@ export const SessionCard = ({ session, onNavigate }: SessionCardProps) => {
 
       {session.details ? (
         <div className="mt-3">
-          <Drawer>
-            <DrawerTrigger asChild>
-              <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white">
-                詳細を開く
-              </Button>
-            </DrawerTrigger>
-            <SessionDetail
-              title={session.title}
-              author={session.author}
-              details={session.details}
-            />
-          </Drawer>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="w-full h-8 text-xs bg-white"
+            onClick={() => onOpenDetail?.(session)}
+          >
+            詳細を開く
+          </Button>
         </div>
       ) : session.action ? (
         <div className="mt-3">

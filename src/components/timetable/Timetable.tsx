@@ -1,17 +1,28 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Drawer } from "@/components/ui/drawer";
 import { EventCard } from "./EventCard";
 import { Clock, Speech } from "lucide-react";
 import { timetable } from "@/constants/timetable";
 import { SessionCard } from "./SessionCard";
-import type { TimetableItem } from "@/types";
+import { SessionDetail } from "./SessionDetail";
+import type { TimetableItem, TimetableSession } from "@/types";
 
 interface TimetableProps {
   onNavigate: (view: 'timetable' | 'map') => void;
 }
 
 export const Timetable = ({ onNavigate }: TimetableProps) => {
+  const [selectedSession, setSelectedSession] = useState<TimetableSession | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleOpenDetail = (session: TimetableSession) => {
+    setSelectedSession(session);
+    setIsDrawerOpen(true);
+  };
+
   return (
-    <div className="max-w-md mx-auto space-y-8">
+    <div className="max-w-md mx-auto space-y-8 relative">
       <div className="flex justify-center w-full">
         <EventCard />
       </div>
@@ -66,13 +77,28 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
             {item.sessions && (
               <div className="border-t border-slate-100 bg-slate-50/50">
                 {item.sessions.map((session, sIndex) => (
-                  <SessionCard key={sIndex} session={session} onNavigate={onNavigate} />
+                  <SessionCard 
+                    key={sIndex} 
+                    session={session} 
+                    onNavigate={onNavigate} 
+                    onOpenDetail={handleOpenDetail}
+                  />
                 ))}
               </div>
             )}
           </div>
         </div>
       ))}
+
+      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+        {selectedSession?.details && (
+          <SessionDetail
+            title={selectedSession.title}
+            author={selectedSession.author}
+            details={selectedSession.details}
+          />
+        )}
+      </Drawer>
     </div>
   );
 };
