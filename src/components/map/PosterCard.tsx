@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { User } from "lucide-react";
+import { User, ChevronUp } from "lucide-react";
 import type { Poster } from "@/types";
 
 interface PosterCardProps {
@@ -29,7 +29,8 @@ export const PosterCard = ({ poster, onOpen }: PosterCardProps) => {
 
       <div className="mt-3">
         <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white" onClick={onOpen}>
-          詳細を開く
+          <ChevronUp size={14} />
+          詳細を見る
         </Button>
       </div>
     </div>

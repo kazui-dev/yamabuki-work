@@ -60,14 +60,15 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
               {item.action && (
                 <div className="mt-4">
                   <Button 
-                    size="sm" 
-                    className="w-full bg-blue-600 hover:bg-blue-700" 
+                    size="sm"
+                    className="w-full bg-slate-200 hover:bg-slate-300 text-slate-800" 
                     onClick={() => {
                       if (item.action) {
                         onNavigate(item.action.targetView);
                       }
                     }}
                   >
+                    {item.action.icon && <item.action.icon size={16} />}
                     {item.action.label}
                   </Button>
                 </div>

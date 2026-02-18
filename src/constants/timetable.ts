@@ -1,4 +1,5 @@
 import type { TimetableItem } from "@/types";
+import { MapPinned } from "lucide-react";
 
 export const timetable: TimetableItem[] = [
   {
@@ -46,7 +47,8 @@ export const timetable: TimetableItem[] = [
     title: "ポスター発表",
     description: "ここに説明を入れる",
     action: {
-      label: "フロアマップを開く",
+      icon: MapPinned,
+      label: "フロアマップを見る",
       targetView: "map"
     }
   },
