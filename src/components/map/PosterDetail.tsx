@@ -42,7 +42,7 @@ export const PosterDetail = ({ poster, roomName }: PosterDetailProps) => {
           {poster.details?.image && (
             <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-4">
               <img
-                src={poster.details.image.src}
+                src={poster.details.image}
                 alt={poster.title}
                 className="object-cover w-full h-full"
               />

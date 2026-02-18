@@ -1,4 +1,3 @@
-import image1 from "@/assets/images/image1.jpg";
 import type { TimetableItem } from "@/types";
 
 export const timetable: TimetableItem[] = [
@@ -16,7 +15,7 @@ export const timetable: TimetableItem[] = [
         author: "○○チーム",
         details: {
           description: "東京都立新宿山吹高等学校（とうきょうとりつ しんじゅく やまぶき こうとうがっこう、英: Shinjuku Yamabuki High School）は、東京都新宿区山吹町に所在する東京都立高等学校。",
-          image: image1
+          image: "/images/session1.jpg",
         }
       },
       {

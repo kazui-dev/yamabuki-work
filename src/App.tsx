@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { Timetable } from './timetable/Timetable';
-import { Maps } from './map/Maps';
+import { Timetable } from './components/timetable/Timetable';
+import { Maps } from './components/map/Maps';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarDays, MapPinned } from "lucide-react";
 
