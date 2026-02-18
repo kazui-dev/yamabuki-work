@@ -1,8 +1,6 @@
-import type { ImageMetadata } from "astro";
-
 export interface SessionDetails {
   description: string;
-  image?: ImageMetadata;
+  image?: string; 
 }
 
 export interface ActionButton {
@@ -27,20 +25,6 @@ export interface TimetableItem {
   details?: SessionDetails;
   sessions?: TimetableSession[];
   action?: ActionButton;
-}
-
-export interface LayoutProps {
-  title: string;
-  description?: string;
-  image?: string;
-}
-
-export interface EventInfo {
-  eventName: string;
-  date: string;
-  dateJP: string;
-  startTime: string;
-  location: string;
 }
 
 export interface Poster {

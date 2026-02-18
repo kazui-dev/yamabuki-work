@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://your-portfolio.pages.dev/sitemap-index.xml
+Sitemap: https://yamabuki.work/sitemap.xml

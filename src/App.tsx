@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { Timetable } from './timetable/Timetable';
-import { Maps } from './map/Maps';
+import { Timetable } from './components/timetable/Timetable';
+import { Maps } from './components/map/Maps';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CalendarDays, Map as MapIcon } from "lucide-react";
+import { CalendarDays, MapPinned } from "lucide-react";
 
 export type PageID = 'timetable' | 'map';
 
@@ -112,7 +112,7 @@ export const App = () => {
                 className="flex items-center justify-center h-full px-0 data-[state=active]:shadow-none"
                 aria-label="マップ"
               >
-                <MapIcon size={16} />
+                <MapPinned size={16} />
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -128,4 +128,5 @@ export const App = () => {
       </main>
     </div>
   );
+
 };
