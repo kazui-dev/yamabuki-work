@@ -85,14 +85,13 @@ export const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-50 w-full bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 py-3">
+      <header className="sticky top-0 z-50 w-full bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 py-2">
         <div className="max-w-md mx-auto flex items-center justify-between gap-3">
           <h1 
-            className="text-sm sm:text-base font-extrabold text-slate-800 cursor-pointer hover:opacity-80 transition-opacity shrink-0 leading-tight"
+            className="text-sm sm:text-base font-extrabold text-slate-800 cursor-pointer hover:opacity-80 transition-opacity shrink truncate"
             onClick={() => handleNavigate('timetable')}
           >
-            新宿山吹高校<br />
-            情報科発表会
+            新宿山吹高校情報科発表会
           </h1>
           
           <Tabs 
@@ -100,20 +99,20 @@ export const App = () => {
             onValueChange={(value) => handleNavigate(value as PageID)} 
             className="w-24 sm:w-28 shrink-0"
           >
-            <TabsList className="grid w-full grid-cols-2 h-9 bg-slate-200/50">
+            <TabsList className="grid w-full grid-cols-2 h-8 bg-slate-200/50">
               <TabsTrigger 
                 value="timetable" 
                 className="flex items-center justify-center px-0"
                 aria-label="タイムテーブル"
               >
-                <CalendarDays size={18} />
+                <CalendarDays size={16} />
               </TabsTrigger>
               <TabsTrigger 
                 value="map" 
                 className="flex items-center justify-center px-0"
                 aria-label="マップ"
               >
-                <MapIcon size={18} />
+                <MapIcon size={16} />
               </TabsTrigger>
             </TabsList>
           </Tabs>
