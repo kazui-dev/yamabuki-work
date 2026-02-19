@@ -36,8 +36,14 @@ export interface Poster {
   details?: SessionDetails;
 }
 
-export interface RoomData {
+export interface Maps{
   id: string;
   name: string;
-  posters: Poster[];
+  posters?: Poster[];
+}
+
+export interface RoomMapProps {
+  roomId: string;
+  className?: string;
+  onPosterClick?: (posterId: string) => void;
 }

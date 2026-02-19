@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FloorMap } from "./FloorMap";
 import { PosterCard } from "./PosterCard";
 import { PosterDetail } from "./PosterDetail";
@@ -13,7 +13,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Drawer } from "@/components/ui/drawer";
-import { ROOM_DATA } from "@/constants/maps";
+import { MapsData } from "@/constants/maps";
 
 export const Maps: React.FC = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -22,18 +22,22 @@ export const Maps: React.FC = () => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const roomId = params.get('room');
-      if (roomId && ROOM_DATA.some(r => r.id === roomId)) return roomId;
+      if (roomId && MapsData.some(r => r.id === roomId)) return roomId;
     }
-    return ROOM_DATA[0]?.id || null;
+    return MapsData[0]?.id || null;
   };
 
   const [activeRoomId, setActiveRoomId] = useState<string | null>(getInitialRoomId());
-  
-  const [initialIndex] = useState(() => Math.max(0, ROOM_DATA.findIndex(r => r.id === getInitialRoomId())));
+  const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === getInitialRoomId())));
   const [current, setCurrent] = useState(initialIndex);
   
   const [selectedData, setSelectedData] = useState<{ poster: Poster; roomName: string } | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const activeRoomIdRef = useRef(activeRoomId);
+  useEffect(() => {
+    activeRoomIdRef.current = activeRoomId;
+  }, [activeRoomId]);
 
   useEffect(() => {
     if (activeRoomId) {
@@ -71,8 +75,8 @@ export const Maps: React.FC = () => {
       const roomId = params.get('room');
       const page = params.get('page');
 
-      if (page === 'map' && roomId && roomId !== activeRoomId) {
-        const index = ROOM_DATA.findIndex(r => r.id === roomId);
+      if (page === 'map' && roomId && roomId !== activeRoomIdRef.current) {
+        const index = MapsData.findIndex(r => r.id === roomId);
         if (index !== -1) {
           setActiveRoomId(roomId);
           setCurrent(index);
@@ -83,7 +87,7 @@ export const Maps: React.FC = () => {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [activeRoomId, api]);
+  }, [api]);
 
   useEffect(() => {
     if (!api) return;
@@ -91,9 +95,9 @@ export const Maps: React.FC = () => {
     const updateState = () => {
       const index = api.selectedScrollSnap();
       setCurrent(index);
-      const room = ROOM_DATA[index];
+      const room = MapsData[index];
       
-      if (room && room.id !== activeRoomId) {
+      if (room && room.id !== activeRoomIdRef.current) {
         setActiveRoomId(room.id);
       }
     };
@@ -102,7 +106,7 @@ export const Maps: React.FC = () => {
     return () => {
       api.off("select", updateState);
     };
-  }, [api, activeRoomId]);
+  }, [api]);
 
   const handleOpenDetail = useCallback((poster: Poster, roomName: string) => {
     setSelectedData({ poster, roomName });
@@ -110,7 +114,7 @@ export const Maps: React.FC = () => {
   }, []);
 
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
-    const room = ROOM_DATA.find(r => r.id === roomId);
+    const room = MapsData.find(r => r.id === roomId);
     const poster = room?.posters?.find(p => p.id === posterId);
     if (room && poster) {
       handleOpenDetail(poster, room.name);
@@ -122,7 +126,7 @@ export const Maps: React.FC = () => {
   }, [api]);
 
   const handleMapClick = useCallback((roomId: string) => {
-    const index = ROOM_DATA.findIndex(r => r.id === roomId);
+    const index = MapsData.findIndex(r => r.id === roomId);
     if (index !== -1) {
       scrollTo(index);
     }
@@ -149,7 +153,7 @@ export const Maps: React.FC = () => {
           <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white border-slate-200 h-9 w-9 shadow-sm" />
           
           <div className="flex gap-2">
-            {ROOM_DATA.map((_, index) => (
+            {MapsData.map((_, index) => (
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
@@ -166,7 +170,7 @@ export const Maps: React.FC = () => {
         </div>
 
         <CarouselContent className="items-start">
-          {ROOM_DATA.map((room) => {
+          {MapsData.map((room) => {
             const RoomMapComponent = getRoomMapComponent(room.id);
             return (
               <CarouselItem key={room.id} className="pl-4">

@@ -27,7 +27,7 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
         <EventCard />
       </div>
       {timetable.map((item: TimetableItem, index) => (
-        <div key={index} className="relative pl-6 border-l-2 border-slate-200 last:border-transparent pb-4">
+        <div key={item.title+index} className="relative pl-6 border-l-2 border-slate-200 last:border-transparent pb-4">
           {item.time && (
             <>
               <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>

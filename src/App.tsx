@@ -56,7 +56,9 @@ export const App = () => {
   useIsomorphicLayoutEffect(() => {
     if (isReady) {
       const targetScrollY = scrollPositions.current[currentPage] || 0;
-      window.scrollTo({ top: targetScrollY, left: 0, behavior: 'instant' });
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: targetScrollY, left: 0, behavior: 'instant' });
+      });
     }
   }, [currentPage, isReady]);
 
