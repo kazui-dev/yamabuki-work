@@ -21,9 +21,9 @@ export const PosterCard = ({ poster, onOpen }: PosterCardProps) => {
         </p>
       )}
 
-      {(poster.description || poster.details?.description) && (
+      {(poster.description) && (
         <p className="text-xs text-slate-500 mb-2">
-          {poster.description || poster.details?.description}
+          {poster.description}
         </p>
       )}
 

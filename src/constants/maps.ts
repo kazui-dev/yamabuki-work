@@ -1,5 +1,4 @@
 import type { RoomData } from "@/types";
-
 export const ROOM_DATA: RoomData[] = [
   {
     id: "hall",
@@ -9,7 +8,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_hall_01",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 大講義室 poster_hall_01",
         details: {
           description: "ここに説明を入れる 大講義室 poster_hall_01",
         },
@@ -24,7 +22,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_318_01",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 318 poster_318_01",
         details: {
           description: "ここに説明を入れる 318 poster_318_01",
         },
@@ -33,7 +30,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_318_02",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 318 poster_318_02",
         details: {
           description: "ここに説明を入れる 318 poster_318_02",
         },
@@ -42,7 +38,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_318_03",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 318 poster_318_03",
         details: {
           description: "ここに説明を入れる 318 poster_318_03",
         },
@@ -57,7 +52,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_317_01",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 317 poster_317_01",
         details: {
           description: "ここに説明を入れる 317 poster_317_01",
         },
@@ -66,7 +60,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_317_02",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 317 poster_317_02",
         details: {
           description: "ここに説明を入れる 317 poster_317_02",
         },
@@ -75,7 +68,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_317_03",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 317 poster_317_03",
         details: {
           description: "ここに説明を入れる 317 poster_317_03",
         },
@@ -90,7 +82,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_316_01",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 316 poster_316_01",
         details: {
           description: "ここに説明を入れる 316 poster_316_01",
         },
@@ -99,7 +90,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_316_02",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 316 poster_316_02",
         details: {
           description: "ここに説明を入れる 316 poster_316_02",
         },
@@ -108,7 +98,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_316_03",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 316 poster_316_03",
         details: {
           description: "ここに説明を入れる 316 poster_316_03",
         },
@@ -123,7 +112,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_315_01",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 315 poster_315_01",
         details: {
           description: "ここに説明を入れる 315 poster_315_01",
         },
@@ -132,7 +120,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_315_02",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 315 poster_315_02",
         details: {
           description: "ここに説明を入れる 315 poster_315_02",
         },
@@ -141,7 +128,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_315_03",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 315 poster_315_03",
         details: {
           description: "ここに説明を入れる 315 poster_315_03",
         },
@@ -156,7 +142,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_pc_3_01",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_01",
         details: {
           description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_01",
         },
@@ -165,7 +150,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_pc_3_02",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_02",
         details: {
           description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_02",
         },
@@ -174,7 +158,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_pc_3_03",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_03",
         details: {
           description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_03",
         },
@@ -183,7 +166,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_pc_3_04",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_04",
         details: {
           description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_04",
         },
@@ -192,7 +174,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_pc_3_05",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_05",
         details: {
           description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_05",
         },
@@ -201,7 +182,6 @@ export const ROOM_DATA: RoomData[] = [
         id: "poster_pc_3_06",
         title: "タイトル",
         author: "情報科○部○組 ○○",
-        description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_06",
         details: {
           description: "ここに説明を入れる 第3パソコン教室 poster_pc_3_06",
         },
