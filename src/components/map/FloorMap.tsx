@@ -41,7 +41,6 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
           pointer-events: none;
           user-select: none;
           fill: #333333;
-          font-family: sans-serif;
           font-weight: bold;
         }
         
@@ -98,7 +97,7 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
         <text x="227" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>317</text>
         <text x="324" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>316</text>
         <text x="413.3" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>315</text>
-                <text x="137.8" y="218" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '12px' }}>第3パソコン</text>
+        <text x="137.8" y="218" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '12px' }}>第3パソコン</text>
         <text x="137.8" y="234" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '12px' }}>教室</text>
       </g>
     </svg>

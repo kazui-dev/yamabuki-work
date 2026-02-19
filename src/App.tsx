@@ -22,6 +22,10 @@ export const App = () => {
 
     const params = new URLSearchParams(window.location.search);
     const pageFromUrl = params.get('page') as PageID;
+
+    if (!window.history.state) {
+      window.history.replaceState({ page: pageFromUrl || 'timetable', scrollY: 0 }, '');
+    }
     
     if (pageFromUrl === 'map') {
       setCurrentPage('map');
@@ -79,6 +83,15 @@ export const App = () => {
     setCurrentPage(page);
   };
 
+  const handleLogoClick = () => {
+    if (currentPage === 'timetable') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      scrollPositions.current['timetable'] = 0;
+      handleNavigate('timetable');
+    }
+  };
+
   if (!isReady) {
     return <div className="min-h-screen bg-slate-50" />;
   }
@@ -89,7 +102,7 @@ export const App = () => {
         <div className="max-w-md mx-auto flex items-center justify-between gap-3">
           <h1 
             className="text-sm sm:text-base font-extrabold text-slate-800 cursor-pointer hover:opacity-80 transition-opacity shrink truncate"
-            onClick={() => handleNavigate('timetable')}
+            onClick={handleLogoClick}
           >
             新宿山吹高校情報科発表会
           </h1>
@@ -128,5 +141,4 @@ export const App = () => {
       </main>
     </div>
   );
-
 };
