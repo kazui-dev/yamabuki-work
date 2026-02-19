@@ -1,13 +1,13 @@
-import React from 'react';
-import type { RoomMapProps } from "./types";
+import React from "react";
+import type { RoomMapProps } from "@/types";
 
-export const Room318: React.FC<RoomMapProps> = ({ className = '', onPosterClick }) => {
+export const Room318: React.FC<RoomMapProps> = ({ className = "", onPosterClick }) => {
   const handleClick = (e: React.MouseEvent<SVGGElement>) => {
     const target = e.target as SVGElement;
-    const posterGroup = target.closest('[data-poster-id]');
+    const posterGroup = target.closest("[data-poster-id]");
     
     if (posterGroup && onPosterClick) {
-      const posterId = posterGroup.getAttribute('data-poster-id');
+      const posterId = posterGroup.getAttribute("data-poster-id");
       if (posterId) onPosterClick(posterId);
     }
   };

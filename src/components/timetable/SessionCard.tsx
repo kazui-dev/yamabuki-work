@@ -59,6 +59,7 @@ export const SessionCard = ({ session, onNavigate, onOpenDetail }: SessionCardPr
               }
             }}
           >
+            {session.action.icon && <session.action.icon size={14} />}
             {session.action.label}
           </Button>
         </div>

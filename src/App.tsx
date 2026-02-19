@@ -56,7 +56,9 @@ export const App = () => {
   useIsomorphicLayoutEffect(() => {
     if (isReady) {
       const targetScrollY = scrollPositions.current[currentPage] || 0;
-      window.scrollTo({ top: targetScrollY, left: 0, behavior: 'instant' });
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: targetScrollY, left: 0, behavior: 'instant' });
+      });
     }
   }, [currentPage, isReady]);
 
@@ -101,7 +103,7 @@ export const App = () => {
       <header className="sticky top-0 z-50 w-full bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 py-2">
         <div className="max-w-md mx-auto flex items-center justify-between gap-3">
           <h1 
-            className="text-sm sm:text-base font-extrabold text-slate-800 cursor-pointer hover:opacity-80 transition-opacity shrink truncate"
+            className="text-sm sm:text-base font-bold text-slate-800 cursor-pointer hover:opacity-80 transition-opacity shrink truncate"
             onClick={handleLogoClick}
           >
             新宿山吹高校情報科発表会
