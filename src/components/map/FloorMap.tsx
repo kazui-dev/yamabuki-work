@@ -6,15 +6,6 @@ type Props = {
   activeRoomId?: string | null;
 };
 
-const ACTIVE_ROOMS = [
-  { id: "hall", width: "96.6", height: "58.41", transform: "translate(96.6 58.4) rotate(180)" },
-  { id: "318", x: "96.6", width: "82.4", height: "58.41", transform: "translate(275.6 58.4) rotate(180)" },
-  { id: "317", x: "179", width: "96", height: "58.41", transform: "translate(454 58.4) rotate(180)" },
-  { id: "316", x: "275", width: "98", height: "58.41", transform: "translate(648 58.4) rotate(180)" },
-  { id: "315", x: "373", width: "80.5", height: "58.41", transform: "translate(826.6 58.4) rotate(180)" },
-  { id: "pc_3", x: "96.6", y: "196.8", width: "82.4", height: "58.35", transform: "translate(275.6 451.9) rotate(180)" },
-];
-
 export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomId }) => {
   const handleClick = (e: React.MouseEvent<SVGGElement>) => {
     const target = e.target as SVGElement;
@@ -76,18 +67,12 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
       </g>
 
       <g id="active_area">
-        {ACTIVE_ROOMS.map((room) => (
-          <rect
-            key={room.id}
-            data-room-id={room.id}
-            x={room.x}
-            y={room.y}
-            width={room.width}
-            height={room.height}
-            transform={room.transform}
-            style={getActiveStyle(room.id)}
-          />
-        ))}
+        <rect data-room-id="hall" width="96.6" height="58.41" transform="translate(96.6 58.4) rotate(180)" style={getActiveStyle("hall")} />
+        <rect data-room-id="318" x="96.6" width="82.4" height="58.41" transform="translate(275.6 58.4) rotate(180)" style={getActiveStyle("318")} />
+        <rect data-room-id="317" x="179" width="96" height="58.41" transform="translate(454 58.4) rotate(180)" style={getActiveStyle("317")} />
+        <rect data-room-id="316" x="275" width="98" height="58.41" transform="translate(648 58.4) rotate(180)" style={getActiveStyle("316")} />
+        <rect data-room-id="315" x="373" width="80.5" height="58.41" transform="translate(826.6 58.4) rotate(180)" style={getActiveStyle("315")} />
+        <rect data-room-id="pc_3" x="96.6" y="196.8" width="82.4" height="58.35" transform="translate(275.6 451.9) rotate(180)" style={getActiveStyle("pc_3")} />
       </g>
 
       <g id="facilities">
