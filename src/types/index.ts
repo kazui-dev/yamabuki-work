@@ -32,6 +32,7 @@ export interface Poster {
   id: string;
   title: string;
   author: string;
+  location?: string;
   description?: string;
   details?: SessionDetails;
 }
