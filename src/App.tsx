@@ -115,6 +115,7 @@ export const App = () => {
       <header className="sticky top-0 z-50 w-full bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 px-4 py-2">
         <div className="max-w-md mx-auto flex items-center justify-between gap-3">
           <AppMenu
+            currentPage={currentPage}
             onNavigate={handleNavigate}
             onOpenPoster={(poster, roomName) => {
               setSelectedPosterData({ poster, roomName });

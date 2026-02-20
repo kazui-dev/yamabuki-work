@@ -9,13 +9,14 @@ import type { Poster } from '@/types';
 import { useTheme } from '@/lib/theme';
 
 interface AppMenuProps {
+  currentPage: 'timetable' | 'map';
   onNavigate: (page: 'timetable' | 'map') => void;
   onOpenPoster: (poster: Poster, roomName: string) => void;
   onSelectRoom: (roomId: string) => void;
   isPosterDrawerOpen: boolean;
 }
 
-export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawerOpen }: AppMenuProps) => {
+export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, isPosterDrawerOpen }: AppMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, resolvedTheme, setTheme } = useTheme();
   const roomNameById = Object.fromEntries(MapsData.map((room) => [room.id, room.name]));
@@ -44,7 +45,11 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
             <nav className="p-4 space-y-2">
               <button
                 onClick={() => handleNavigate('timetable')}
-                className="w-full flex items-center gap-2.5 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-800 dark:text-slate-200 text-sm font-medium"
+                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
+                  currentPage === 'timetable'
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'
+                    : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200'
+                }`}
               >
                 <CalendarDays size={18} className="text-slate-600 dark:text-slate-300" />
                 タイムテーブル
@@ -52,7 +57,11 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
 
               <button
                 onClick={() => handleNavigate('map')}
-                className="w-full flex items-center gap-2.5 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-800 dark:text-slate-200 text-sm font-medium"
+                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
+                  currentPage === 'map'
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'
+                    : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200'
+                }`}
               >
                 <MapPinned size={18} className="text-slate-600 dark:text-slate-300" />
                 フロアマップ
@@ -137,33 +146,22 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
               </PopoverTrigger>
               <PopoverContent className="w-56 p-2" side="top" align="start">
                 <div className="space-y-1">
-                  <button
-                    onClick={() => setTheme('light')}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                    aria-current={theme === 'light' ? 'true' : undefined}
-                  >
-                    <Sun size={18} className="text-slate-600 dark:text-slate-300" />
-                    <span className="text-sm font-medium text-slate-800 dark:text-slate-200 flex-1 text-left">ライトモード</span>
-                    {theme === 'light' && <Check size={16} className="text-slate-600 dark:text-slate-300" />}
-                  </button>
-                  <button
-                    onClick={() => setTheme('dark')}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                    aria-current={theme === 'dark' ? 'true' : undefined}
-                  >
-                    <MoonStar size={18} className="text-slate-600 dark:text-slate-300" />
-                    <span className="text-sm font-medium text-slate-800 dark:text-slate-200 flex-1 text-left">ダークモード</span>
-                    {theme === 'dark' && <Check size={16} className="text-slate-600 dark:text-slate-300" />}
-                  </button>
-                  <button
-                    onClick={() => setTheme('system')}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                    aria-current={theme === 'system' ? 'true' : undefined}
-                  >
-                    <Smartphone size={18} className="text-slate-600 dark:text-slate-300" />
-                    <span className="text-sm font-medium text-slate-800 dark:text-slate-200 flex-1 text-left">端末の設定を使う</span>
-                    {theme === 'system' && <Check size={16} className="text-slate-600 dark:text-slate-300" />}
-                  </button>
+                  {[
+                    { themeValue: 'light' as const, icon: Sun, label: 'ライトモード' },
+                    { themeValue: 'dark' as const, icon: MoonStar, label: 'ダークモード' },
+                    { themeValue: 'system' as const, icon: Smartphone, label: '端末の設定を使う' },
+                  ].map(({ themeValue, icon: Icon, label }) => (
+                    <button
+                      key={themeValue}
+                      onClick={() => setTheme(themeValue)}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                      aria-current={theme === themeValue ? 'true' : undefined}
+                    >
+                      <Icon size={18} className="text-slate-600 dark:text-slate-300" />
+                      <span className="text-sm font-medium text-slate-800 dark:text-slate-200 flex-1 text-left">{label}</span>
+                      {theme === themeValue && <Check size={16} className="text-slate-600 dark:text-slate-300" />}
+                    </button>
+                  ))}
                 </div>
               </PopoverContent>
             </Popover>
