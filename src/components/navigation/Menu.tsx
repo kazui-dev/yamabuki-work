@@ -122,25 +122,12 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
                   type="button"
                   className="w-full flex items-center gap-1.5 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-800 dark:text-slate-200 text-sm font-medium"
                 >
-                  {theme === 'system' && resolvedTheme === 'dark' && (
+                  {resolvedTheme === 'dark' ? (
                     <>
                       <MoonStar size={18} className="text-slate-600 dark:text-slate-300" />
                       ダークモード
                     </>
-                  )}
-                  {theme === 'system' && resolvedTheme === 'light' && (
-                    <>
-                      <Sun size={18} className="text-slate-600 dark:text-slate-300" />
-                      ライトモード
-                    </>
-                  )}
-                  {theme === 'dark' && (
-                    <>
-                      <MoonStar size={18} className="text-slate-600 dark:text-slate-300" />
-                      ダークモード
-                    </>
-                  )}
-                  {theme === 'light' && (
+                  ) : (
                     <>
                       <Sun size={18} className="text-slate-600 dark:text-slate-300" />
                       ライトモード
