@@ -140,6 +140,7 @@ export const App = () => {
               setCurrentPage('map');
             }}
             isPosterDrawerOpen={isPosterDrawerOpen}
+            selectedPosterId={selectedPosterData?.poster.id ?? null}
           />
 
           <h1 

@@ -14,16 +14,19 @@ interface AppMenuProps {
   onOpenPoster: (poster: Poster, roomName: string) => void;
   onSelectRoom: (roomId: string) => void;
   isPosterDrawerOpen: boolean;
+  selectedPosterId: string | null;
 }
 
-export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, isPosterDrawerOpen }: AppMenuProps) => {
+export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, isPosterDrawerOpen, selectedPosterId }: AppMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, resolvedTheme, setTheme } = useTheme();
   const roomNameById = Object.fromEntries(MapsData.map((room) => [room.id, room.name]));
 
   const handleNavigate = (page: 'timetable' | 'map') => {
     onNavigate(page);
-    setIsOpen(false);
+    requestAnimationFrame(() => {
+      setIsOpen(false);
+    });
   };
 
   return (
@@ -47,7 +50,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                 onClick={() => handleNavigate('timetable')}
                 className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
                   currentPage === 'timetable'
-                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'
+                    ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
                     : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200'
                 }`}
               >
@@ -59,7 +62,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                 onClick={() => handleNavigate('map')}
                 className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
                   currentPage === 'map'
-                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'
+                    ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
                     : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200'
                 }`}
               >
@@ -102,13 +105,17 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                           <button
                             key={poster.id}
                             onClick={() => onOpenPoster(poster, roomName)}
-                            className="w-full text-left rounded-md px-2 py-1 hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 transition-colors"
+                            className={`w-full text-left rounded-md px-2 py-1 transition-colors ${
+                              isPosterDrawerOpen && selectedPosterId === poster.id
+                                ? 'bg-slate-100 dark:bg-slate-800'
+                                : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800'
+                            }`}
                           >
                             <span className="flex items-center justify-between gap-2">
                               <p className="text-sm text-slate-800 dark:text-slate-200 font-medium truncate">
                                 {poster.title}
                               </p>
-                              {isPosterDrawerOpen ? (
+                              {isPosterDrawerOpen && selectedPosterId === poster.id ? (
                                 <ChevronDown size={14} className="text-slate-500 dark:text-slate-400 shrink-0" />
                               ) : (
                                 <ChevronUp size={14} className="text-slate-500 dark:text-slate-400 shrink-0" />
