@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
-import { Menu as MenuIcon, CalendarDays, MapPinned, MapPin, ChevronUp, ChevronDown } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Menu as MenuIcon, CalendarDays, MapPinned, MapPin, ChevronUp, ChevronDown, Sun, MoonStar, Smartphone, Check } from 'lucide-react';
 import { MapsData } from '@/constants/maps';
 import { POSTERS_BY_LOCATION } from '@/constants/posters';
 import type { Poster } from '@/types';
+import { useTheme } from '@/lib/theme';
 
 interface AppMenuProps {
   onNavigate: (page: 'timetable' | 'map') => void;
@@ -15,6 +17,7 @@ interface AppMenuProps {
 
 export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawerOpen }: AppMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const roomNameById = Object.fromEntries(MapsData.map((room) => [room.id, room.name]));
 
   const handleNavigate = (page: 'timetable' | 'map') => {
@@ -28,41 +31,37 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
         <Button
           variant="ghost"
           size="icon"
-          className="h-9 w-9 p-0 hover:bg-slate-200/50 [&_svg]:size-5"
+          className="h-9 w-9 p-0 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 [&_svg]:size-5"
           aria-label="メニュー"
         >
-          <MenuIcon />
+          <MenuIcon className="text-slate-700 dark:text-slate-300" />
         </Button>
       </DrawerTrigger>
 
       <DrawerContent direction="left" className="w-64 p-0">
         <div className="h-full flex flex-col overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-200">
-            <h2 className="font-bold text-slate-800">メニュー</h2>
-          </div>
-
           <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <nav className="p-4 space-y-2">
               <button
                 onClick={() => handleNavigate('timetable')}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 transition-colors text-slate-800 text-sm font-medium"
+                className="w-full flex items-center gap-2.5 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-800 dark:text-slate-200 text-sm font-medium"
               >
-                <CalendarDays size={18} className="text-slate-600" />
+                <CalendarDays size={18} className="text-slate-600 dark:text-slate-300" />
                 タイムテーブル
               </button>
 
               <button
                 onClick={() => handleNavigate('map')}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 transition-colors text-slate-800 text-sm font-medium"
+                className="w-full flex items-center gap-2.5 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-800 dark:text-slate-200 text-sm font-medium"
               >
-                <MapPinned size={18} className="text-slate-600" />
+                <MapPinned size={18} className="text-slate-600 dark:text-slate-300" />
                 フロアマップ
               </button>
 
-              <div className="h-px bg-slate-200 my-4" />
+              <div className="h-px bg-slate-200 dark:bg-slate-700 my-4" />
 
               <div className="px-4 pt-1 pb-0.5">
-                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">
+                <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">
                   ポスター発表
                 </h3>
               </div>
@@ -83,7 +82,7 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
                           onSelectRoom(room.id);
                           setIsOpen(false);
                         }}
-                        className="mb-1 flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-700"
+                        className="mb-1 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                       >
                         <MapPin size={12} />
                         {roomName}
@@ -94,16 +93,16 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
                           <button
                             key={poster.id}
                             onClick={() => onOpenPoster(poster, roomName)}
-                            className="w-full text-left rounded-md px-2 py-1 hover:bg-slate-100 transition-colors"
+                            className="w-full text-left rounded-md px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                           >
                             <span className="flex items-center justify-between gap-2">
-                              <p className="text-sm text-slate-800 font-medium truncate">
+                              <p className="text-sm text-slate-800 dark:text-slate-200 font-medium truncate">
                                 {poster.title}
                               </p>
                               {isPosterDrawerOpen ? (
-                                <ChevronDown size={14} className="text-slate-500 shrink-0" />
+                                <ChevronDown size={14} className="text-slate-500 dark:text-slate-400 shrink-0" />
                               ) : (
-                                <ChevronUp size={14} className="text-slate-500 shrink-0" />
+                                <ChevronUp size={14} className="text-slate-500 dark:text-slate-400 shrink-0" />
                               )}
                             </span>
                           </button>
@@ -114,6 +113,69 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
                 })}
               </div>
             </nav>
+          </div>
+
+          <div className="border-t border-slate-200 dark:border-slate-700 p-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  className="w-full flex items-center gap-1.5 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-800 dark:text-slate-200 text-sm font-medium"
+                >
+                  {theme === 'system' ? (
+                    resolvedTheme === 'dark' ? (
+                      <>
+                        <MoonStar size={18} className="text-slate-600 dark:text-slate-300" />
+                        ダークモード
+                      </>
+                    ) : (
+                      <>
+                        <Sun size={18} className="text-slate-600 dark:text-slate-300" />
+                        ライトモード
+                      </>
+                    )
+                  ) : theme === 'dark' ? (
+                    <>
+                      <MoonStar size={18} className="text-slate-600 dark:text-slate-300" />
+                      ダークモード
+                    </>
+                  ) : (
+                    <>
+                      <Sun size={18} className="text-slate-600 dark:text-slate-300" />
+                      ライトモード
+                    </>
+                  )}
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-56 p-2" side="top" align="start">
+                <div className="space-y-1">
+                  <button
+                    onClick={() => setTheme('light')}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <Sun size={18} className="text-slate-600 dark:text-slate-300" />
+                    <span className="text-sm font-medium text-slate-800 dark:text-slate-200 flex-1 text-left">ライトモード</span>
+                    {theme === 'light' && <Check size={16} className="text-slate-600 dark:text-slate-300" />}
+                  </button>
+                  <button
+                    onClick={() => setTheme('dark')}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <MoonStar size={18} className="text-slate-600 dark:text-slate-300" />
+                    <span className="text-sm font-medium text-slate-800 dark:text-slate-200 flex-1 text-left">ダークモード</span>
+                    {theme === 'dark' && <Check size={16} className="text-slate-600 dark:text-slate-300" />}
+                  </button>
+                  <button
+                    onClick={() => setTheme('system')}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <Smartphone size={18} className="text-slate-600 dark:text-slate-300" />
+                    <span className="text-sm font-medium text-slate-800 dark:text-slate-200 flex-1 text-left">端末の設定を使う</span>
+                    {theme === 'system' && <Check size={16} className="text-slate-600 dark:text-slate-300" />}
+                  </button>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
       </DrawerContent>

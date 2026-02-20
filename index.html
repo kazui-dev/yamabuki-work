@@ -23,6 +23,22 @@
   </head>
   <body class="min-h-screen bg-slate-50 selection:bg-slate-400/30 text-slate-900 antialiased">
     <div id="root"></div>
+    <script>
+      (() => {
+        const THEME_STORAGE_KEY = 'theme-preference';
+        const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+        const theme = storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system'
+          ? storedTheme
+          : 'system';
+
+        const isDark = theme === 'dark' || (
+          theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches
+        );
+
+        document.documentElement.classList.toggle('dark', isDark);
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -27,32 +27,32 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
         <EventCard />
       </div>
       {timetable.map((item: TimetableItem, index) => (
-        <div key={item.title+index} className="relative pl-6 border-l-2 border-slate-200 last:border-transparent pb-4">
+        <div key={item.title+index} className="relative pl-6 border-l-2 border-slate-200 dark:border-slate-700 last:border-transparent pb-4">
           {item.time && (
             <>
-              <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 border-2 border-white z-10"></div>
-              <div className="flex items-center gap-1.5 leading-none text-sm text-slate-500 font-bold mb-3">
+              <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 dark:bg-slate-500 border-2 border-white dark:border-slate-950 z-10"></div>
+              <div className="flex items-center gap-1.5 leading-none text-sm text-slate-500 dark:text-slate-400 font-bold mb-3">
                 <Clock size={16} />
                 {item.time}
               </div>
             </>
           )}
 
-          <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <div className="p-5 pb-4">
-              <h2 className="text-lg font-bold text-slate-800">
+              <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">
                 {item.title}
               </h2>
 
               {item.author && (
-                <p className="flex items-center gap-2 leading-none text-sm text-slate-600 mt-2">
+                <p className="flex items-center gap-2 leading-none text-sm text-slate-600 dark:text-slate-300 mt-2">
                   <Speech size={14} />
                   {item.author}
                 </p>
               )}
 
               {item.description && (
-                <p className="text-xs text-slate-500 mt-2">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
                   {item.description}
                 </p>
               )}
@@ -61,7 +61,7 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
                 <div className="mt-4">
                   <Button 
                     size="sm"
-                    className="w-full bg-slate-200 hover:bg-slate-300 text-slate-800" 
+                    className="w-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100" 
                     onClick={() => {
                       if (item.action) {
                         onNavigate(item.action.targetView);
@@ -76,7 +76,7 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
             </div>
 
             {item.sessions && (
-              <div className="border-t border-slate-100 bg-slate-50/50">
+              <div className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
                 {item.sessions.map((session, sIndex) => (
                   <SessionCard 
                     key={sIndex} 

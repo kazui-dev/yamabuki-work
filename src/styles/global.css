@@ -127,6 +127,14 @@
   section {
     scroll-margin-top: 4rem;
   }
+  
+  /* テーマ切り替え時は transition を無効化 */
+  .theme-transitioning,
+  .theme-transitioning *,
+  .theme-transitioning *::before,
+  .theme-transitioning *::after {
+    transition: none !important;
+  }
 }
 
 .lucide rect,

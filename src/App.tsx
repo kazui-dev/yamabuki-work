@@ -107,12 +107,12 @@ export const App = () => {
   };
 
   if (!isReady) {
-    return <div className="min-h-screen bg-slate-50" />;
+    return <div className="min-h-screen bg-slate-50 dark:bg-slate-950" />;
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-50 w-full bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 py-2">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+      <header className="sticky top-0 z-50 w-full bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 px-4 py-2">
         <div className="max-w-md mx-auto flex items-center justify-between gap-3">
           <AppMenu
             onNavigate={handleNavigate}
@@ -123,14 +123,26 @@ export const App = () => {
             onSelectRoom={(roomId) => {
               syncMapRoom(roomId);
               setSelectedRoomId(roomId);
+
+              window.history.replaceState(
+                { ...(window.history.state ?? {}), scrollY: 0 },
+                ''
+              );
               scrollPositions.current.map = 0;
+
+              if (currentPage === 'map') {
+                requestAnimationFrame(() => {
+                  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                });
+              }
+
               setCurrentPage('map');
             }}
             isPosterDrawerOpen={isPosterDrawerOpen}
           />
 
           <h1 
-            className="text-sm sm:text-base font-bold text-slate-800 cursor-pointer hover:opacity-80 transition-opacity shrink truncate flex-1"
+            className="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200 cursor-pointer hover:opacity-80 transition-opacity shrink truncate flex-1"
             onClick={handleLogoClick}
           >
             新宿山吹高校情報科発表会
@@ -141,7 +153,7 @@ export const App = () => {
             onValueChange={(value) => handleNavigate(value as PageID)} 
             className="w-24 sm:w-28 shrink-0"
           >
-            <TabsList className="grid w-full grid-cols-2 h-9 p-1 bg-slate-200/50">
+            <TabsList className="grid w-full grid-cols-2 h-9 p-1 bg-slate-200/50 dark:bg-slate-800/50">
               <TabsTrigger 
                 value="timetable" 
                 className="flex items-center justify-center h-full px-0 data-[state=active]:shadow-none"
