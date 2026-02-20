@@ -3,6 +3,8 @@ import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/lib/utils"
 
+type DrawerDirection = "top" | "bottom" | "left" | "right"
+
 const Drawer = ({
   shouldScaleBackground = true,
   ...props
@@ -34,19 +36,25 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & {
+    direction?: DrawerDirection
+  }
+>(({ className, children, direction = "bottom", ...props }, ref) => (
   <DrawerPortal>
     <DrawerOverlay />
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background",
+        "fixed z-50 flex flex-col border bg-background",
+        direction === "bottom" && "inset-x-0 bottom-0 mt-24 h-auto rounded-t-[10px]",
+        direction === "top" && "inset-x-0 top-0 mb-24 h-auto rounded-b-[10px]",
+        direction === "left" && "inset-y-0 left-0 h-full w-3/4 max-w-sm border-r",
+        direction === "right" && "inset-y-0 right-0 h-full w-3/4 max-w-sm border-l",
         className
       )}
       {...props}
     >
-      <div className="mx-auto mt-4 h-2 w-25 rounded-full bg-muted" />
+      {direction === "bottom" ? <div className="mx-auto mt-4 h-2 w-25 rounded-full bg-muted" /> : null}
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
@@ -82,7 +90,7 @@ const DrawerTitle = React.forwardRef<
   <DrawerPrimitive.Title
     ref={ref}
     className={cn(
-      "text-lg font-semibold leading-none tracking-tight",
+      "text-lg font-semibold leading-none tracking-tight text-slate-800 dark:text-slate-200",
       className
     )}
     {...props}

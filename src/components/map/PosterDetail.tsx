@@ -24,23 +24,23 @@ export const PosterDetail = ({ poster, roomName }: PosterDetailProps) => {
           <DrawerDescription className="flex flex-wrap items-center w-full px-6 gap-y-2 mt-2">
             {poster.author && (
               <span className="flex items-center gap-1.5">
-                <User size={14} className="text-slate-500" /> 
+                <User size={14} className="text-muted-foreground" /> 
                 {poster.author}
               </span>
             )}
             <span className="flex items-center gap-1.5 ml-auto">
-              <MapPin size={14} className="text-slate-500" /> 
+              <MapPin size={14} className="text-muted-foreground" /> 
               {roomName}
             </span>
           </DrawerDescription>
         </DrawerHeader>
 
         <div className="p-5 overflow-y-auto max-h-[60vh]">
-          <div className="text-sm text-slate-700 whitespace-pre-wrap">
+          <div className="text-sm text-foreground whitespace-pre-wrap">
             {poster.details?.description || poster.description || "詳細情報"}
           </div>
           {poster.details?.image && (
-            <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-4">
+            <div className="rounded-md overflow-hidden border border-border bg-muted/30 aspect-video relative mt-4">
               <img
                 src={poster.details.image}
                 alt={poster.title}
@@ -52,7 +52,7 @@ export const PosterDetail = ({ poster, roomName }: PosterDetailProps) => {
 
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">閉じる</Button>
+            <Button variant="outline" className="text-slate-700 dark:text-slate-300">閉じる</Button>
           </DrawerClose>
         </DrawerFooter>
       </div>

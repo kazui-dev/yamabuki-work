@@ -20,9 +20,25 @@
     <meta name="twitter:title" content="情報科発表会" />
     <meta name="twitter:description" content="第9回新宿山吹高校情報科発表会 特設サイト" />
     <meta name="twitter:image" content="https://yamabuki.work/ogp-image.png" />
+    <meta name="theme-color" id="themeColorMeta" content="#fafaf8" />
   </head>
-  <body class="min-h-screen bg-slate-50 selection:bg-slate-400/30 text-slate-900 antialiased">
+  <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 selection:bg-slate-400/30 dark:selection:bg-slate-700/30 antialiased">
     <div id="root"></div>
+    <script>
+      (() => {
+        const storedTheme = localStorage.getItem('theme-preference');
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const isDark = storedTheme === 'dark' || (
+          (storedTheme === 'system' || !storedTheme) && mediaQuery.matches
+        );
+        
+        document.documentElement.classList.toggle('dark', isDark);
+        document.getElementById('themeColorMeta')?.setAttribute(
+          'content',
+          isDark ? '#0f172a' : '#fafaf8'
+        );
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

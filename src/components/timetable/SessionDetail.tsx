@@ -30,11 +30,11 @@ export const SessionDetail = ({ title, author, details }: SessionDetailProps) =>
         </DrawerHeader>
 
         <div className="p-5 overflow-y-auto max-h-[60vh]">
-          <div className="text-sm text-slate-700 whitespace-pre-wrap">
+          <div className="text-sm text-foreground whitespace-pre-wrap">
             {details.description}
           </div>
           {details.image && (
-            <div className="rounded-md overflow-hidden border border-slate-100 bg-slate-50 aspect-video relative mt-4">
+            <div className="rounded-md overflow-hidden border border-border bg-muted/30 aspect-video relative mt-4">
               <img
                 src={details.image}
                 alt={title}
@@ -46,7 +46,7 @@ export const SessionDetail = ({ title, author, details }: SessionDetailProps) =>
 
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">閉じる</Button>
+            <Button variant="outline" className="text-slate-700 dark:text-slate-300">閉じる</Button>
           </DrawerClose>
         </DrawerFooter>
       </div>
