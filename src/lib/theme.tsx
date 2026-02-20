@@ -57,6 +57,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const nextResolvedTheme = theme === 'system' ? getSystemTheme() : theme;
     setResolvedTheme(nextResolvedTheme);
     applyResolvedTheme(nextResolvedTheme);
+    updateThemeColor(nextResolvedTheme);
 
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
@@ -72,6 +73,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       const nextResolvedTheme = getSystemTheme();
       setResolvedTheme(nextResolvedTheme);
       applyResolvedTheme(nextResolvedTheme);
+      updateThemeColor(nextResolvedTheme);
     };
 
     mediaQuery.addEventListener('change', handleSystemThemeChange);
@@ -96,4 +98,11 @@ export const useTheme = () => {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
+};
+
+export const updateThemeColor = (resolvedTheme: ResolvedTheme) => {
+  const metaTag = document.getElementById('themeColorMeta');
+  if (metaTag) {
+    metaTag.setAttribute('content', resolvedTheme === 'dark' ? '#0f172a' : '#fafaf8');
+  }
 };
