@@ -10,7 +10,7 @@ interface PosterCardProps {
 
 export const PosterCard = ({ poster, onOpen, isDrawerOpen }: PosterCardProps) => {
   return (
-    <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-slate-50 active:bg-slate-100 dark:hover:bg-slate-800/40 dark:active:bg-slate-800/60 transition-colors">
+    <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-slate-50 active:bg-slate-50 dark:hover:bg-slate-800/40 dark:active:bg-slate-800/40 transition-colors">
       <h3 className="font-bold text-slate-800 dark:text-slate-200 text-sm mb-2">
         {poster.title}
       </h3>

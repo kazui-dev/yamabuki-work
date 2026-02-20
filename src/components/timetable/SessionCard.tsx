@@ -11,7 +11,7 @@ interface SessionCardProps {
 
 export const SessionCard = ({ session, onNavigate, onOpenDetail, isDrawerOpen }: SessionCardProps) => {
   return (
-    <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-slate-50 active:bg-slate-100 dark:hover:bg-slate-800/40 dark:active:bg-slate-800/60 transition-colors">
+    <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-slate-50 active:bg-slate-50 dark:hover:bg-slate-800/40 dark:active:bg-slate-800/40 transition-colors">
       {session.time && (
         <div className="flex items-center gap-1.5 leading-none text-xs text-slate-500 dark:text-slate-400 font-bold mb-2">
           <Clock size={14} />

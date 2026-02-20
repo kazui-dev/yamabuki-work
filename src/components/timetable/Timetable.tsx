@@ -61,7 +61,7 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
                 <div className="mt-4">
                   <Button 
                     size="sm"
-                    className="w-full bg-slate-200 hover:bg-slate-300 active:bg-slate-400 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-500 text-slate-800 dark:text-slate-100" 
+                    className="w-full bg-slate-200 hover:bg-slate-300 active:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-600 text-slate-800 dark:text-slate-100" 
                     onClick={() => {
                       if (item.action) {
                         onNavigate(item.action.targetView);
