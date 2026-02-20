@@ -36,11 +36,6 @@ const getInitialTheme = (): Theme => {
 const applyResolvedTheme = (resolvedTheme: ResolvedTheme) => {
   const root = document.documentElement;
   
-  const currentColorScheme = window.getComputedStyle(root).colorScheme;
-  if (currentColorScheme !== resolvedTheme) {
-    root.style.colorScheme = resolvedTheme;
-  }
-  
   root.classList.add('theme-transitioning');
   root.classList.toggle('dark', resolvedTheme === 'dark');
   
