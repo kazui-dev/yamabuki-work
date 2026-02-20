@@ -18,9 +18,10 @@ import { roomFromSearch, syncMapRoom } from '@/lib/history';
 
 interface MapsProps {
   selectedRoomId?: string | null;
+  onSelectedRoomHandled?: () => void;
 }
 
-export const Maps: React.FC<MapsProps> = ({ selectedRoomId }) => {
+export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled }) => {
   const [api, setApi] = useState<CarouselApi>();
 
   const getInitialRoomId = () => {
@@ -79,8 +80,9 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId }) => {
         setCurrent(index);
         api?.scrollTo(index);
       }
+      onSelectedRoomHandled?.();
     }
-  }, [selectedRoomId, api]);
+  }, [selectedRoomId, api, onSelectedRoomHandled]);
 
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
     const room = MapsData.find(r => r.id === roomId);
@@ -160,7 +162,7 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId }) => {
                         <PosterCard 
                           key={poster.id} 
                           poster={poster} 
-                          isDrawerOpen={isDrawerOpen}
+                          isExpanded={isDrawerOpen && selectedData?.poster.id === poster.id}
                           onOpen={() => handleOpenDetail(poster, room.name)} 
                         />
                       ))}

@@ -43,11 +43,9 @@ const applyResolvedTheme = (resolvedTheme: ResolvedTheme) => {
   root.classList.add('theme-transitioning');
   root.classList.toggle('dark', resolvedTheme === 'dark');
   
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      root.classList.remove('theme-transitioning');
-    });
-  });
+  setTimeout(() => {
+    root.classList.remove('theme-transitioning');
+  }, 0);
 };
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
@@ -90,7 +88,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       resolvedTheme,
       setTheme,
     }),
-    [theme, resolvedTheme]
+    [theme, resolvedTheme, setTheme]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

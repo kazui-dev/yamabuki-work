@@ -1,5 +1,5 @@
 import type { TimetableItem } from "@/types";
-import { MapPinned } from "lucide-react";
+import { MapPinned, ClipboardList } from "lucide-react";
 
 export const timetable: TimetableItem[] = [
   {
@@ -55,5 +55,10 @@ export const timetable: TimetableItem[] = [
   {
     time: "14:50",
     title: "閉会式",
+    action: {
+      icon: ClipboardList,
+      label: "来場者アンケートへ",
+      targetView: "survey"
+    }
   }
 ];

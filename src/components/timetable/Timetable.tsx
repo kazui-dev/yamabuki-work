@@ -6,10 +6,10 @@ import { Clock, Speech } from "lucide-react";
 import { timetable } from "@/constants/timetable";
 import { SessionCard } from "./SessionCard";
 import { SessionDetail } from "./SessionDetail";
-import type { TimetableItem, TimetableSession } from "@/types";
+import type { PageID, TimetableItem, TimetableSession } from "@/types";
 
 interface TimetableProps {
-  onNavigate: (view: 'timetable' | 'map') => void;
+  onNavigate: (view: PageID) => void;
 }
 
 export const Timetable = ({ onNavigate }: TimetableProps) => {
@@ -27,7 +27,7 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
         <EventCard />
       </div>
       {timetable.map((item: TimetableItem, index) => (
-        <div key={item.title+index} className="relative pl-6 border-l-2 border-slate-200 dark:border-slate-700 last:border-transparent pb-4">
+        <div key={`${item.title}-${index}`} className="relative pl-6 border-l-2 border-slate-200 dark:border-slate-700 last:border-transparent pb-4">
           {item.time && (
             <>
               <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 dark:bg-slate-500 border-2 border-white dark:border-slate-950 z-10"></div>
@@ -83,7 +83,7 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
                     session={session} 
                     onNavigate={onNavigate} 
                     onOpenDetail={handleOpenDetail}
-                    isDrawerOpen={isDrawerOpen}
+                    isExpanded={isDrawerOpen && selectedSession === session}
                   />
                 ))}
               </div>

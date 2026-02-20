@@ -1,3 +1,5 @@
+export type PageID = 'timetable' | 'map' | 'survey';
+
 export interface SessionDetails {
   description: string;
   image?: string; 
@@ -6,7 +8,7 @@ export interface SessionDetails {
 export interface ActionButton {
   icon?: React.ComponentType<{ size: number; className?: string }>;
   label: string;
-  targetView: 'timetable' | 'map';
+  targetView: PageID;
 }
 
 export interface TimetableSession {

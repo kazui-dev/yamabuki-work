@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { Timetable } from './components/timetable/Timetable';
 import { Maps } from './components/map/Maps';
+import { Survey } from './components/survey/Survey';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarDays, MapPinned } from "lucide-react";
 import { AppMenu } from './components/navigation/Menu';
 import { Drawer } from './components/ui/drawer';
 import { PosterDetail } from './components/map/PosterDetail';
-import type { Poster } from './types';
+import type { PageID, Poster } from './types';
 import {
   initHistory,
   pageFromSearch,
@@ -16,15 +17,13 @@ import {
   type HistoryState,
 } from '@/lib/history';
 
-export type PageID = 'timetable' | 'map';
-
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export const App = () => {
   const [isReady, setIsReady] = useState(false);
   const [currentPage, setCurrentPage] = useState<PageID>('timetable');
   
-  const scrollPositions = useRef<{ timetable: number; map: number }>({ timetable: 0, map: 0 });
+  const scrollPositions = useRef<{ timetable: number; map: number; survey: number }>({ timetable: 0, map: 0, survey: 0 });
   const mapParams = useRef<string>('');
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
 
@@ -40,9 +39,11 @@ export const App = () => {
 
     initHistory('timetable');
     
-    if (pageFromUrl === 'map') {
-      setCurrentPage('map');
-      mapParams.current = window.location.search;
+    if (pageFromUrl) {
+      setCurrentPage(pageFromUrl);
+      if (pageFromUrl === 'map') {
+        mapParams.current = window.location.search;
+      }
     }
 
     const handlePopState = (event: PopStateEvent) => {
@@ -87,9 +88,11 @@ export const App = () => {
 
     saveScroll();
 
-    const url = page === 'timetable' 
-      ? window.location.pathname 
-      : (mapParams.current || '?page=map');
+    const url = page === 'timetable'
+      ? window.location.pathname
+      : page === 'map'
+        ? (mapParams.current || '?page=map')
+        : '?page=survey';
     
     const targetScrollY = scrollPositions.current[page] || 0;
 
@@ -122,13 +125,8 @@ export const App = () => {
               setIsPosterDrawerOpen(true);
             }}
             onSelectRoom={(roomId) => {
-              syncMapRoom(roomId);
+              syncMapRoom(roomId, { scrollY: 0 });
               setSelectedRoomId(roomId);
-
-              window.history.replaceState(
-                { ...(window.history.state ?? {}), scrollY: 0 },
-                ''
-              );
               scrollPositions.current.map = 0;
 
               if (currentPage === 'map') {
@@ -178,8 +176,13 @@ export const App = () => {
       <main className="p-4 sm:p-6 mb-16 flex-1 w-full max-w-md mx-auto">
         {currentPage === 'timetable' ? (
           <Timetable onNavigate={handleNavigate} />
+        ) : currentPage === 'map' ? (
+          <Maps
+            selectedRoomId={selectedRoomId}
+            onSelectedRoomHandled={() => setSelectedRoomId(null)}
+          />
         ) : (
-          <Maps selectedRoomId={selectedRoomId} />
+          <Survey />
         )}
       </main>
 
