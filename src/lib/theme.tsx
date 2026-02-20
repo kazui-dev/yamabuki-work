@@ -9,7 +9,6 @@ type ThemeContextValue = {
   theme: Theme;
   resolvedTheme: ResolvedTheme;
   setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -37,12 +36,14 @@ const getInitialTheme = (): Theme => {
 const applyResolvedTheme = (resolvedTheme: ResolvedTheme) => {
   const root = document.documentElement;
   
-  // テーマ切り替え中は transition を無効化
+  const currentColorScheme = root.style.colorScheme;
+  if (currentColorScheme !== resolvedTheme) {
+    root.style.colorScheme = resolvedTheme;
+  }
+  
   root.classList.add('theme-transitioning');
   root.classList.toggle('dark', resolvedTheme === 'dark');
-  root.style.colorScheme = resolvedTheme;
   
-  // 次のフレームで transition を再有効化
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       root.classList.remove('theme-transitioning');
@@ -87,14 +88,6 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       theme,
       resolvedTheme,
       setTheme,
-      toggleTheme: () => {
-        setTheme((currentTheme) => {
-          // light -> dark -> system -> light の順で循環
-          if (currentTheme === 'light') return 'dark';
-          if (currentTheme === 'dark') return 'system';
-          return 'light';
-        });
-      },
     }),
     [theme, resolvedTheme]
   );

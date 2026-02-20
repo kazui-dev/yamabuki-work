@@ -129,10 +129,8 @@
   }
   
   /* テーマ切り替え時は transition を無効化 */
-  .theme-transitioning,
-  .theme-transitioning *,
-  .theme-transitioning *::before,
-  .theme-transitioning *::after {
+  html.theme-transitioning,
+  html.theme-transitioning * {
     transition: none !important;
   }
 }

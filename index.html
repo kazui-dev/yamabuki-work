@@ -25,16 +25,12 @@
     <div id="root"></div>
     <script>
       (() => {
-        const THEME_STORAGE_KEY = 'theme-preference';
-        const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-        const theme = storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system'
-          ? storedTheme
-          : 'system';
-
-        const isDark = theme === 'dark' || (
-          theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches
+        const storedTheme = localStorage.getItem('theme-preference');
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const isDark = storedTheme === 'dark' || (
+          (storedTheme === 'system' || !storedTheme) && mediaQuery.matches
         );
-
+        
         document.documentElement.classList.toggle('dark', isDark);
         document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
       })();
