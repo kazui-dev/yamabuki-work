@@ -32,7 +32,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
         <Button
           variant="ghost"
           size="icon"
-          className="h-9 w-9 p-0 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 [&_svg]:size-5"
+          className="h-9 w-9 p-0 hover:bg-slate-200/50 active:bg-slate-300/60 dark:hover:bg-slate-800/50 dark:active:bg-slate-700/60 [&_svg]:size-5"
           aria-label="メニュー"
         >
           <MenuIcon className="text-slate-700 dark:text-slate-300" />
@@ -48,7 +48,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                 className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
                   currentPage === 'timetable'
                     ? 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'
-                    : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200'
+                    : 'hover:bg-slate-100 active:bg-slate-200 dark:hover:bg-slate-800 dark:active:bg-slate-700 text-slate-800 dark:text-slate-200'
                 }`}
               >
                 <CalendarDays size={18} className="text-slate-600 dark:text-slate-300" />
@@ -60,7 +60,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                 className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
                   currentPage === 'map'
                     ? 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'
-                    : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200'
+                    : 'hover:bg-slate-100 active:bg-slate-200 dark:hover:bg-slate-800 dark:active:bg-slate-700 text-slate-800 dark:text-slate-200'
                 }`}
               >
                 <MapPinned size={18} className="text-slate-600 dark:text-slate-300" />
@@ -91,7 +91,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                           onSelectRoom(room.id);
                           setIsOpen(false);
                         }}
-                        className="mb-1 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                        className="mb-1 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 active:text-slate-800 dark:hover:text-slate-200 dark:active:text-slate-100"
                       >
                         <MapPin size={12} />
                         {roomName}
@@ -102,7 +102,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                           <button
                             key={poster.id}
                             onClick={() => onOpenPoster(poster, roomName)}
-                            className="w-full text-left rounded-md px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            className="w-full text-left rounded-md px-2 py-1 hover:bg-slate-100 active:bg-slate-200 dark:hover:bg-slate-800 dark:active:bg-slate-700 transition-colors"
                           >
                             <span className="flex items-center justify-between gap-2">
                               <p className="text-sm text-slate-800 dark:text-slate-200 font-medium truncate">
@@ -129,7 +129,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
               <PopoverTrigger asChild>
                 <button
                   type="button"
-                  className="w-full flex items-center gap-1.5 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-800 dark:text-slate-200 text-sm font-medium"
+                  className="w-full flex items-center gap-1.5 px-4 py-3 rounded-lg hover:bg-slate-100 active:bg-slate-200 dark:hover:bg-slate-800 dark:active:bg-slate-700 transition-colors text-slate-800 dark:text-slate-200 text-sm font-medium"
                 >
                   {resolvedTheme === 'dark' ? (
                     <>
@@ -154,7 +154,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                     <button
                       key={themeValue}
                       onClick={() => setTheme(themeValue)}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md hover:bg-slate-100 active:bg-slate-200 dark:hover:bg-slate-800 dark:active:bg-slate-700 transition-colors"
                       aria-current={theme === themeValue ? 'true' : undefined}
                     >
                       <Icon size={18} className="text-slate-600 dark:text-slate-300" />
