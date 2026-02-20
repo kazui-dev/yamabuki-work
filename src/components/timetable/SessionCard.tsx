@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Clock, Speech, ChevronUp, ChevronDown } from "lucide-react";
-import type { TimetableSession } from "@/types";
+import type { PageID, TimetableSession } from "@/types";
 
 interface SessionCardProps {
   session: TimetableSession;
-  onNavigate: (view: 'timetable' | 'map') => void;
+  onNavigate: (view: PageID) => void;
   onOpenDetail?: (session: TimetableSession) => void;
   isDrawerOpen: boolean;
 }

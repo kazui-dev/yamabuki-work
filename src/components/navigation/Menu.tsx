@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Menu as MenuIcon, CalendarDays, MapPinned, MapPin, ChevronUp, ChevronDown, Sun, MoonStar, Smartphone, Check } from 'lucide-react';
+import { Menu as MenuIcon, CalendarDays, MapPinned, MapPin, ChevronUp, ChevronDown, Sun, MoonStar, Smartphone, Check, ClipboardList } from 'lucide-react';
 import { MapsData } from '@/constants/maps';
 import { POSTERS_BY_LOCATION } from '@/constants/posters';
-import type { Poster } from '@/types';
+import type { PageID, Poster } from '@/types';
 import { useTheme } from '@/lib/theme';
 
 interface AppMenuProps {
-  currentPage: 'timetable' | 'map';
-  onNavigate: (page: 'timetable' | 'map') => void;
+  currentPage: PageID;
+  onNavigate: (page: PageID) => void;
   onOpenPoster: (poster: Poster, roomName: string) => void;
   onSelectRoom: (roomId: string) => void;
   isPosterDrawerOpen: boolean;
@@ -22,7 +22,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
   const { theme, resolvedTheme, setTheme } = useTheme();
   const roomNameById = Object.fromEntries(MapsData.map((room) => [room.id, room.name]));
 
-  const handleNavigate = (page: 'timetable' | 'map') => {
+  const handleNavigate = (page: PageID) => {
     onNavigate(page);
     requestAnimationFrame(() => {
       setIsOpen(false);
@@ -68,6 +68,18 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
               >
                 <MapPinned size={18} className="text-slate-600 dark:text-slate-300" />
                 フロアマップ
+              </button>
+
+              <button
+                onClick={() => handleNavigate('survey')}
+                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
+                  currentPage === 'survey'
+                    ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
+                    : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200'
+                }`}
+              >
+                <ClipboardList size={18} className="text-slate-600 dark:text-slate-300" />
+                来場者アンケート
               </button>
 
               <div className="h-px bg-slate-200 dark:bg-slate-700 my-4" />

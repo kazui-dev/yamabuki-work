@@ -6,10 +6,10 @@ import { Clock, Speech } from "lucide-react";
 import { timetable } from "@/constants/timetable";
 import { SessionCard } from "./SessionCard";
 import { SessionDetail } from "./SessionDetail";
-import type { TimetableItem, TimetableSession } from "@/types";
+import type { PageID, TimetableItem, TimetableSession } from "@/types";
 
 interface TimetableProps {
-  onNavigate: (view: 'timetable' | 'map') => void;
+  onNavigate: (view: PageID) => void;
 }
 
 export const Timetable = ({ onNavigate }: TimetableProps) => {

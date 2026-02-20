@@ -1,4 +1,6 @@
-export type Page = 'timetable' | 'map';
+import type { PageID } from '@/types';
+
+export type Page = PageID;
 
 export interface HistoryState extends Record<string, unknown> {
   page?: Page;
@@ -7,7 +9,7 @@ export interface HistoryState extends Record<string, unknown> {
 }
 
 const parsePage = (value: unknown): Page | undefined => {
-  if (value === 'timetable' || value === 'map') {
+  if (value === 'timetable' || value === 'map' || value === 'survey') {
     return value;
   }
   return undefined;
