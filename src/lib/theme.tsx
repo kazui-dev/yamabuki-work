@@ -36,7 +36,7 @@ const getInitialTheme = (): Theme => {
 const applyResolvedTheme = (resolvedTheme: ResolvedTheme) => {
   const root = document.documentElement;
   
-  const currentColorScheme = root.style.colorScheme;
+  const currentColorScheme = window.getComputedStyle(root).colorScheme;
   if (currentColorScheme !== resolvedTheme) {
     root.style.colorScheme = resolvedTheme;
   }
@@ -74,7 +74,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      const nextResolvedTheme = mediaQuery.matches ? 'dark' : 'light';
+      const nextResolvedTheme = getSystemTheme();
       setResolvedTheme(nextResolvedTheme);
       applyResolvedTheme(nextResolvedTheme);
     };
