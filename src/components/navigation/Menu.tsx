@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -19,18 +19,41 @@ interface AppMenuProps {
 
 export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, isPosterDrawerOpen, selectedPosterId }: AppMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const scrollTopRef = useRef(0);
   const { theme, resolvedTheme, setTheme } = useTheme();
   const roomNameById = Object.fromEntries(MapsData.map((room) => [room.id, room.name]));
+
+  const closeMenu = () => {
+    if (scrollContainerRef.current) {
+      scrollTopRef.current = scrollContainerRef.current.scrollTop;
+    }
+    setIsOpen(false);
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      closeMenu();
+      return;
+    }
+
+    setIsOpen(true);
+    requestAnimationFrame(() => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = scrollTopRef.current;
+      }
+    });
+  };
 
   const handleNavigate = (page: PageID) => {
     onNavigate(page);
     requestAnimationFrame(() => {
-      setIsOpen(false);
+      closeMenu();
     });
   };
 
   return (
-    <Drawer direction="left" open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer direction="left" open={isOpen} onOpenChange={handleOpenChange}>
       <DrawerTrigger asChild>
         <Button
           variant="ghost"
@@ -44,47 +67,55 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
 
       <DrawerContent direction="left" className="w-64 p-0">
         <div className="h-full flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <nav className="p-4 space-y-2">
-              <button
-                onClick={() => handleNavigate('timetable')}
-                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
-                  currentPage === 'timetable'
-                    ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
-                    : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200'
-                }`}
-              >
-                <CalendarDays size={18} className="text-slate-600 dark:text-slate-300" />
-                タイムテーブル
-              </button>
+          <div className="px-4 pt-4 pb-2">
+            <button
+              onClick={() => handleNavigate('timetable')}
+              className={`w-full mb-2 flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
+                currentPage === 'timetable'
+                  ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
+                  : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200'
+              }`}
+            >
+              <CalendarDays size={18} className="text-slate-600 dark:text-slate-300" />
+              タイムテーブル
+            </button>
 
-              <button
-                onClick={() => handleNavigate('map')}
-                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
-                  currentPage === 'map'
-                    ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
-                    : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200'
-                }`}
-              >
-                <MapPinned size={18} className="text-slate-600 dark:text-slate-300" />
-                フロアマップ
-              </button>
+            <button
+              onClick={() => handleNavigate('map')}
+              className={`w-full mb-2 flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
+                currentPage === 'map'
+                  ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
+                  : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200'
+              }`}
+            >
+              <MapPinned size={18} className="text-slate-600 dark:text-slate-300" />
+              フロアマップ
+            </button>
 
-              <button
-                onClick={() => handleNavigate('survey')}
-                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
-                  currentPage === 'survey'
-                    ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
-                    : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200'
-                }`}
-              >
-                <ClipboardList size={18} className="text-slate-600 dark:text-slate-300" />
-                来場者アンケート
-              </button>
+            <button
+              onClick={() => handleNavigate('survey')}
+              className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
+                currentPage === 'survey'
+                  ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
+                  : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200'
+              }`}
+            >
+              <ClipboardList size={18} className="text-slate-600 dark:text-slate-300" />
+              来場者アンケート
+            </button>
 
-              <div className="h-px bg-slate-200 dark:bg-slate-700 my-4" />
+            <div className="h-px bg-slate-200 dark:bg-slate-700 mt-2 mb-0" />
+          </div>
 
-              <div className="px-4 pt-1 pb-0.5">
+          <div
+            ref={scrollContainerRef}
+            onScroll={(event) => {
+              scrollTopRef.current = event.currentTarget.scrollTop;
+            }}
+            className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          >
+            <nav className="pt-1.5 px-4 pb-4">
+              <div className="px-4 pb-0.5">
                 <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">
                   ポスター発表
                 </h3>
@@ -104,7 +135,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                       <button
                         onClick={() => {
                           onSelectRoom(room.id);
-                          setIsOpen(false);
+                          closeMenu();
                         }}
                         className="mb-1 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 active:text-slate-700 dark:hover:text-slate-200 dark:active:text-slate-200"
                       >
@@ -123,7 +154,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                                 : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800'
                             }`}
                           >
-                            <span className="flex items-center justify-between gap-2">
+                            <div className="flex items-center justify-between gap-2">
                               <p className="text-sm text-slate-800 dark:text-slate-200 font-medium truncate">
                                 {poster.title}
                               </p>
@@ -132,7 +163,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                               ) : (
                                 <ChevronUp size={14} className="text-slate-500 dark:text-slate-400 shrink-0" />
                               )}
-                            </span>
+                            </div>
                           </button>
                         ))}
                       </div>
@@ -143,7 +174,8 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
             </nav>
           </div>
 
-          <div className="border-t border-slate-200 dark:border-slate-700 p-2">
+          <div className="px-4 pt-2 pb-4">
+            <div className="h-px bg-slate-200 dark:bg-slate-700 mt-0 mb-2" />
             <Popover>
               <PopoverTrigger asChild>
                 <button
