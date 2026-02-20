@@ -45,7 +45,7 @@ export const pushPage = (page: Page, url: string, scrollY: number) => {
   window.history.pushState({ page, scrollY }, '', url);
 };
 
-export const syncMapRoom = (roomId: string) => {
+export const syncMapRoom = (roomId: string, options?: { scrollY?: number }) => {
   const url = new URL(window.location.href);
   const currentUrlRoom = url.searchParams.get('room');
 
@@ -57,7 +57,12 @@ export const syncMapRoom = (roomId: string) => {
   url.searchParams.set('room', roomId);
 
   window.history.replaceState(
-    { ...(window.history.state ?? {}), page: 'map', room: roomId },
+    {
+      ...(window.history.state ?? {}),
+      page: 'map',
+      room: roomId,
+      ...(typeof options?.scrollY === 'number' ? { scrollY: options.scrollY } : {}),
+    },
     '',
     url.toString()
   );

@@ -125,13 +125,8 @@ export const App = () => {
               setIsPosterDrawerOpen(true);
             }}
             onSelectRoom={(roomId) => {
-              syncMapRoom(roomId);
+              syncMapRoom(roomId, { scrollY: 0 });
               setSelectedRoomId(roomId);
-
-              window.history.replaceState(
-                { ...(window.history.state ?? {}), scrollY: 0 },
-                ''
-              );
               scrollPositions.current.map = 0;
 
               if (currentPage === 'map') {
@@ -154,7 +149,7 @@ export const App = () => {
           </h1>
           
           <Tabs 
-            value={currentPage === 'survey' ? 'timetable' : currentPage} 
+            value={currentPage} 
             onValueChange={(value) => handleNavigate(value as PageID)} 
             className="w-24 sm:w-28 shrink-0"
           >
@@ -182,7 +177,10 @@ export const App = () => {
         {currentPage === 'timetable' ? (
           <Timetable onNavigate={handleNavigate} />
         ) : currentPage === 'map' ? (
-          <Maps selectedRoomId={selectedRoomId} />
+          <Maps
+            selectedRoomId={selectedRoomId}
+            onSelectedRoomHandled={() => setSelectedRoomId(null)}
+          />
         ) : (
           <Survey />
         )}

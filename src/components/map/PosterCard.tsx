@@ -5,10 +5,10 @@ import type { Poster } from "@/types";
 interface PosterCardProps {
   poster: Poster;
   onOpen: () => void;
-  isDrawerOpen: boolean;
+  isExpanded: boolean;
 }
 
-export const PosterCard = ({ poster, onOpen, isDrawerOpen }: PosterCardProps) => {
+export const PosterCard = ({ poster, onOpen, isExpanded }: PosterCardProps) => {
   return (
     <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-slate-50 active:bg-slate-50 dark:hover:bg-slate-800/40 dark:active:bg-slate-800/40 transition-colors">
       <h3 className="font-bold text-slate-800 dark:text-slate-200 text-sm mb-2">
@@ -30,7 +30,7 @@ export const PosterCard = ({ poster, onOpen, isDrawerOpen }: PosterCardProps) =>
 
       <div className="mt-3">
         <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300" onClick={onOpen}>
-          {isDrawerOpen ? <ChevronDown size={14} className="text-slate-700 dark:text-slate-300" /> : <ChevronUp size={14} className="text-slate-700 dark:text-slate-300" />}
+          {isExpanded ? <ChevronDown size={14} className="text-slate-700 dark:text-slate-300" /> : <ChevronUp size={14} className="text-slate-700 dark:text-slate-300" />}
           詳細を見る
         </Button>
       </div>

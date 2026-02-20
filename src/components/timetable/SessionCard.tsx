@@ -6,10 +6,10 @@ interface SessionCardProps {
   session: TimetableSession;
   onNavigate: (view: PageID) => void;
   onOpenDetail?: (session: TimetableSession) => void;
-  isDrawerOpen: boolean;
+  isExpanded: boolean;
 }
 
-export const SessionCard = ({ session, onNavigate, onOpenDetail, isDrawerOpen }: SessionCardProps) => {
+export const SessionCard = ({ session, onNavigate, onOpenDetail, isExpanded }: SessionCardProps) => {
   return (
     <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-slate-50 active:bg-slate-50 dark:hover:bg-slate-800/40 dark:active:bg-slate-800/40 transition-colors">
       {session.time && (
@@ -44,7 +44,7 @@ export const SessionCard = ({ session, onNavigate, onOpenDetail, isDrawerOpen }:
             className="w-full h-8 text-xs bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300"
             onClick={() => onOpenDetail?.(session)}
           >
-            {isDrawerOpen ? <ChevronDown size={14} className="text-slate-700 dark:text-slate-300" /> : <ChevronUp size={14} className="text-slate-700 dark:text-slate-300" />}
+            {isExpanded ? <ChevronDown size={14} className="text-slate-700 dark:text-slate-300" /> : <ChevronUp size={14} className="text-slate-700 dark:text-slate-300" />}
             詳細を見る
           </Button>
         </div>
