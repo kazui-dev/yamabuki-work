@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useState } from 'react';
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Menu as MenuIcon, CalendarDays, MapPinned, MapPin, ChevronUp, ChevronDown } from 'lucide-react';
 import { MapsData } from '@/constants/maps';
@@ -15,8 +15,6 @@ interface AppMenuProps {
 
 export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawerOpen }: AppMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
   const roomNameById = Object.fromEntries(MapsData.map((room) => [room.id, room.name]));
 
   const handleNavigate = (page: 'timetable' | 'map') => {
@@ -24,35 +22,9 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
     setIsOpen(false);
   };
 
-  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    const touch = event.touches[0];
-    touchStartX.current = touch.clientX;
-    touchStartY.current = touch.clientY;
-  };
-
-  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (touchStartX.current === null || touchStartY.current === null) {
-      return;
-    }
-
-    const touch = event.changedTouches[0];
-    const diffX = touch.clientX - touchStartX.current;
-    const diffY = touch.clientY - touchStartY.current;
-
-    const isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY) * 1.2;
-    const isSwipeToRight = diffX > 72;
-
-    if (isHorizontalSwipe && isSwipeToRight) {
-      setIsOpen(false);
-    }
-
-    touchStartX.current = null;
-    touchStartY.current = null;
-  };
-
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
+    <Drawer direction="left" open={isOpen} onOpenChange={setIsOpen}>
+      <DrawerTrigger asChild>
         <Button
           variant="ghost"
           size="icon"
@@ -61,14 +33,9 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
         >
           <MenuIcon />
         </Button>
-      </SheetTrigger>
+      </DrawerTrigger>
 
-      <SheetContent
-        side="left"
-        className="w-64 p-0"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
+      <DrawerContent direction="left" className="w-64 p-0">
         <div className="h-full flex flex-col overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-200">
             <h2 className="font-bold text-slate-800">メニュー</h2>
@@ -149,7 +116,7 @@ export const AppMenu = ({ onNavigate, onOpenPoster, onSelectRoom, isPosterDrawer
             </nav>
           </div>
         </div>
-      </SheetContent>
-    </Sheet>
+      </DrawerContent>
+    </Drawer>
   );
 };
