@@ -143,7 +143,7 @@ export const App = () => {
           />
 
           <h1 
-            className="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200 cursor-pointer hover:opacity-80 transition-opacity shrink truncate flex-1"
+            className="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200 cursor-pointer hover:opacity-80 active:opacity-80 transition-opacity shrink truncate flex-1"
             onClick={handleLogoClick}
           >
             新宿山吹高校情報科発表会

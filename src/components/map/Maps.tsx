@@ -129,7 +129,7 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId }) => {
                 className={`h-2.5 w-2.5 rounded-full border transition-colors ${
                   index === current 
                     ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200" 
-                    : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 hover:border-slate-400 dark:hover:border-slate-500"
+                    : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 hover:border-slate-400 active:border-slate-400 dark:hover:border-slate-500 dark:active:border-slate-500"
                 }`}
               />
             ))}
