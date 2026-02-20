@@ -4,6 +4,10 @@ export type Theme = 'light' | 'dark' | 'system';
 export type ResolvedTheme = 'light' | 'dark';
 
 const THEME_STORAGE_KEY = 'theme-preference';
+const THEME_COLORS = {
+  light: '#fafaf8',
+  dark: '#0f172a',
+} as const;
 
 type ThemeContextValue = {
   theme: Theme;
@@ -101,8 +105,8 @@ export const useTheme = () => {
 };
 
 export const updateThemeColor = (resolvedTheme: ResolvedTheme) => {
-  const metaTag = document.getElementById('themeColorMeta');
-  if (metaTag) {
-    metaTag.setAttribute('content', resolvedTheme === 'dark' ? '#0f172a' : '#fafaf8');
-  }
+  document.getElementById('themeColorMeta')?.setAttribute(
+    'content',
+    THEME_COLORS[resolvedTheme]
+  );
 };

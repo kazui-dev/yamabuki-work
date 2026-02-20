@@ -33,10 +33,10 @@
         );
         
         document.documentElement.classList.toggle('dark', isDark);
-        const metaTag = document.getElementById('themeColorMeta');
-        if (metaTag) {
-          metaTag.setAttribute('content', isDark ? '#0f172a' : '#fafaf8');
-        }
+        document.getElementById('themeColorMeta')?.setAttribute(
+          'content',
+          isDark ? '#0f172a' : '#fafaf8'
+        );
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>
