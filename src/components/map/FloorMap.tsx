@@ -58,11 +58,11 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
       </g>
 
       <g id="passive_area">
-        <rect id="pc_ll" y="196.8" width="96.6" height="58.35" transform="translate(96.6 451.9) rotate(180)"/>
-        <rect id="pc_2" x="375" y="196.8" width="78.5" height="58.32" transform="translate(828.5 451.9) rotate(180)"/>
-        <rect id="311" x="179" y="196.8" width="56.5" height="58.35" transform="translate(414.6 451.9) rotate(180)"/>
-        <rect id="310" x="235.6" y="196.8" width="39.4" height="58.35" transform="translate(510.5 451.9) rotate(180)"/>
         <rect id="309" x="275" y="196.8" width="100" height="58.32" transform="translate(650 451.9) rotate(180)"/>
+        <rect id="310" x="235.6" y="196.8" width="39.4" height="58.35" transform="translate(510.5 451.9) rotate(180)"/>
+        <rect id="311" x="179" y="196.8" width="56.5" height="58.35" transform="translate(414.6 451.9) rotate(180)"/>
+        <rect id="pc_2" x="375" y="196.8" width="78.5" height="58.32" transform="translate(828.5 451.9) rotate(180)"/>
+        <rect id="pc_ll" y="196.8" width="96.6" height="58.35" transform="translate(96.6 451.9) rotate(180)"/>
         <rect id="top_light" x="179" y="87.8" width="196" height="79.61" transform="translate(554 255.2) rotate(180)"/>
       </g>
 
