@@ -3,6 +3,18 @@ import { Timetable } from './components/timetable/Timetable';
 import { Maps } from './components/map/Maps';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarDays, MapPinned } from "lucide-react";
+import { AppMenu } from './components/navigation/Menu';
+import { Drawer } from './components/ui/drawer';
+import { PosterDetail } from './components/map/PosterDetail';
+import type { Poster } from './types';
+import {
+  initHistory,
+  pageFromSearch,
+  saveScroll,
+  pushPage,
+  syncMapRoom,
+  type HistoryState,
+} from '@/lib/history';
 
 export type PageID = 'timetable' | 'map';
 
@@ -14,18 +26,19 @@ export const App = () => {
   
   const scrollPositions = useRef<{ timetable: number; map: number }>({ timetable: 0, map: 0 });
   const mapParams = useRef<string>('');
+  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
+
+  const [selectedPosterData, setSelectedPosterData] = useState<{ poster: Poster; roomName: string } | null>(null);
+  const [isPosterDrawerOpen, setIsPosterDrawerOpen] = useState(false);
 
   useEffect(() => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
 
-    const params = new URLSearchParams(window.location.search);
-    const pageFromUrl = params.get('page') as PageID;
+    const pageFromUrl = pageFromSearch(window.location.search);
 
-    if (!window.history.state) {
-      window.history.replaceState({ page: pageFromUrl || 'timetable', scrollY: 0 }, '');
-    }
+    initHistory('timetable');
     
     if (pageFromUrl === 'map') {
       setCurrentPage('map');
@@ -33,11 +46,13 @@ export const App = () => {
     }
 
     const handlePopState = (event: PopStateEvent) => {
-      const pageFromState = event.state?.page as PageID;
-      const p = new URLSearchParams(window.location.search).get('page') as PageID;
-      const targetPage = pageFromState || p || 'timetable';
+      const historyState = event.state as HistoryState | null;
+      const targetPage =
+        (historyState?.page) ??
+        pageFromSearch(window.location.search) ??
+        'timetable';
 
-      const savedScrollY = event.state?.scrollY || 0;
+      const savedScrollY = typeof historyState?.scrollY === 'number' ? historyState.scrollY : 0;
       
       scrollPositions.current[targetPage] = savedScrollY;
       if (targetPage === 'map') {
@@ -70,10 +85,7 @@ export const App = () => {
       mapParams.current = window.location.search;
     }
 
-    window.history.replaceState(
-      { ...window.history.state, scrollY: window.scrollY }, 
-      ''
-    );
+    saveScroll();
 
     const url = page === 'timetable' 
       ? window.location.pathname 
@@ -81,7 +93,7 @@ export const App = () => {
     
     const targetScrollY = scrollPositions.current[page] || 0;
 
-    window.history.pushState({ page, scrollY: targetScrollY }, '', url);
+    pushPage(page, url, targetScrollY);
     setCurrentPage(page);
   };
 
@@ -102,8 +114,23 @@ export const App = () => {
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 w-full bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 py-2">
         <div className="max-w-md mx-auto flex items-center justify-between gap-3">
+          <AppMenu
+            onNavigate={handleNavigate}
+            onOpenPoster={(poster, roomName) => {
+              setSelectedPosterData({ poster, roomName });
+              setIsPosterDrawerOpen(true);
+            }}
+            onSelectRoom={(roomId) => {
+              syncMapRoom(roomId);
+              setSelectedRoomId(roomId);
+              scrollPositions.current.map = 0;
+              setCurrentPage('map');
+            }}
+            isPosterDrawerOpen={isPosterDrawerOpen}
+          />
+
           <h1 
-            className="text-sm sm:text-base font-bold text-slate-800 cursor-pointer hover:opacity-80 transition-opacity shrink truncate"
+            className="text-sm sm:text-base font-bold text-slate-800 cursor-pointer hover:opacity-80 transition-opacity shrink truncate flex-1"
             onClick={handleLogoClick}
           >
             新宿山吹高校情報科発表会
@@ -138,9 +165,18 @@ export const App = () => {
         {currentPage === 'timetable' ? (
           <Timetable onNavigate={handleNavigate} />
         ) : (
-          <Maps />
+          <Maps selectedRoomId={selectedRoomId} />
         )}
       </main>
+
+      <Drawer open={isPosterDrawerOpen} onOpenChange={setIsPosterDrawerOpen}>
+        {selectedPosterData && (
+          <PosterDetail
+            poster={selectedPosterData.poster}
+            roomName={selectedPosterData.roomName}
+          />
+        )}
+      </Drawer>
     </div>
   );
 };

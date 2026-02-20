@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FloorMap } from "./FloorMap";
 import { PosterCard } from "./PosterCard";
 import { PosterDetail } from "./PosterDetail";
@@ -14,80 +14,38 @@ import {
 } from "@/components/ui/carousel";
 import { Drawer } from "@/components/ui/drawer";
 import { MapsData } from "@/constants/maps";
+import { roomFromSearch, syncMapRoom } from '@/lib/history';
 
-export const Maps: React.FC = () => {
+interface MapsProps {
+  selectedRoomId?: string | null;
+}
+
+export const Maps: React.FC<MapsProps> = ({ selectedRoomId }) => {
   const [api, setApi] = useState<CarouselApi>();
 
   const getInitialRoomId = () => {
     if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const roomId = params.get('room');
+      const roomId = roomFromSearch(window.location.search);
       if (roomId && MapsData.some(r => r.id === roomId)) return roomId;
     }
     return MapsData[0]?.id || null;
   };
 
-  const [activeRoomId, setActiveRoomId] = useState<string | null>(getInitialRoomId());
-  const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === getInitialRoomId())));
+  const [activeRoomId, setActiveRoomId] = useState<string | null>(() => getInitialRoomId());
+  const [initialIndex] = useState(() => {
+    const initialRoomId = getInitialRoomId();
+    return Math.max(0, MapsData.findIndex(r => r.id === initialRoomId));
+  });
   const [current, setCurrent] = useState(initialIndex);
   
   const [selectedData, setSelectedData] = useState<{ poster: Poster; roomName: string } | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const activeRoomIdRef = useRef(activeRoomId);
-  useEffect(() => {
-    activeRoomIdRef.current = activeRoomId;
-  }, [activeRoomId]);
-
   useEffect(() => {
     if (activeRoomId) {
-      const url = new URL(window.location.href);
-      const currentUrlRoom = url.searchParams.get('room');
-      
-      if (currentUrlRoom !== activeRoomId) {
-        url.searchParams.set('page', 'map');
-        url.searchParams.set('room', activeRoomId);
-
-        if (!currentUrlRoom) {
-          window.history.replaceState(
-            { ...window.history.state, page: 'map', room: activeRoomId }, 
-            '', 
-            url.toString()
-          );
-        } else {
-          window.history.replaceState(
-            { ...window.history.state, scrollY: window.scrollY }, 
-            ''
-          );
-          window.history.pushState(
-            { page: 'map', room: activeRoomId, scrollY: window.scrollY }, 
-            '', 
-            url.toString()
-          );
-        }
-      }
+      syncMapRoom(activeRoomId);
     }
   }, [activeRoomId]);
-
-  useEffect(() => {
-    const handlePopState = () => {
-      const params = new URLSearchParams(window.location.search);
-      const roomId = params.get('room');
-      const page = params.get('page');
-
-      if (page === 'map' && roomId && roomId !== activeRoomIdRef.current) {
-        const index = MapsData.findIndex(r => r.id === roomId);
-        if (index !== -1) {
-          setActiveRoomId(roomId);
-          setCurrent(index);
-          api?.scrollTo(index);
-        }
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, [api]);
 
   useEffect(() => {
     if (!api) return;
@@ -97,7 +55,7 @@ export const Maps: React.FC = () => {
       setCurrent(index);
       const room = MapsData[index];
       
-      if (room && room.id !== activeRoomIdRef.current) {
+      if (room) {
         setActiveRoomId(room.id);
       }
     };
@@ -112,6 +70,17 @@ export const Maps: React.FC = () => {
     setSelectedData({ poster, roomName });
     setIsDrawerOpen(true);
   }, []);
+
+  useEffect(() => {
+    if (selectedRoomId) {
+      const index = MapsData.findIndex(r => r.id === selectedRoomId);
+      if (index !== -1) {
+        setActiveRoomId(selectedRoomId);
+        setCurrent(index);
+        api?.scrollTo(index);
+      }
+    }
+  }, [selectedRoomId, api]);
 
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
     const room = MapsData.find(r => r.id === roomId);
@@ -191,6 +160,7 @@ export const Maps: React.FC = () => {
                         <PosterCard 
                           key={poster.id} 
                           poster={poster} 
+                          isDrawerOpen={isDrawerOpen}
                           onOpen={() => handleOpenDetail(poster, room.name)} 
                         />
                       ))}

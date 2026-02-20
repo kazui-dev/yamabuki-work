@@ -83,6 +83,7 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
                     session={session} 
                     onNavigate={onNavigate} 
                     onOpenDetail={handleOpenDetail}
+                    isDrawerOpen={isDrawerOpen}
                   />
                 ))}
               </div>

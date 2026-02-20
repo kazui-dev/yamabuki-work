@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { Clock, Speech, ChevronUp } from "lucide-react";
+import { Clock, Speech, ChevronUp, ChevronDown } from "lucide-react";
 import type { TimetableSession } from "@/types";
 
 interface SessionCardProps {
   session: TimetableSession;
   onNavigate: (view: 'timetable' | 'map') => void;
   onOpenDetail?: (session: TimetableSession) => void;
+  isDrawerOpen: boolean;
 }
 
-export const SessionCard = ({ session, onNavigate, onOpenDetail }: SessionCardProps) => {
+export const SessionCard = ({ session, onNavigate, onOpenDetail, isDrawerOpen }: SessionCardProps) => {
   return (
     <div className="p-5 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors">
       {session.time && (
@@ -43,7 +44,7 @@ export const SessionCard = ({ session, onNavigate, onOpenDetail }: SessionCardPr
             className="w-full h-8 text-xs bg-white"
             onClick={() => onOpenDetail?.(session)}
           >
-            <ChevronUp size={14} />
+            {isDrawerOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
             詳細を見る
           </Button>
         </div>

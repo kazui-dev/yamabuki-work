@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { User, ChevronUp } from "lucide-react";
+import { User, ChevronUp, ChevronDown } from "lucide-react";
 import type { Poster } from "@/types";
 
 interface PosterCardProps {
   poster: Poster;
   onOpen: () => void;
+  isDrawerOpen: boolean;
 }
 
-export const PosterCard = ({ poster, onOpen }: PosterCardProps) => {
+export const PosterCard = ({ poster, onOpen, isDrawerOpen }: PosterCardProps) => {
   return (
     <div className="p-5 border-b border-slate-100 last:border-transparent hover:bg-slate-50 transition-colors">
       <h3 className="font-bold text-slate-800 text-sm mb-2">
@@ -29,7 +30,7 @@ export const PosterCard = ({ poster, onOpen }: PosterCardProps) => {
 
       <div className="mt-3">
         <Button variant="outline" size="sm" className="w-full h-8 text-xs bg-white" onClick={onOpen}>
-          <ChevronUp size={14} />
+          {isDrawerOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
           詳細を見る
         </Button>
       </div>
