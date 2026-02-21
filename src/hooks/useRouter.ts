@@ -23,7 +23,7 @@ export const useRouter = () => {
     }
 
     const { page: pageFromUrl } = parsePath(window.location.pathname);
-    initHistory('timetable');
+    initHistory(pageFromUrl);
     setCurrentPage(pageFromUrl);
     if (pageFromUrl === 'map') {
       mapParams.current = window.location.pathname;
