@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import type { RoomMapProps } from "@/types";
 
 export const Room316: React.FC<RoomMapProps> = ({ className = "", onPosterClick }) => {
