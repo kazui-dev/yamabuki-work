@@ -80,8 +80,8 @@ export const useRouter = (options: RouterOptions = {}) => {
     });
   }, [currentPage]);
 
-  const navigate = (page: PageID) => {
-    if (page === currentPage) return;
+  const navigate = (page: PageID, options?: { roomId?: string }) => {
+    if (page === currentPage && !options?.roomId) return;
 
     scrollPositions.current[currentPage] = window.scrollY;
     if (currentPage === 'map') {
@@ -90,11 +90,19 @@ export const useRouter = (options: RouterOptions = {}) => {
 
     saveScroll();
 
-    const url = page === 'timetable'
-      ? '/'
-      : page === 'map'
-        ? (mapParams.current || '/map')
-        : '/survey';
+    let url = '';
+    if (page === 'timetable') {
+      url = '/';
+    } else if (page === 'survey') {
+      url = '/survey';
+    } else if (page === 'map') {
+      if (options?.roomId) {
+        url = `/map?r=${options.roomId}`;
+        mapParams.current = url;
+      } else {
+        url = mapParams.current || '/map';
+      }
+    }
     
     const targetScrollY = scrollPositions.current[page] || 0;
 

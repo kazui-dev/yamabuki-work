@@ -6,7 +6,6 @@ import { Maps } from './components/map/Maps';
 import { Survey } from './components/survey/Survey';
 import { Drawer } from './components/ui/drawer';
 import { PosterDetail } from './components/map/PosterDetail';
-import { syncMapRoom } from '@/lib/history';
 import { PAGE_METADATA } from '@/constants/metadata';
 import type { Poster, PageID } from './types';
 
@@ -55,7 +54,6 @@ export const App = ({ initialPage, initialPath }: AppProps) => {
           setIsPosterDrawerOpen(true);
         }}
         onSelectRoom={(roomId) => {
-          syncMapRoom(roomId, { scrollY: 0 });
           setSelectedRoomId(roomId);
           resetScroll('map');
 
@@ -63,8 +61,9 @@ export const App = ({ initialPage, initialPath }: AppProps) => {
             requestAnimationFrame(() => {
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             });
+          } else {
+            navigate('map', { roomId });
           }
-          navigate('map');
         }}
         isPosterDrawerOpen={isPosterDrawerOpen}
         selectedPosterId={isPosterDrawerOpen ? selectedPosterData?.poster.id ?? null : null}
