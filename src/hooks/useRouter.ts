@@ -22,8 +22,9 @@ export const useRouter = (options: RouterOptions = {}) => {
   const [currentPage, setCurrentPage] = useState<PageID>(initialPageValue);
   
   const scrollPositions = useRef<{ timetable: number; map: number; survey: number }>({ timetable: 0, map: 0, survey: 0 });
-  const mapParams = useRef<string>(initialPath ?? '');
-
+  const initialMapParams = initialPath && parsePath(initialPath).page === 'map' ? initialPath : '';
+  const mapParams = useRef<string>(initialMapParams);
+  
   useEffect(() => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';

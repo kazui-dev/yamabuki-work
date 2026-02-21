@@ -23,7 +23,10 @@ interface MapsProps {
 }
 
 const resolveInitialRoomId = (initialPath?: string) => {
-  const pathname = initialPath ?? (typeof window !== 'undefined' ? window.location.pathname : '');
+  const hasWindow = typeof window !== 'undefined' && typeof window.location?.pathname === 'string';
+  const pathname = hasWindow && window.location.pathname
+    ? window.location.pathname
+    : (initialPath ?? '');
   if (pathname) {
     const { room } = parsePath(pathname);
     if (room && MapsData.some(r => r.id === room)) return room;
