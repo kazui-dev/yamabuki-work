@@ -19,24 +19,24 @@ interface MapsProps {
   onSelectedRoomHandled?: () => void;
   onOpenPoster: (poster: Poster, roomName: string) => void;
   selectedPosterId?: string | null;
+  initialPath?: string;
 }
 
-export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled, onOpenPoster, selectedPosterId }) => {
+const resolveInitialRoomId = (initialPath?: string) => {
+  const pathname = initialPath ?? (typeof window !== 'undefined' ? window.location.pathname : '');
+  if (pathname) {
+    const { room } = parsePath(pathname);
+    if (room && MapsData.some(r => r.id === room)) return room;
+  }
+  return MapsData[0]?.id || null;
+};
+
+export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled, onOpenPoster, selectedPosterId, initialPath }) => {
   const [api, setApi] = useState<CarouselApi>();
 
-  const getInitialRoomId = () => {
-    if (typeof window !== 'undefined') {
-      const { room } = parsePath(window.location.pathname);
-      if (room && MapsData.some(r => r.id === room)) return room;
-    }
-    return MapsData[0]?.id || null;
-  };
-
-  const [activeRoomId, setActiveRoomId] = useState<string | null>(() => getInitialRoomId());
-  const [initialIndex] = useState(() => {
-    const initialRoomId = getInitialRoomId();
-    return Math.max(0, MapsData.findIndex(r => r.id === initialRoomId));
-  });
+  const initialRoomId = resolveInitialRoomId(initialPath);
+  const [activeRoomId, setActiveRoomId] = useState<string | null>(initialRoomId);
+  const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === initialRoomId)));
   const [current, setCurrent] = useState(initialIndex);
 
   useEffect(() => {
