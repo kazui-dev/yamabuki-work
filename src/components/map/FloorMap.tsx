@@ -28,7 +28,7 @@ const RoomLink: React.FC<RoomLinkProps> = ({ roomId, children, onRoomSelect }) =
   };
 
   return (
-    <a href={`/map/?r=${roomId}`} onClick={handleClick}>
+    <a href={`/map?r=${roomId}`} onClick={handleClick}>
       {children}
     </a>
   );

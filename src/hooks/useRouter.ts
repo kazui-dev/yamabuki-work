@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import {
   initHistory,
   parsePath,
@@ -17,24 +17,39 @@ type RouterOptions = {
 
 export const useRouter = (options: RouterOptions = {}) => {
   const { initialPage, initialPath } = options;
-  const initialPageValue = initialPage ?? 'timetable';
-  const [isReady, setIsReady] = useState(typeof initialPage !== 'undefined');
-  const [currentPage, setCurrentPage] = useState<PageID>(initialPageValue);
   
+  const getInitialPage = (): PageID => {
+    if (initialPage) return initialPage;
+    if (typeof window !== 'undefined') {
+      return parsePath(window.location.pathname, window.location.search).page;
+    }
+    return 'timetable';
+  };
+
+  const [currentPage, setCurrentPage] = useState<PageID>(getInitialPage);
   const scrollPositions = useRef<{ timetable: number; map: number; survey: number }>({ timetable: 0, map: 0, survey: 0 });
   
-  const initialMapParams = initialPath && parsePath(initialPath).page === 'map' ? initialPath : '';
+  const parseInitial = () => {
+    if (!initialPath) return { page: getInitialPage(), room: undefined };
+    const [path, search] = initialPath.split('?');
+    return parsePath(path, search ? `?${search}` : '');
+  };
+
+  const initialMapParams = initialPath && parseInitial().page === 'map' ? initialPath : '';
   const mapParams = useRef<string>(initialMapParams);
   
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
 
     const { page: pageFromUrl } = parsePath(window.location.pathname, window.location.search);
     initHistory(pageFromUrl);
-    setCurrentPage(pageFromUrl);
     
+    if (pageFromUrl !== currentPage) {
+      setCurrentPage(pageFromUrl);
+    }
+
     if (pageFromUrl === 'map') {
       mapParams.current = window.location.pathname + window.location.search;
     }
@@ -55,19 +70,15 @@ export const useRouter = (options: RouterOptions = {}) => {
     };
 
     window.addEventListener('popstate', handlePopState);
-    setIsReady(true);
-
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   useIsomorphicLayoutEffect(() => {
-    if (isReady) {
-      const targetScrollY = scrollPositions.current[currentPage] || 0;
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: targetScrollY, left: 0, behavior: 'instant' });
-      });
-    }
-  }, [currentPage, isReady]);
+    const targetScrollY = scrollPositions.current[currentPage] || 0;
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: targetScrollY, left: 0, behavior: 'instant' });
+    });
+  }, [currentPage]);
 
   const navigate = (page: PageID) => {
     if (page === currentPage) return;
@@ -96,7 +107,6 @@ export const useRouter = (options: RouterOptions = {}) => {
   };
 
   return {
-    isReady,
     currentPage,
     navigate,
     resetScroll,

@@ -64,7 +64,7 @@ export const SideNav = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
       return (
         <div key={room.id} className="px-4 py-2">
           <a
-            href={`/map/?r=${room.id}`}
+            href={`/map?r=${room.id}`}
             onClick={(e) => {
               e.preventDefault();
               onSelectRoom(room.id);

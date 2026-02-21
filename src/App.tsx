@@ -30,7 +30,7 @@ type AppProps = {
 };
 
 export const App = ({ initialPage, initialPath }: AppProps) => {
-  const { isReady, currentPage, navigate, resetScroll } = useRouter({
+  const { currentPage, navigate, resetScroll } = useRouter({
     initialPage,
     initialPath,
   });
@@ -40,14 +40,9 @@ export const App = ({ initialPage, initialPath }: AppProps) => {
   const [isPosterDrawerOpen, setIsPosterDrawerOpen] = useState(false);
 
   useEffect(() => {
-    if (isReady) {
-      updatePageMeta(currentPage);
-    }
-  }, [currentPage, isReady]);
-
-  if (!isReady) {
-    return <div className="min-h-screen bg-slate-50 dark:bg-slate-950" />;
-  }
+    updatePageMeta(currentPage);
+    setIsPosterDrawerOpen(false);
+  }, [currentPage]);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">

@@ -23,16 +23,21 @@ interface MapsProps {
 }
 
 const resolveInitialRoomId = (initialPath?: string) => {
-  const hasWindow = typeof window !== 'undefined' && typeof window.location?.pathname === 'string';
-  const pathname = hasWindow && window.location.pathname ? window.location.pathname : initialPath;
-  const search = hasWindow ? window.location.search : '';
-
-  if (pathname) {
-    const { room } = parsePath(pathname, search);
+  if (initialPath) {
+    const [path, search] = initialPath.split('?');
+    const { room } = parsePath(path, search ? `?${search}` : '');
     if (room && MapsData.some(r => r.id === room)) return room;
   }
+
+  if (typeof window !== 'undefined') {
+    const { room } = parsePath(window.location.pathname, window.location.search);
+    if (room && MapsData.some(r => r.id === room)) return room;
+  }
+
   return MapsData[0]?.id || null;
 };
+
+const listScrollPositions: Record<string, number> = {};
 
 export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled, onOpenPoster, selectedPosterId, initialPath }) => {
   const [api, setApi] = useState<CarouselApi>();
@@ -152,7 +157,17 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
                   </div>
 
                   {room.posters && room.posters.length > 0 && (
-                    <div className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto">
+                    <div 
+                      className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
+                      onScroll={(e) => {
+                        listScrollPositions[room.id] = e.currentTarget.scrollTop;
+                      }}
+                      ref={(el) => {
+                        if (el && listScrollPositions[room.id] !== undefined) {
+                          el.scrollTop = listScrollPositions[room.id];
+                        }
+                      }}
+                    >
                       {room.posters.map((poster) => (
                         <PosterCard 
                           key={poster.id} 

@@ -27,6 +27,7 @@ export const initHistory = (page: Page = 'timetable') => {
   if (window.history.state) {
     return;
   }
+
   const { room } = parsePath(window.location.pathname, window.location.search);
   window.history.replaceState({ page, room, scrollY: 0 }, '');
 };
