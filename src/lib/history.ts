@@ -8,21 +8,17 @@ export interface HistoryState extends Record<string, unknown> {
   scrollY?: number;
 }
 
-const parsePage = (value: unknown): Page | undefined => {
-  if (value === 'timetable' || value === 'map' || value === 'survey') {
-    return value;
+export const parsePath = (pathname: string): { page: Page; room?: string } => {
+  const parts = pathname.split('/').filter(Boolean);
+  const first = parts[0];
+
+  if (first === 'map') {
+    return { page: 'map', room: parts[1] };
   }
-  return undefined;
-};
-
-export const pageFromSearch = (search: string): Page | undefined => {
-  const raw = new URLSearchParams(search).get('page');
-  return parsePage(raw);
-};
-
-export const roomFromSearch = (search: string): string | undefined => {
-  const room = new URLSearchParams(search).get('room');
-  return room ?? undefined;
+  if (first === 'survey') {
+    return { page: 'survey' };
+  }
+  return { page: 'timetable' };
 };
 
 export const initHistory = (fallback: Page = 'timetable') => {
@@ -30,8 +26,8 @@ export const initHistory = (fallback: Page = 'timetable') => {
     return;
   }
 
-  const page = pageFromSearch(window.location.search) ?? fallback;
-  window.history.replaceState({ page, scrollY: 0 }, '');
+  const { page, room } = parsePath(window.location.pathname);
+  window.history.replaceState({ page: page ?? fallback, room, scrollY: 0 }, '');
 };
 
 export const saveScroll = () => {
@@ -46,15 +42,13 @@ export const pushPage = (page: Page, url: string, scrollY: number) => {
 };
 
 export const syncMapRoom = (roomId: string, options?: { scrollY?: number }) => {
-  const url = new URL(window.location.href);
-  const currentUrlRoom = url.searchParams.get('room');
+  const { page, room } = parsePath(window.location.pathname);
 
-  if (currentUrlRoom === roomId) {
+  if (page === 'map' && room === roomId) {
     return;
   }
 
-  url.searchParams.set('page', 'map');
-  url.searchParams.set('room', roomId);
+  const url = `/map/${roomId}`;
 
   window.history.replaceState(
     {
@@ -64,6 +58,6 @@ export const syncMapRoom = (roomId: string, options?: { scrollY?: number }) => {
       ...(typeof options?.scrollY === 'number' ? { scrollY: options.scrollY } : {}),
     },
     '',
-    url.toString()
+    url
   );
 };

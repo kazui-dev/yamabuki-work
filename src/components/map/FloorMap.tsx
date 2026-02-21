@@ -6,18 +6,35 @@ type Props = {
   activeRoomId?: string | null;
 };
 
-export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomId }) => {
-  const handleClick = (e: React.MouseEvent<SVGGElement>) => {
-    const target = e.target as SVGElement;
-    const roomElement = target.closest('[data-room-id]');
-    
-    if (roomElement && onRoomSelect) {
-      const roomId = roomElement.getAttribute('data-room-id');
-      if (roomId) {
-        onRoomSelect(roomId);
-      }
+type RoomLinkProps = {
+  roomId: string;
+  children: React.ReactNode;
+  onRoomSelect?: (roomId: string) => void;
+};
+
+const RoomLink: React.FC<RoomLinkProps> = ({ roomId, children, onRoomSelect }) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!onRoomSelect) return;
+
+    const isPrimaryClick = e.button === 0;
+    const hasModifier = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey;
+
+    if (!isPrimaryClick || hasModifier) {
+      return;
     }
+
+    e.preventDefault();
+    onRoomSelect(roomId);
   };
+
+  return (
+    <a href={`/map/${roomId}`} onClick={handleClick}>
+      {children}
+    </a>
+  );
+};
+
+export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomId }) => {
 
   const getActiveStyle = (roomId: string) => {
     return activeRoomId === roomId ? { fill: '#ff8000', fillOpacity: 0.5 } : undefined;
@@ -27,7 +44,6 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
     <svg 
       viewBox="-2 -2 458.5 259.1" 
       className={`w-full h-auto ${className}`}
-      onClick={handleClick}
     >
       <style>{`
         rect, polygon, path, line {
@@ -67,12 +83,24 @@ export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomI
       </g>
 
       <g id="active_area">
-        <rect data-room-id="hall" width="96.6" height="58.41" transform="translate(96.6 58.4) rotate(180)" style={getActiveStyle("hall")} />
-        <rect data-room-id="318" x="96.6" width="82.4" height="58.41" transform="translate(275.6 58.4) rotate(180)" style={getActiveStyle("318")} />
-        <rect data-room-id="317" x="179" width="96" height="58.41" transform="translate(454 58.4) rotate(180)" style={getActiveStyle("317")} />
-        <rect data-room-id="316" x="275" width="98" height="58.41" transform="translate(648 58.4) rotate(180)" style={getActiveStyle("316")} />
-        <rect data-room-id="315" x="373" width="80.5" height="58.41" transform="translate(826.6 58.4) rotate(180)" style={getActiveStyle("315")} />
-        <rect data-room-id="pc_3" x="96.6" y="196.8" width="82.4" height="58.35" transform="translate(275.6 451.9) rotate(180)" style={getActiveStyle("pc_3")} />
+        <RoomLink roomId="hall" onRoomSelect={onRoomSelect}>
+          <rect id="hall" width="96.6" height="58.41" transform="translate(96.6 58.4) rotate(180)" style={getActiveStyle("hall")} />
+        </RoomLink>
+        <RoomLink roomId="318" onRoomSelect={onRoomSelect}>
+          <rect id="318" x="96.6" width="82.4" height="58.41" transform="translate(275.6 58.4) rotate(180)" style={getActiveStyle("318")} />
+        </RoomLink>
+        <RoomLink roomId="317" onRoomSelect={onRoomSelect}>
+          <rect id="317" x="179" width="96" height="58.41" transform="translate(454 58.4) rotate(180)" style={getActiveStyle("317")} />
+        </RoomLink>
+        <RoomLink roomId="316" onRoomSelect={onRoomSelect}>
+          <rect id="316" x="275" width="98" height="58.41" transform="translate(648 58.4) rotate(180)" style={getActiveStyle("316")} />
+        </RoomLink>
+        <RoomLink roomId="315" onRoomSelect={onRoomSelect}>
+          <rect id="315" x="373" width="80.5" height="58.41" transform="translate(826.6 58.4) rotate(180)" style={getActiveStyle("315")} />
+        </RoomLink>
+        <RoomLink roomId="pc_3" onRoomSelect={onRoomSelect}>
+          <rect id="pc_3" x="96.6" y="196.8" width="82.4" height="58.35" transform="translate(275.6 451.9) rotate(180)" style={getActiveStyle("pc_3")} />
+        </RoomLink>
       </g>
 
       <g id="facilities">

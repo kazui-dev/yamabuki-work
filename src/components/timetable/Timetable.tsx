@@ -10,9 +10,10 @@ import type { PageID, TimetableItem, TimetableSession } from "@/types";
 
 interface TimetableProps {
   onNavigate: (view: PageID) => void;
+  onResetScroll: (view: PageID) => void;
 }
 
-export const Timetable = ({ onNavigate }: TimetableProps) => {
+export const Timetable = ({ onNavigate, onResetScroll }: TimetableProps) => {
   const [selectedSession, setSelectedSession] = useState<TimetableSession | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -61,15 +62,22 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
                 <div className="mt-4">
                   <Button 
                     size="sm"
+                    asChild
                     className="w-full bg-slate-200 hover:bg-slate-300 active:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-600 text-slate-800 dark:text-slate-100" 
-                    onClick={() => {
-                      if (item.action) {
-                        onNavigate(item.action.targetView);
-                      }
-                    }}
                   >
-                    {item.action.icon && <item.action.icon size={16} />}
-                    {item.action.label}
+                    <a
+                      href={item.action.targetView === 'timetable' ? '/' : `/${item.action.targetView}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (item.action) {
+                          onResetScroll(item.action.targetView);
+                          onNavigate(item.action.targetView);
+                        }
+                      }}
+                    >
+                      {item.action.icon && <item.action.icon size={16} />}
+                      {item.action.label}
+                    </a>
                   </Button>
                 </div>
               )}
@@ -81,7 +89,8 @@ export const Timetable = ({ onNavigate }: TimetableProps) => {
                   <SessionCard 
                     key={sIndex} 
                     session={session} 
-                    onNavigate={onNavigate} 
+                    onNavigate={onNavigate}
+                    onResetScroll={onResetScroll}
                     onOpenDetail={handleOpenDetail}
                     isExpanded={isDrawerOpen && selectedSession === session}
                   />

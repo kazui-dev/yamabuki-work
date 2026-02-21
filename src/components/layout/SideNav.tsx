@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -8,7 +8,7 @@ import { POSTERS_BY_LOCATION } from '@/constants/posters';
 import type { PageID, Poster } from '@/types';
 import { useTheme } from '@/lib/theme';
 
-interface AppMenuProps {
+interface SideNavProps {
   currentPage: PageID;
   onNavigate: (page: PageID) => void;
   onOpenPoster: (poster: Poster, roomName: string) => void;
@@ -17,12 +17,13 @@ interface AppMenuProps {
   selectedPosterId: string | null;
 }
 
-export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, isPosterDrawerOpen, selectedPosterId }: AppMenuProps) => {
+export const SideNav = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, isPosterDrawerOpen, selectedPosterId }: SideNavProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const scrollTopRef = useRef(0);
   const { theme, resolvedTheme, setTheme } = useTheme();
-  const roomNameById = Object.fromEntries(MapsData.map((room) => [room.id, room.name]));
+  
+  const roomNameById = useMemo(() => Object.fromEntries(MapsData.map((room) => [room.id, room.name])), []);
 
   const closeMenu = () => {
     if (scrollContainerRef.current) {
@@ -45,12 +46,64 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
     });
   };
 
-  const handleNavigate = (page: PageID) => {
+  const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, page: PageID) => {
+    e.preventDefault();
     onNavigate(page);
     requestAnimationFrame(() => {
       closeMenu();
     });
   };
+
+  const posterListNodes = useMemo(() => {
+    return MapsData.map((room) => {
+      const posters = POSTERS_BY_LOCATION[room.id] ?? [];
+      if (posters.length === 0) return null;
+
+      const roomName = roomNameById[room.id] ?? room.id;
+
+      return (
+        <div key={room.id} className="px-4 py-2">
+          <a
+            href={`/map/${room.id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              onSelectRoom(room.id);
+              closeMenu();
+            }}
+            className="mb-1 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 active:text-slate-700 dark:hover:text-slate-200 dark:active:text-slate-200"
+          >
+            <MapPin size={12} />
+            {roomName}
+          </a>
+
+          <div className="space-y-2 pl-4">
+            {posters.map((poster: Poster) => (
+              <button
+                key={poster.id}
+                onClick={() => onOpenPoster(poster, roomName)}
+                className={`w-full text-left rounded-md px-2 py-1 transition-colors ${
+                  isPosterDrawerOpen && selectedPosterId === poster.id
+                    ? 'bg-slate-100 dark:bg-slate-800'
+                    : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-sm text-slate-800 dark:text-slate-200 font-medium truncate">
+                    {poster.title}
+                  </p>
+                  {isPosterDrawerOpen && selectedPosterId === poster.id ? (
+                    <ChevronDown size={14} className="text-slate-500 dark:text-slate-400 shrink-0" />
+                  ) : (
+                    <ChevronUp size={14} className="text-slate-500 dark:text-slate-400 shrink-0" />
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    });
+  }, [isPosterDrawerOpen, selectedPosterId, onSelectRoom, onOpenPoster, roomNameById]);
 
   return (
     <Drawer direction="left" open={isOpen} onOpenChange={handleOpenChange}>
@@ -68,8 +121,9 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
       <DrawerContent direction="left" className="w-64 p-0">
         <div className="h-full flex flex-col overflow-hidden">
           <div className="px-4 pt-4 pb-2">
-            <button
-              onClick={() => handleNavigate('timetable')}
+            <a
+              href="/"
+              onClick={(e) => handleNavigate(e, 'timetable')}
               className={`w-full mb-2 flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
                 currentPage === 'timetable'
                   ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
@@ -78,10 +132,11 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
             >
               <CalendarDays size={18} className="text-slate-600 dark:text-slate-300" />
               タイムテーブル
-            </button>
+            </a>
 
-            <button
-              onClick={() => handleNavigate('map')}
+            <a
+              href="/map"
+              onClick={(e) => handleNavigate(e, 'map')}
               className={`w-full mb-2 flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
                 currentPage === 'map'
                   ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
@@ -90,10 +145,11 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
             >
               <MapPinned size={18} className="text-slate-600 dark:text-slate-300" />
               フロアマップ
-            </button>
+            </a>
 
-            <button
-              onClick={() => handleNavigate('survey')}
+            <a
+              href="/survey"
+              onClick={(e) => handleNavigate(e, 'survey')}
               className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium ${
                 currentPage === 'survey'
                   ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
@@ -102,8 +158,7 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
             >
               <ClipboardList size={18} className="text-slate-600 dark:text-slate-300" />
               来場者アンケート
-            </button>
-
+            </a>
             <div className="h-px bg-slate-200 dark:bg-slate-700 mt-2 mb-0" />
           </div>
 
@@ -120,56 +175,8 @@ export const AppMenu = ({ currentPage, onNavigate, onOpenPoster, onSelectRoom, i
                   ポスター発表
                 </h3>
               </div>
-
               <div className="space-y-2">
-                {MapsData.map((room) => {
-                  const posters = POSTERS_BY_LOCATION[room.id] ?? [];
-                  if (posters.length === 0) {
-                    return null;
-                  }
-
-                  const roomName = roomNameById[room.id] ?? room.id;
-
-                  return (
-                    <div key={room.id} className="px-4 py-2">
-                      <button
-                        onClick={() => {
-                          onSelectRoom(room.id);
-                          closeMenu();
-                        }}
-                        className="mb-1 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 active:text-slate-700 dark:hover:text-slate-200 dark:active:text-slate-200"
-                      >
-                        <MapPin size={12} />
-                        {roomName}
-                      </button>
-
-                      <div className="space-y-2 pl-4">
-                        {posters.map((poster: Poster) => (
-                          <button
-                            key={poster.id}
-                            onClick={() => onOpenPoster(poster, roomName)}
-                            className={`w-full text-left rounded-md px-2 py-1 transition-colors ${
-                              isPosterDrawerOpen && selectedPosterId === poster.id
-                                ? 'bg-slate-100 dark:bg-slate-800'
-                                : 'hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800'
-                            }`}
-                          >
-                            <div className="flex items-center justify-between gap-2">
-                              <p className="text-sm text-slate-800 dark:text-slate-200 font-medium truncate">
-                                {poster.title}
-                              </p>
-                              {isPosterDrawerOpen && selectedPosterId === poster.id ? (
-                                <ChevronDown size={14} className="text-slate-500 dark:text-slate-400 shrink-0" />
-                              ) : (
-                                <ChevronUp size={14} className="text-slate-500 dark:text-slate-400 shrink-0" />
-                              )}
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
+                {posterListNodes}
               </div>
             </nav>
           </div>

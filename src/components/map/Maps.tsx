@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FloorMap } from "./FloorMap";
 import { PosterCard } from "./PosterCard";
-import { PosterDetail } from "./PosterDetail";
 import { getRoomMapComponent } from "./rooms";
 import type { Poster } from "@/types";
 import {
@@ -12,22 +11,23 @@ import {
   CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { Drawer } from "@/components/ui/drawer";
 import { MapsData } from "@/constants/maps";
-import { roomFromSearch, syncMapRoom } from '@/lib/history';
+import { parsePath, syncMapRoom } from '@/lib/history';
 
 interface MapsProps {
   selectedRoomId?: string | null;
   onSelectedRoomHandled?: () => void;
+  onOpenPoster: (poster: Poster, roomName: string) => void;
+  selectedPosterId?: string | null;
 }
 
-export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled }) => {
+export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled, onOpenPoster, selectedPosterId }) => {
   const [api, setApi] = useState<CarouselApi>();
 
   const getInitialRoomId = () => {
     if (typeof window !== 'undefined') {
-      const roomId = roomFromSearch(window.location.search);
-      if (roomId && MapsData.some(r => r.id === roomId)) return roomId;
+      const { room } = parsePath(window.location.pathname);
+      if (room && MapsData.some(r => r.id === room)) return room;
     }
     return MapsData[0]?.id || null;
   };
@@ -38,9 +38,6 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
     return Math.max(0, MapsData.findIndex(r => r.id === initialRoomId));
   });
   const [current, setCurrent] = useState(initialIndex);
-  
-  const [selectedData, setSelectedData] = useState<{ poster: Poster; roomName: string } | null>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (activeRoomId) {
@@ -67,11 +64,6 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
     };
   }, [api]);
 
-  const handleOpenDetail = useCallback((poster: Poster, roomName: string) => {
-    setSelectedData({ poster, roomName });
-    setIsDrawerOpen(true);
-  }, []);
-
   useEffect(() => {
     if (selectedRoomId) {
       const index = MapsData.findIndex(r => r.id === selectedRoomId);
@@ -88,9 +80,9 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
     const room = MapsData.find(r => r.id === roomId);
     const poster = room?.posters?.find(p => p.id === posterId);
     if (room && poster) {
-      handleOpenDetail(poster, room.name);
+      onOpenPoster(poster, room.name);
     }
-  }, [handleOpenDetail]);
+  }, [onOpenPoster]);
 
   const scrollTo = useCallback((index: number) => {
     api?.scrollTo(index);
@@ -162,8 +154,8 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
                         <PosterCard 
                           key={poster.id} 
                           poster={poster} 
-                          isExpanded={isDrawerOpen && selectedData?.poster.id === poster.id}
-                          onOpen={() => handleOpenDetail(poster, room.name)} 
+                          isExpanded={selectedPosterId === poster.id}
+                          onOpen={() => onOpenPoster(poster, room.name)} 
                         />
                       ))}
                     </div>
@@ -174,10 +166,6 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
           })}
         </CarouselContent>
       </Carousel>
-
-      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-        {selectedData && <PosterDetail poster={selectedData.poster} roomName={selectedData.roomName} />}
-      </Drawer>
     </div>
   );
 };
