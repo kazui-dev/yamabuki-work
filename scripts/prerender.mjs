@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 
-const ROUTES = ['/', '/map', '/survey'];
+const ROUTES = ['/', '/map', '/survey', '/map/hall', '/map/318', '/map/317', '/map/316', '/map/315', '/map/pc_3'];
 const SITE_URL = 'https://yamabuki.work';
 const ENTRY_SERVER = '/src/entry-server.tsx';
 

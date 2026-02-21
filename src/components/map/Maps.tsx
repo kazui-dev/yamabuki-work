@@ -37,6 +37,8 @@ const resolveInitialRoomId = (initialPath?: string) => {
 export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled, onOpenPoster, selectedPosterId, initialPath }) => {
   const [api, setApi] = useState<CarouselApi>();
 
+  const listScrollPositions: Record<string, number> = {};
+
   const initialRoomId = resolveInitialRoomId(initialPath);
   const [activeRoomId, setActiveRoomId] = useState<string | null>(initialRoomId);
   const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === initialRoomId)));
@@ -152,7 +154,17 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
                   </div>
 
                   {room.posters && room.posters.length > 0 && (
-                    <div className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto">
+                    <div 
+                      className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
+                      onScroll={(e) => {
+                        listScrollPositions[room.id] = e.currentTarget.scrollTop;
+                      }}
+                      ref={(el) => {
+                        if (el && listScrollPositions[room.id] !== undefined) {
+                          el.scrollTop = listScrollPositions[room.id];
+                        }
+                      }}
+                    >
                       {room.posters.map((poster) => (
                         <PosterCard 
                           key={poster.id} 
