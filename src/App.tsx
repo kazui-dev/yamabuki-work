@@ -7,38 +7,33 @@ import { Survey } from './components/survey/Survey';
 import { Drawer } from './components/ui/drawer';
 import { PosterDetail } from './components/map/PosterDetail';
 import { syncMapRoom } from '@/lib/history';
+import { PAGE_METADATA } from '@/constants/metadata';
 import type { Poster, PageID } from './types';
-
-const PAGE_METADATA: Record<PageID, { title: string; description: string }> = {
-  timetable: {
-    title: '第9回 新宿山吹高校情報科発表会',
-    description: '2026年3月13日(金)開催、第9回 新宿山吹高校情報科発表会の特設サイトです。当日のタイムテーブルや、生徒による発表の概要を掲載しています。',
-  },
-  map: {
-    title: 'フロアマップ - 第9回 新宿山吹高校情報科発表会',
-    description: 'ポスター発表の概要をマップ形式で掲載しています。部屋やポスターをタップすると、詳細を直接表示できます。',
-  },
-  survey: {
-    title: '来場者アンケート - 第9回 新宿山吹高校情報科発表会',
-    description: '情報科発表会では、ご来場の皆様にアンケートのご協力をお願いしております。発表に関するご意見やご感想をお寄せください。',
-  },
-};
 
 const updatePageMeta = (pageId: PageID) => {
   const meta = PAGE_METADATA[pageId];
   document.title = meta.title;
-  
-  let descriptionElement = document.querySelector('meta[name="description"]');
-  if (!descriptionElement) {
-    descriptionElement = document.createElement('meta');
+
+  const descriptionElement =
+    document.querySelector('meta[name="description"]') ??
+    document.head.appendChild(document.createElement('meta'));
+
+  if (!descriptionElement.getAttribute('name')) {
     descriptionElement.setAttribute('name', 'description');
-    document.head.appendChild(descriptionElement);
   }
   descriptionElement.setAttribute('content', meta.description);
 };
 
-export const App = () => {
-  const { isReady, currentPage, navigate, resetScroll } = useRouter();
+type AppProps = {
+  initialPage?: PageID;
+  initialPath?: string;
+};
+
+export const App = ({ initialPage, initialPath }: AppProps) => {
+  const { isReady, currentPage, navigate, resetScroll } = useRouter({
+    initialPage,
+    initialPath,
+  });
   
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [selectedPosterData, setSelectedPosterData] = useState<{ poster: Poster; roomName: string } | null>(null);
@@ -94,6 +89,7 @@ export const App = () => {
               setIsPosterDrawerOpen(true);
             }}
             selectedPosterId={isPosterDrawerOpen ? selectedPosterData?.poster.id ?? null : null}
+            initialPath={initialPath}
           />
         )}
         

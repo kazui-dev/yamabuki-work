@@ -10,13 +10,21 @@ import type { PageID } from '@/types';
 
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
-export const useRouter = () => {
-  const [isReady, setIsReady] = useState(false);
-  const [currentPage, setCurrentPage] = useState<PageID>('timetable');
+type RouterOptions = {
+  initialPage?: PageID;
+  initialPath?: string;
+};
+
+export const useRouter = (options: RouterOptions = {}) => {
+  const { initialPage, initialPath } = options;
+  const initialPageValue = initialPage ?? 'timetable';
+  const [isReady, setIsReady] = useState(typeof initialPage !== 'undefined');
+  const [currentPage, setCurrentPage] = useState<PageID>(initialPageValue);
   
   const scrollPositions = useRef<{ timetable: number; map: number; survey: number }>({ timetable: 0, map: 0, survey: 0 });
-  const mapParams = useRef<string>('');
-
+  const initialMapParams = initialPath && parsePath(initialPath).page === 'map' ? initialPath : '';
+  const mapParams = useRef<string>(initialMapParams);
+  
   useEffect(() => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
