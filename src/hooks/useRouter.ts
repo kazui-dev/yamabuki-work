@@ -24,18 +24,15 @@ export const useRouter = () => {
 
     const { page: pageFromUrl } = parsePath(window.location.pathname);
     initHistory('timetable');
-    
-    if (pageFromUrl) {
-      setCurrentPage(pageFromUrl);
-      if (pageFromUrl === 'map') {
-        mapParams.current = window.location.pathname;
-      }
+    setCurrentPage(pageFromUrl);
+    if (pageFromUrl === 'map') {
+      mapParams.current = window.location.pathname;
     }
 
     const handlePopState = (event: PopStateEvent) => {
       const historyState = event.state as HistoryState | null;
       const { page: urlPage } = parsePath(window.location.pathname);
-      const targetPage = (historyState?.page) ?? urlPage ?? 'timetable';
+      const targetPage = (historyState?.page) ?? urlPage;
 
       const savedScrollY = typeof historyState?.scrollY === 'number' ? historyState.scrollY : 0;
       

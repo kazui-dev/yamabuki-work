@@ -21,13 +21,13 @@ export const parsePath = (pathname: string): { page: Page; room?: string } => {
   return { page: 'timetable' };
 };
 
-export const initHistory = (fallback: Page = 'timetable') => {
+export const initHistory = (page: Page = 'timetable') => {
   if (window.history.state) {
     return;
   }
 
-  const { page, room } = parsePath(window.location.pathname);
-  window.history.replaceState({ page: page ?? fallback, room, scrollY: 0 }, '');
+  const { room } = parsePath(window.location.pathname);
+  window.history.replaceState({ page, room, scrollY: 0 }, '');
 };
 
 export const saveScroll = () => {
