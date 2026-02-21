@@ -22,6 +22,7 @@ export const useRouter = (options: RouterOptions = {}) => {
   const [currentPage, setCurrentPage] = useState<PageID>(initialPageValue);
   
   const scrollPositions = useRef<{ timetable: number; map: number; survey: number }>({ timetable: 0, map: 0, survey: 0 });
+  
   const initialMapParams = initialPath && parsePath(initialPath).page === 'map' ? initialPath : '';
   const mapParams = useRef<string>(initialMapParams);
   
@@ -30,23 +31,24 @@ export const useRouter = (options: RouterOptions = {}) => {
       history.scrollRestoration = 'manual';
     }
 
-    const { page: pageFromUrl } = parsePath(window.location.pathname);
+    const { page: pageFromUrl } = parsePath(window.location.pathname, window.location.search);
     initHistory(pageFromUrl);
     setCurrentPage(pageFromUrl);
+    
     if (pageFromUrl === 'map') {
-      mapParams.current = window.location.pathname;
+      mapParams.current = window.location.pathname + window.location.search;
     }
 
     const handlePopState = (event: PopStateEvent) => {
       const historyState = event.state as HistoryState | null;
-      const { page: urlPage } = parsePath(window.location.pathname);
+      const { page: urlPage } = parsePath(window.location.pathname, window.location.search);
       const targetPage = (historyState?.page) ?? urlPage;
 
       const savedScrollY = typeof historyState?.scrollY === 'number' ? historyState.scrollY : 0;
       
       scrollPositions.current[targetPage] = savedScrollY;
       if (targetPage === 'map') {
-        mapParams.current = window.location.pathname;
+        mapParams.current = window.location.pathname + window.location.search;
       }
       
       setCurrentPage(targetPage);
@@ -72,7 +74,7 @@ export const useRouter = (options: RouterOptions = {}) => {
 
     scrollPositions.current[currentPage] = window.scrollY;
     if (currentPage === 'map') {
-      mapParams.current = window.location.pathname;
+      mapParams.current = window.location.pathname + window.location.search;
     }
 
     saveScroll();

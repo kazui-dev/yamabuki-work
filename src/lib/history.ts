@@ -8,12 +8,14 @@ export interface HistoryState extends Record<string, unknown> {
   scrollY?: number;
 }
 
-export const parsePath = (pathname: string): { page: Page; room?: string } => {
+export const parsePath = (pathname: string, search: string = ''): { page: Page; room?: string } => {
   const parts = pathname.split('/').filter(Boolean);
   const first = parts[0];
 
   if (first === 'map') {
-    return { page: 'map', room: parts[1] };
+    const params = new URLSearchParams(search);
+    const room = params.get('r') || undefined;
+    return { page: 'map', room };
   }
   if (first === 'survey') {
     return { page: 'survey' };
@@ -25,8 +27,7 @@ export const initHistory = (page: Page = 'timetable') => {
   if (window.history.state) {
     return;
   }
-
-  const { room } = parsePath(window.location.pathname);
+  const { room } = parsePath(window.location.pathname, window.location.search);
   window.history.replaceState({ page, room, scrollY: 0 }, '');
 };
 
@@ -42,13 +43,13 @@ export const pushPage = (page: Page, url: string, scrollY: number) => {
 };
 
 export const syncMapRoom = (roomId: string, options?: { scrollY?: number }) => {
-  const { page, room } = parsePath(window.location.pathname);
+  const { page, room } = parsePath(window.location.pathname, window.location.search);
 
   if (page === 'map' && room === roomId) {
     return;
   }
 
-  const url = `/map/${roomId}`;
+  const url = `/map?r=${roomId}`;
 
   window.history.replaceState(
     {

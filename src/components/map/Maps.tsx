@@ -24,11 +24,11 @@ interface MapsProps {
 
 const resolveInitialRoomId = (initialPath?: string) => {
   const hasWindow = typeof window !== 'undefined' && typeof window.location?.pathname === 'string';
-  const pathname = initialPath ?? (hasWindow && window.location.pathname
-    ? window.location.pathname
-    : '');
+  const pathname = hasWindow && window.location.pathname ? window.location.pathname : initialPath;
+  const search = hasWindow ? window.location.search : '';
+
   if (pathname) {
-    const { room } = parsePath(pathname);
+    const { room } = parsePath(pathname, search);
     if (room && MapsData.some(r => r.id === room)) return room;
   }
   return MapsData[0]?.id || null;
@@ -37,7 +37,7 @@ const resolveInitialRoomId = (initialPath?: string) => {
 export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled, onOpenPoster, selectedPosterId, initialPath }) => {
   const [api, setApi] = useState<CarouselApi>();
 
-  const initialRoomId = resolveInitialRoomId(initialPath);
+  const initialRoomId = selectedRoomId || resolveInitialRoomId(initialPath);
   const [activeRoomId, setActiveRoomId] = useState<string | null>(initialRoomId);
   const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === initialRoomId)));
   const [current, setCurrent] = useState(initialIndex);
