@@ -1,4 +1,5 @@
 import { SideNav } from './SideNav';
+import type { MouseEvent } from 'react';
 import { CalendarDays, MapPinned } from "lucide-react";
 import type { PageID, Poster } from '@/types';
 
@@ -22,7 +23,8 @@ export const Header = ({
   selectedPosterId
 }: HeaderProps) => {
   
-  const handleLogoClick = () => {
+  const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
     if (currentPage === 'timetable') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
@@ -43,11 +45,14 @@ export const Header = ({
           selectedPosterId={selectedPosterId}
         />
 
-        <h1 
-          className="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200 cursor-pointer hover:opacity-80 active:opacity-80 transition-opacity shrink truncate flex-1"
-          onClick={handleLogoClick}
-        >
-          新宿山吹高校情報科発表会
+        <h1 className="shrink truncate flex-1">
+          <a
+            href="/"
+            onClick={handleLogoClick}
+            className="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200 hover:opacity-80 active:opacity-80 transition-opacity block"
+          >
+            新宿山吹高校情報科発表会
+          </a>
         </h1>
         
         <div className="w-24 sm:w-28 shrink-0">

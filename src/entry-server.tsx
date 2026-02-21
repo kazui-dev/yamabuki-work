@@ -1,3 +1,4 @@
+import { StrictMode } from 'react';
 import { renderToString } from 'react-dom/server';
 import { App } from './App';
 import { ThemeProvider } from './lib/theme';
@@ -19,9 +20,11 @@ export const renderPage = (pathname: string): RenderResult => {
   const ogTitle = meta.ogTitle ?? meta.title;
 
   const html = renderToString(
-    <ThemeProvider>
-      <App initialPage={page} initialPath={pathname} />
-    </ThemeProvider>
+    <StrictMode>
+      <ThemeProvider>
+        <App initialPage={page} initialPath={pathname} />
+      </ThemeProvider>
+    </StrictMode>
   );
 
   return {

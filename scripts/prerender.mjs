@@ -19,16 +19,15 @@ const escapeHtml = (value) =>
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/'/g, '&#39;')
+    .replace(/`/g, '&#96;');
 
 const replaceMeta = (template, route, title, ogTitle, description) => {
-  const safeOgTitle = ogTitle || title;
-
+  const effectiveOgTitle = ogTitle || title;
   let result = template.replace(/<title>.*?<\/title>/is, `<title>${escapeHtml(title)}</title>`);
-
   const metaTags = [
     { attr: 'name="description"', content: description },
-    { attr: 'property="og:title"', content: safeOgTitle },
+    { attr: 'property="og:title"', content: effectiveOgTitle },
     { attr: 'property="og:url"', content: toPageUrl(route) },
   ];
 
