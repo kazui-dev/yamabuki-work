@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from '@/hooks/useRouter';
 import { Header } from './components/layout/Header';
 import { Timetable } from './components/timetable/Timetable';
@@ -7,7 +7,35 @@ import { Survey } from './components/survey/Survey';
 import { Drawer } from './components/ui/drawer';
 import { PosterDetail } from './components/map/PosterDetail';
 import { syncMapRoom } from '@/lib/history';
-import type { Poster } from './types';
+import type { Poster, PageID } from './types';
+
+const PAGE_METADATA: Record<PageID, { title: string; description: string }> = {
+  timetable: {
+    title: '第9回 新宿山吹高校情報科発表会',
+    description: '2026年3月13日(金)開催、第9回 新宿山吹高校情報科発表会の特設サイトです。当日のタイムテーブルや、生徒による発表の概要を掲載しています。',
+  },
+  map: {
+    title: 'フロアマップ - 第9回 新宿山吹高校情報科発表会',
+    description: 'ポスター発表の概要をマップ形式で掲載しています。部屋やポスターをタップすると、詳細を直接表示できます。',
+  },
+  survey: {
+    title: '来場者アンケート - 第9回 新宿山吹高校情報科発表会',
+    description: '情報科発表会では、ご来場の皆様にアンケートのご協力をお願いしております。発表に関するご意見やご感想をお寄せください。',
+  },
+};
+
+const updatePageMeta = (pageId: PageID) => {
+  const meta = PAGE_METADATA[pageId];
+  document.title = meta.title;
+  
+  let descriptionElement = document.querySelector('meta[name="description"]');
+  if (!descriptionElement) {
+    descriptionElement = document.createElement('meta');
+    descriptionElement.setAttribute('name', 'description');
+    document.head.appendChild(descriptionElement);
+  }
+  descriptionElement.setAttribute('content', meta.description);
+};
 
 export const App = () => {
   const { isReady, currentPage, navigate, resetScroll } = useRouter();
@@ -15,6 +43,12 @@ export const App = () => {
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [selectedPosterData, setSelectedPosterData] = useState<{ poster: Poster; roomName: string } | null>(null);
   const [isPosterDrawerOpen, setIsPosterDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    if (isReady) {
+      updatePageMeta(currentPage);
+    }
+  }, [currentPage, isReady]);
 
   if (!isReady) {
     return <div className="min-h-screen bg-slate-50 dark:bg-slate-950" />;
