@@ -28,7 +28,7 @@ const RoomLink = ({ roomId, children, onRoomSelect }: RoomLinkProps) => {
   };
 
   return (
-    <a href={`/map/${roomId}`} onClick={handleClick}>
+    <a href={`/map?r=${roomId}`} onClick={handleClick}>
       {children}
     </a>
   );
