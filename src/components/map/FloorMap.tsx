@@ -1,0 +1,139 @@
+import type React from 'react';
+
+type Props = {
+  className?: string;
+  onRoomSelect?: (roomId: string) => void;
+  activeRoomId?: string | null;
+};
+
+type RoomLinkProps = {
+  roomId: string;
+  children: React.ReactNode;
+  onRoomSelect?: (roomId: string) => void;
+};
+
+const RoomLink: React.FC<RoomLinkProps> = ({ roomId, children, onRoomSelect }) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!onRoomSelect) return;
+
+    const isPrimaryClick = e.button === 0;
+    const hasModifier = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey;
+
+    if (!isPrimaryClick || hasModifier) {
+      return;
+    }
+
+    e.preventDefault();
+    onRoomSelect(roomId);
+  };
+
+  return (
+    <a href={`/map/${roomId}`} onClick={handleClick}>
+      {children}
+    </a>
+  );
+};
+
+export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomId }) => {
+
+  const getActiveStyle = (roomId: string) => {
+    return activeRoomId === roomId ? { fill: '#ff8000', fillOpacity: 0.5 } : undefined;
+  };
+
+  return (
+    <svg 
+      viewBox="-2 -2 458.5 259.1" 
+      className={`w-full h-auto ${className}`}
+    >
+      <style>{`
+        rect, polygon, path, line {
+          fill: #ffffff;
+          stroke: #333333;
+          stroke-width: 2px;
+        }
+
+        #passive_area rect, #passive_area polygon { fill: #f0f0f0; }
+        #facilities rect, #facilities polygon, #facilities path, #facilities line { fill: #ffffff; }
+        .icon_man, #icon_man { fill: #0066cc; stroke: none; }
+        .icon_woman, #icon_woman { fill: #cc0066; stroke: none; }
+        .icon_EV { fill: #333333; stroke: none; }
+        
+        #active_area rect { cursor: pointer; transition: all 0.2s ease; fill: #ffff0044; }
+        #active_area rect:hover { fill-opacity: 0.5; }
+        
+        .room_label {
+          pointer-events: none;
+          user-select: none;
+          fill: #333333;
+          font-weight: bold;
+        }
+      `}</style>
+
+      <g id="base_area">
+        <rect id="base" width="453.5" height="255.12"/>
+      </g>
+
+      <g id="passive_area">
+        <rect id="309" x="275" y="196.8" width="100" height="58.32" transform="translate(650 451.9) rotate(180)"/>
+        <rect id="310" x="235.6" y="196.8" width="39.4" height="58.35" transform="translate(510.5 451.9) rotate(180)"/>
+        <rect id="311" x="179" y="196.8" width="56.5" height="58.35" transform="translate(414.6 451.9) rotate(180)"/>
+        <rect id="pc_2" x="375" y="196.8" width="78.5" height="58.32" transform="translate(828.5 451.9) rotate(180)"/>
+        <rect id="pc_ll" y="196.8" width="96.6" height="58.35" transform="translate(96.6 451.9) rotate(180)"/>
+        <rect id="top_light" x="179" y="87.8" width="196" height="79.61" transform="translate(554 255.2) rotate(180)"/>
+      </g>
+
+      <g id="active_area">
+        <RoomLink roomId="hall" onRoomSelect={onRoomSelect}>
+          <rect id="hall" width="96.6" height="58.41" transform="translate(96.6 58.4) rotate(180)" style={getActiveStyle("hall")} />
+        </RoomLink>
+        <RoomLink roomId="318" onRoomSelect={onRoomSelect}>
+          <rect id="318" x="96.6" width="82.4" height="58.41" transform="translate(275.6 58.4) rotate(180)" style={getActiveStyle("318")} />
+        </RoomLink>
+        <RoomLink roomId="317" onRoomSelect={onRoomSelect}>
+          <rect id="317" x="179" width="96" height="58.41" transform="translate(454 58.4) rotate(180)" style={getActiveStyle("317")} />
+        </RoomLink>
+        <RoomLink roomId="316" onRoomSelect={onRoomSelect}>
+          <rect id="316" x="275" width="98" height="58.41" transform="translate(648 58.4) rotate(180)" style={getActiveStyle("316")} />
+        </RoomLink>
+        <RoomLink roomId="315" onRoomSelect={onRoomSelect}>
+          <rect id="315" x="373" width="80.5" height="58.41" transform="translate(826.6 58.4) rotate(180)" style={getActiveStyle("315")} />
+        </RoomLink>
+        <RoomLink roomId="pc_3" onRoomSelect={onRoomSelect}>
+          <rect id="pc_3" x="96.6" y="196.8" width="82.4" height="58.35" transform="translate(275.6 451.9) rotate(180)" style={getActiveStyle("pc_3")} />
+        </RoomLink>
+      </g>
+
+      <g id="facilities">
+        <path id="stairs" d="M54.1,87.8H75.3V99.2H54.1ZM75.3,99.2H96.6V87.8H75.3ZM54.1,110.5H75.3V99.2H54.1Zm21.2,0H96.6V99.2H75.3ZM54.1,121.9H75.3V110.5H54.1Zm21.2,0H96.6V110.5H75.3ZM54.1,133.3H75.3V121.9H54.1Zm21.2,0H96.6V121.9H75.3ZM54.1,144.6H75.3V133.3H54.1Zm21.2,0H96.6V133.3H75.3Zm0,11.4V144.6H54.1V156m42.5,0V144.6H75.3V156"/>
+        <polygon id="wc-1" points="431.3 87.8 431.3 114.5 404.9 114.5 404.9 127.6 375 127.6 375 87.8 431.3 87.8"/>
+        <polygon id="wc-2" points="431.3 140.6 431.3 167.4 375 167.4 375 127.6 404.9 127.6 404.9 140.6 431.3 140.6"/>
+        <rect id="wc_3" y="87.8" width="54.1" height="39.8" transform="translate(54.1 215.4) rotate(180)"/>
+        <rect id="wc_4" y="127.6" width="54.1" height="39.8" transform="translate(54.1 295) rotate(180)"/>
+        <rect id="EV_1" x="404.9" y="114.5" width="26.4" height="26.03" transform="translate(836.1 255.1) rotate(180)"/>
+        <rect id="EV_2" x="147.8" y="87.8" width="31.2" height="79.61" transform="translate(326.8 255.2) rotate(180)"/>
+        <line x1="179" y1="87.8" x2="375" y2="167.4"/>
+        <line x1="179" y1="167.4" x2="375" y2="87.8"/>
+      </g>
+      
+      <g id="icons">
+        <path id="icon_man_1" className="icon_man" d="M391.11,103.97c-2.19,0-3.97-1.78-3.97-3.97s1.78-3.97,3.97-3.97,3.97,1.78,3.97,3.97-1.78,3.97-3.97,3.97ZM395.12,107.57l-.95,10c0,.99-.54,1.8-1.2,1.8h-3.7c-.66,0-1.2-.81-1.2-1.8l-.95-10c-.07-.74.31-1.4.81-1.4h6.38c.5,0,.89.66.81,1.4Z"/>
+        <path id="icon_man_2" className="icon_man" d="M27.05,143.76c-2.19,0-3.97-1.78-3.97-3.97s1.78-3.97,3.97-3.97,3.97,1.78,3.97,3.97-1.78,3.97-3.97,3.97ZM31.06,147.36l-.95,10c0,.99-.54,1.8-1.2,1.8h-3.7c-.66,0-1.2-.81-1.2-1.8l-.95-10c-.07-.74.31-1.4.81-1.4h6.38c.5,0,.89.66.81,1.4Z"/>
+        <path id="icon_woman_1" className="icon_woman" d="M391.11,143.77c-2.19,0-3.97-1.78-3.97-3.97s1.78-3.97,3.97-3.97,3.97,1.78,3.97,3.97-1.78,3.97-3.97,3.97ZM395.12,157.77l-.95-10c0-.99-.54-1.8-1.2-1.8h-3.7c-.66,0-1.2.81-1.2,1.8l-.95,10c-.07.74.31,1.4.81,1.4h6.38c.5,0,.89-.66.81-1.4Z"/>
+        <path id="icon_woman_2" className="icon_woman" d="M27.05,103.95c-2.19,0-3.97-1.78-3.97-3.97s1.78-3.97,3.97-3.97,3.97,1.78,3.97,3.97-1.78,3.97-3.97,3.97ZM31.06,117.95l-.95-10c0-.99-.54-1.8-1.2-1.8h-3.7c-.66,0-1.2.81-1.2,1.8l-.95,10c-.07.74.31,1.4.81,1.4h6.38c.5,0,.89-.66.81-1.4Z"/>
+        <path id="icon_EV_1" className="icon_EV" d="M418.07,129.46c-.86,0-1.55-.69-1.55-1.55s.69-1.55,1.55-1.55,1.55.69,1.55,1.55-.69,1.55-1.55,1.55ZM419.64,134.93l-.37-3.91c0-.39-.21-.7-.47-.7h-1.45c-.26,0-.47.32-.47.7l-.37,3.91c-.03.29.12.55.32.55h2.5c.2,0,.35-.26.32-.55ZM414.14,129.46c-.86,0-1.55-.69-1.55-1.55s.69-1.55,1.55-1.55,1.55.69,1.55,1.55-.69,1.55-1.55,1.55ZM415.7,134.93l-.37-3.91c0-.39-.21-.7-.47-.7h-1.45c-.26,0-.47.32-.47.7l-.37,3.91c-.03.29.12.55.32.55h2.5c.2,0,.35-.26.32-.55ZM422.01,129.46c-.86,0-1.55-.69-1.55-1.55s.69-1.55,1.55-1.55,1.55.69,1.55,1.55-.69,1.55-1.55,1.55ZM423.58,134.93l-.37-3.91c0-.39-.21-.7-.47-.7h-1.45c-.26,0-.47.32-.47.7l-.37,3.91c-.03.29.12.55.32.55h2.5c.2,0,.35-.26.32-.55ZM424.42,137.94h-12.7c-.93,0-1.69-.76-1.69-1.69v-10.73c0-.93.76-1.69,1.69-1.69h12.7c.93,0,1.69.76,1.69,1.69v10.73c0,.93-.76,1.69-1.69,1.69ZM411.72,125c-.29,0-.52.23-.52.52v10.73c0,.29.23.52.52.52h12.7c.29,0,.52-.23.52-.52v-10.73c0-.29-.23-.52-.52-.52h-12.7ZM412.82,120.36l1.78-1.78,1.78,1.78c.23.23.6.23.83,0,.23-.23.23-.6,0-.83l-2.08-2.08c-.28-.28-.77-.28-1.05,0l-2.08,2.08c-.23.23-.23.6,0,.83.11.11.26.17.41.17s.3-.06.41-.17ZM415.19,122.46v-4.64c0-.32-.26-.59-.59-.59s-.59.26-.59.59v4.64c0,.32.26.59.59.59s.59-.26.59-.59ZM422.13,122.46v-4.64c0-.32-.26-.59-.59-.59s-.59.26-.59.59v4.64c0,.32.26.59.59.59s.59-.26.59-.59ZM422.07,122.83l2.08-2.08c.23-.23.23-.6,0-.83-.23-.23-.6-.23-.83,0l-1.78,1.78-1.78-1.78c-.23-.23-.6-.23-.83,0-.23.23-.23.6,0,.83l2.08,2.08c.14.14.33.22.53.22s.39-.08.53-.22Z"/>
+        <path id="icon_EV_2" className="icon_EV" d="M163.39,112.39c-.86,0-1.55-.69-1.55-1.55s.69-1.55,1.55-1.55,1.55.69,1.55,1.55-.69,1.55-1.55,1.55ZM164.96,117.86l-.37-3.91c0-.39-.21-.7-.47-.7h-1.45c-.26,0-.47.32-.47.7l-.37,3.91c-.03.29.12.55.32.55h2.5c.2,0,.35-.26.32-.55ZM159.46,112.39c-.86,0-1.55-.69-1.55-1.55s.69-1.55,1.55-1.55,1.55.69,1.55,1.55-.69,1.55-1.55,1.55ZM161.02,117.86l-.37-3.91c0-.39-.21-.7-.47-.7h-1.45c-.26,0-.47.32-.47.7l-.37,3.91c-.03.29.12.55.32.55h2.5c.2,0,.35-.26.32-.55ZM167.33,112.39c-.86,0-1.55-.69-1.55-1.55s.69-1.55,1.55-1.55,1.55.69,1.55,1.55-.69,1.55-1.55,1.55ZM168.9,117.86l-.37-3.91c0-.39-.21-.7-.47-.7h-1.45c-.26,0-.47.32-.47.7l-.37,3.91c-.03.29.12.55.32.55h2.5c.2,0,.35-.26.32-.55ZM169.74,120.87h-12.7c-.93,0-1.69-.76-1.69-1.69v-10.73c0-.93.76-1.69,1.69-1.69h12.7c.93,0,1.69.76,1.69,1.69v10.73c0,.93-.76,1.69-1.69,1.69ZM157.05,107.93c-.29,0-.52.23-.52.52v10.73c0,.29.23.52.52.52h12.7c.29,0,.52-.23.52-.52v-10.73c0-.29-.23-.52-.52-.52h-12.7ZM158.15,103.29l1.78-1.78,1.78,1.78c.23.23.6.23.83,0,.23-.23.23-.6,0-.83l-2.08-2.08c-.28-.28-.77-.28-1.05,0l-2.08,2.08c-.23.23-.23.6,0,.83.11.11.26.17.41.17s.3-.06.41-.17ZM160.51,105.39v-4.64c0-.32-.26-.59-.59-.59s-.59.26-.59.59v4.64c0,.32.26.59.59.59s.59-.26.59-.59ZM167.45,105.39v-4.64c0-.32-.26-.59-.59-.59s-.59.26-.59.59v4.64c0,.32.26.59.59.59s.59-.26.59-.59ZM167.39,105.76l2.08-2.08c.23-.23.23-.6,0-.83-.23-.23-.6-.23-.83,0l-1.78,1.78-1.78-1.78c-.23-.23-.6-.23-.83,0-.23.23-.23.6,0,.83l2.08,2.08c.14.14.33.22.53.22s.39-.08.53-.22Z"/>
+        <path id="icon_EV_3" className="icon_EV" d="M163.39,146.5c-.86,0-1.55-.69-1.55-1.55s.69-1.55,1.55-1.55,1.55.69,1.55,1.55-.69,1.55-1.55,1.55ZM164.96,151.97l-.37-3.91c0-.39-.21-.7-.47-.7h-1.45c-.26,0-.47.32-.47.7l-.37,3.91c-.03.29.12.55.32.55h2.5c.2,0,.35-.26.32-.55ZM159.46,146.5c-.86,0-1.55-.69-1.55-1.55s.69-1.55,1.55-1.55,1.55.69,1.55,1.55-.69,1.55-1.55,1.55ZM161.02,151.97l-.37-3.91c0-.39-.21-.7-.47-.7h-1.45c-.26,0-.47.32-.47.7l-.37,3.91c-.03.29.12.55.32.55h2.5c.2,0,.35-.26.32-.55ZM167.33,146.5c-.86,0-1.55-.69-1.55-1.55s.69-1.55,1.55-1.55,1.55.69,1.55,1.55-.69,1.55-1.55,1.55ZM168.9,151.97l-.37-3.91c0-.39-.21-.7-.47-.7h-1.45c-.26,0-.47.32-.47.7l-.37,3.91c-.03.29.12.55.32.55h2.5c.2,0,.35-.26.32-.55ZM169.74,154.99h-12.7c-.93,0-1.69-.76-1.69-1.69v-10.73c0-.93.76-1.69,1.69-1.69h12.7c.93,0,1.69.76,1.69,1.69v10.73c0,.93-.76,1.69-1.69,1.69ZM157.05,142.05c-.29,0-.52.23-.52.52v10.73c0,.29.23.52.52.52h12.7c.29,0,.52-.23.52-.52v-10.73c0-.29-.23-.52-.52-.52h-12.7ZM158.15,137.4l1.78-1.78,1.78,1.78c.23.23.6.23.83,0,.23-.23.23-.6,0-.83l-2.08-2.08c-.28-.28-.77-.28-1.05,0l-2.08,2.08c-.23.23-.23.6,0,.83.11.11.26.17.41.17s.3-.06.41-.17ZM160.51,139.5v-4.64c0-.32-.26-.59-.59-.59s-.59.26-.59.59v4.64c0,.32.26.59.59.59s.59-.26.59-.59ZM167.45,139.5v-4.64c0-.32-.26-.59-.59-.59s-.59.26-.59.59v4.64c0,.32.26.59.59.59s.59-.26.59-.59ZM167.39,139.87l2.08-2.08c.23-.23.23-.6,0-.83-.23-.23-.6-.23-.83,0l-1.78,1.78-1.78-1.78c-.23-.23-.6-.23-.83,0-.23.23-.23.6,0,.83l2.08,2.08c.14.14.33.22.53.22s.39-.08.53-.22Z"/>
+      </g>
+
+      <g id="room_labels" className="room_label">
+        <text x="48.3" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>大講義室</text>
+        <text x="137.8" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>318</text>
+        <text x="227" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>317</text>
+        <text x="324" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>316</text>
+        <text x="413.3" y="29.2" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '16px' }}>315</text>
+        <text x="137.8" y="218" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '12px' }}>第3パソコン</text>
+        <text x="137.8" y="234" textAnchor="middle" dominantBaseline="central" style={{ fontSize: '12px' }}>教室</text>
+      </g>
+    </svg>
+  );
+};
