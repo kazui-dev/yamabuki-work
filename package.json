@@ -5,7 +5,7 @@
   "scripts": {
     "p": "git add . && git commit -m \"fix\" && git push",
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {

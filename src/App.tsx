@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from '@/hooks/useRouter';
 import { Header } from './components/layout/Header';
 import { Timetable } from './components/timetable/Timetable';
 import { Maps } from './components/map/Maps';
 import { Survey } from './components/survey/Survey';
 import { Drawer } from './components/ui/drawer';
 import { PosterDetail } from './components/map/PosterDetail';
-import { syncMapRoom } from '@/lib/history';
+
 import { PAGE_METADATA } from '@/constants/metadata';
 import type { Poster, PageID } from './types';
 
@@ -30,14 +29,13 @@ type AppProps = {
 };
 
 export const App = ({ initialPage, initialPath }: AppProps) => {
-  const { isReady, currentPage, navigate, resetScroll } = useRouter({
-    initialPage,
-    initialPath,
-  });
-  
+  const [currentPage, setCurrentPage] = useState<PageID>(initialPage ?? 'timetable');
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [selectedPosterData, setSelectedPosterData] = useState<{ poster: Poster; roomName: string } | null>(null);
   const [isPosterDrawerOpen, setIsPosterDrawerOpen] = useState(false);
+  const [isReady, setIsReady] = useState(true);
+  const resetScroll = () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  const navigate = (page: PageID) => setCurrentPage(page);
 
   useEffect(() => {
     if (isReady) {
@@ -60,10 +58,8 @@ export const App = ({ initialPage, initialPath }: AppProps) => {
           setIsPosterDrawerOpen(true);
         }}
         onSelectRoom={(roomId) => {
-          syncMapRoom(roomId, { scrollY: 0 });
           setSelectedRoomId(roomId);
-          resetScroll('map');
-
+          resetScroll();
           if (currentPage === 'map') {
             requestAnimationFrame(() => {
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });

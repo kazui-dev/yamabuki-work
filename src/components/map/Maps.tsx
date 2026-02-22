@@ -12,7 +12,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { MapsData } from "@/constants/maps";
-import { parsePath, syncMapRoom } from '@/lib/history';
+// ルーティング依存を除去
 
 interface MapsProps {
   selectedRoomId?: string | null;
@@ -23,15 +23,9 @@ interface MapsProps {
 }
 
 const resolveInitialRoomId = (initialPath?: string) => {
-  const hasWindow = typeof window !== 'undefined' && typeof window.location?.pathname === 'string';
-  if (hasWindow && window.history.state && window.history.state.room) {
-    const room = window.history.state.room;
-    if (room && MapsData.some(r => r.id === room)) return room;
-  }
-  const pathname = initialPath ?? (hasWindow && window.location.pathname ? window.location.pathname : '');
-  if (pathname) {
-    const { room } = parsePath(pathname);
-    if (room && MapsData.some(r => r.id === room)) return room;
+  // initialPathがroomIdならそれを返す。なければ最初の部屋。
+  if (initialPath && MapsData.some(r => r.id === initialPath)) {
+    return initialPath;
   }
   return MapsData[0]?.id || null;
 };
@@ -46,11 +40,7 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
   const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === initialRoomId)));
   const [current, setCurrent] = useState(initialIndex);
 
-  useEffect(() => {
-    if (activeRoomId) {
-      syncMapRoom(activeRoomId);
-    }
-  }, [activeRoomId]);
+  // ルーティング副作用を除去
 
   useEffect(() => {
     if (!api) return;
