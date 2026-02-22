@@ -27,6 +27,7 @@ export const Route = createRootRoute({
       },
     ],
   }),
+
   shellComponent: RootDocument,
 })
 
