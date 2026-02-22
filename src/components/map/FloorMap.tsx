@@ -12,7 +12,7 @@ type RoomLinkProps = {
   onRoomSelect?: (roomId: string) => void;
 };
 
-const RoomLink: React.FC<RoomLinkProps> = ({ roomId, children, onRoomSelect }) => {
+const RoomLink = ({ roomId, children, onRoomSelect }: RoomLinkProps) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!onRoomSelect) return;
 
@@ -34,7 +34,7 @@ const RoomLink: React.FC<RoomLinkProps> = ({ roomId, children, onRoomSelect }) =
   );
 };
 
-export const FloorMap: React.FC<Props> = ({ className, onRoomSelect, activeRoomId }) => {
+export default function FloorMap({ className, onRoomSelect, activeRoomId }: Props) {
 
   const getActiveStyle = (roomId: string) => {
     return activeRoomId === roomId ? { fill: '#ff8000', fillOpacity: 0.5 } : undefined;

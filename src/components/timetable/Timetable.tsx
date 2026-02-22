@@ -1,19 +1,16 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/drawer";
-import { EventCard } from "./EventCard";
 import { Clock, Speech } from "lucide-react";
+
 import { timetable } from "@/constants/timetable";
-import { SessionCard } from "./SessionCard";
-import { SessionDetail } from "./SessionDetail";
-import type { PageID, TimetableItem, TimetableSession } from "@/types";
+import EventCard from "./EventCard";
+import SessionCard from "./SessionCard";
+import SessionDetail from "./SessionDetail";
+import type { TimetableItem, TimetableSession } from "@/types";
 
-interface TimetableProps {
-  onNavigate: (view: PageID) => void;
-  onResetScroll: (view: PageID) => void;
-}
-
-export const Timetable = ({ onNavigate, onResetScroll }: TimetableProps) => {
+export default function Timetable() {
   const [selectedSession, setSelectedSession] = useState<TimetableSession | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -41,43 +38,23 @@ export const Timetable = ({ onNavigate, onResetScroll }: TimetableProps) => {
 
           <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <div className="p-5 pb-4">
-              <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">
-                {item.title}
-              </h2>
-
+              <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">{item.title}</h2>
               {item.author && (
                 <p className="flex items-center gap-2 leading-none text-sm text-slate-600 dark:text-slate-300 mt-2">
-                  <Speech size={14} />
-                  {item.author}
+                  <Speech size={14} />{item.author}
                 </p>
               )}
-
               {item.description && (
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-                  {item.description}
-                </p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">{item.description}</p>
               )}
 
               {item.action && (
                 <div className="mt-4">
-                  <Button 
-                    size="sm"
-                    asChild
-                    className="w-full bg-slate-200 hover:bg-slate-300 active:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-600 text-slate-800 dark:text-slate-100" 
-                  >
-                    <a
-                      href={item.action.targetView === 'timetable' ? '/' : `/${item.action.targetView}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (item.action) {
-                          onResetScroll(item.action.targetView);
-                          onNavigate(item.action.targetView);
-                        }
-                      }}
-                    >
+                  <Button size="sm" asChild className="w-full bg-slate-200 hover:bg-slate-300 active:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-600 text-slate-800 dark:text-slate-100">
+                    <Link to={(item.action.targetView === 'timetable' ? '/' : `/${item.action.targetView}`) as any}>
                       {item.action.icon && <item.action.icon size={16} />}
                       {item.action.label}
-                    </a>
+                    </Link>
                   </Button>
                 </div>
               )}
@@ -89,8 +66,6 @@ export const Timetable = ({ onNavigate, onResetScroll }: TimetableProps) => {
                   <SessionCard 
                     key={sIndex} 
                     session={session} 
-                    onNavigate={onNavigate}
-                    onResetScroll={onResetScroll}
                     onOpenDetail={handleOpenDetail}
                     isExpanded={isDrawerOpen && selectedSession === session}
                   />
@@ -112,4 +87,4 @@ export const Timetable = ({ onNavigate, onResetScroll }: TimetableProps) => {
       </Drawer>
     </div>
   );
-};
+}

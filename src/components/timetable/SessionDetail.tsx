@@ -16,7 +16,7 @@ interface SessionDetailProps {
   details: SessionDetails;
 }
 
-export const SessionDetail = ({ title, author, details }: SessionDetailProps) => {
+export default function SessionDetail({ title, author, details }: SessionDetailProps) {
   return (
     <DrawerContent>
       <div className="mx-auto w-full max-w-md">

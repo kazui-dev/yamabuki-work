@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { FloorMap } from "./FloorMap";
-import { PosterCard } from "./PosterCard";
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate, useSearch } from '@tanstack/react-router';
+import FloorMap from "./FloorMap";
+import PosterCard from "./PosterCard";
 import { getRoomMapComponent } from "./rooms";
-import type { Poster } from "@/types";
+import { usePosterStore } from '@/store/usePosterStore';
 import {
   Carousel,
   CarouselContent,
@@ -12,95 +13,63 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { MapsData } from "@/constants/maps";
-import { parsePath, syncMapRoom } from '@/lib/history';
 
-interface MapsProps {
-  selectedRoomId?: string | null;
-  onSelectedRoomHandled?: () => void;
-  onOpenPoster: (poster: Poster, roomName: string) => void;
-  selectedPosterId?: string | null;
-  initialPath?: string;
-}
-
-const resolveInitialRoomId = (initialPath?: string) => {
-  const hasWindow = typeof window !== 'undefined' && typeof window.location?.pathname === 'string';
-  if (hasWindow && window.history.state && window.history.state.room) {
-    const room = window.history.state.room;
-    if (room && MapsData.some(r => r.id === room)) return room;
-  }
-  const pathname = initialPath ?? (hasWindow && window.location.pathname ? window.location.pathname : '');
-  if (pathname) {
-    const { room } = parsePath(pathname);
-    if (room && MapsData.some(r => r.id === room)) return room;
-  }
-  return MapsData[0]?.id || null;
-};
-
-export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled, onOpenPoster, selectedPosterId, initialPath }) => {
+export default function Maps() {
   const [api, setApi] = useState<CarouselApi>();
-
   const listScrollPositions: Record<string, number> = {};
+  
+  // TanStack RouterとZustandのフック
+  const search = useSearch({ strict: false }) as { r?: string };
+  const navigate = useNavigate();
+  const { data: posterData, openPoster } = usePosterStore();
 
-  const initialRoomId = resolveInitialRoomId(initialPath);
-  const [activeRoomId, setActiveRoomId] = useState<string | null>(initialRoomId);
-  const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === initialRoomId)));
+  const urlRoomId = search.r;
+  const activeRoomId = useMemo(() => {
+    return MapsData.some(r => r.id === urlRoomId) ? urlRoomId! : MapsData[0]?.id || null;
+  }, [urlRoomId]);
+
+  const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === activeRoomId)));
   const [current, setCurrent] = useState(initialIndex);
 
+  // URLに合わせてカルーセルを動かす
   useEffect(() => {
-    if (activeRoomId) {
-      syncMapRoom(activeRoomId);
+    if (!api || !activeRoomId) return;
+    const targetIndex = MapsData.findIndex(r => r.id === activeRoomId);
+    if (targetIndex !== -1 && targetIndex !== api.selectedScrollSnap()) {
+      api.scrollTo(targetIndex);
     }
-  }, [activeRoomId]);
+  }, [activeRoomId, api]);
 
+  // カルーセルが動いたらURLを更新
   useEffect(() => {
     if (!api) return;
-
     const updateState = () => {
       const index = api.selectedScrollSnap();
       setCurrent(index);
       const room = MapsData[index];
-      
-      if (room) {
-        setActiveRoomId(room.id);
+      if (room && room.id !== urlRoomId) {
+        navigate({ to: '/map', search: { r: room.id }, replace: true });
       }
     };
-
     api.on("select", updateState);
-    return () => {
-      api.off("select", updateState);
-    };
-  }, [api]);
-
-  useEffect(() => {
-    if (selectedRoomId) {
-      const index = MapsData.findIndex(r => r.id === selectedRoomId);
-      if (index !== -1) {
-        setActiveRoomId(selectedRoomId);
-        setCurrent(index);
-        api?.scrollTo(index);
-      }
-      onSelectedRoomHandled?.();
-    }
-  }, [selectedRoomId, api, onSelectedRoomHandled]);
+    return () => { api.off("select", updateState); };
+  }, [api, navigate, urlRoomId]);
 
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
     const room = MapsData.find(r => r.id === roomId);
     const poster = room?.posters?.find(p => p.id === posterId);
     if (room && poster) {
-      onOpenPoster(poster, room.name);
+      openPoster(poster, room.name);
     }
-  }, [onOpenPoster]);
+  }, [openPoster]);
 
   const scrollTo = useCallback((index: number) => {
     api?.scrollTo(index);
   }, [api]);
 
   const handleMapClick = useCallback((roomId: string) => {
-    const index = MapsData.findIndex(r => r.id === roomId);
-    if (index !== -1) {
-      scrollTo(index);
-    }
-  }, [scrollTo]);
+    navigate({ to: '/map', search: { r: roomId }, replace: true });
+  }, [navigate]);
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -114,14 +83,10 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
         </div>
       </section>
 
-      <Carousel 
-        setApi={setApi} 
-        className="w-full" 
-        opts={{ align: "center", loop: true, startIndex: initialIndex }}
-      >
+      <Carousel setApi={setApi} className="w-full" opts={{ align: "center", loop: true, startIndex: initialIndex }}>
+        {/* CarouselPrevious 等の中身はそのまま維持 */}
         <div className="flex items-center justify-center gap-4 mb-4">
           <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
-          
           <div className="flex gap-2">
             {MapsData.map((_, index) => (
               <button
@@ -130,12 +95,11 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
                 className={`h-2.5 w-2.5 rounded-full border transition-colors ${
                   index === current 
                     ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200" 
-                    : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 hover:border-slate-400 active:border-slate-400 dark:hover:border-slate-500 dark:active:border-slate-500"
+                    : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600"
                 }`}
               />
             ))}
           </div>
-
           <CarouselNext className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
         </div>
 
@@ -158,21 +122,15 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
                   {room.posters && room.posters.length > 0 && (
                     <div 
                       className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
-                      onScroll={(e) => {
-                        listScrollPositions[room.id] = e.currentTarget.scrollTop;
-                      }}
-                      ref={(el) => {
-                        if (el && listScrollPositions[room.id] !== undefined) {
-                          el.scrollTop = listScrollPositions[room.id];
-                        }
-                      }}
+                      onScroll={(e) => { listScrollPositions[room.id] = e.currentTarget.scrollTop; }}
+                      ref={(el) => { if (el && listScrollPositions[room.id] !== undefined) el.scrollTop = listScrollPositions[room.id]; }}
                     >
                       {room.posters.map((poster) => (
                         <PosterCard 
                           key={poster.id} 
                           poster={poster} 
-                          isExpanded={selectedPosterId === poster.id}
-                          onOpen={() => onOpenPoster(poster, room.name)} 
+                          isExpanded={posterData?.poster.id === poster.id}
+                          onOpen={() => openPoster(poster, room.name)} 
                         />
                       ))}
                     </div>
@@ -185,4 +143,4 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
       </Carousel>
     </div>
   );
-};
+}

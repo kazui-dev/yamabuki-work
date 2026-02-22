@@ -15,7 +15,7 @@ interface PosterDetailProps {
   roomName: string;
 }
 
-export const PosterDetail = ({ poster, roomName }: PosterDetailProps) => {
+export default function PosterDetail({ poster, roomName }: PosterDetailProps) {
   return (
     <DrawerContent>
       <div className="mx-auto w-full max-w-md">
