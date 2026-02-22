@@ -1,35 +1,49 @@
 {
-  "name": "yamabuki-work",
+  "name": "migrate",
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
+  "imports": {
+    "#/*": "./src/*"
+  },
   "scripts": {
-    "p": "git add . && git commit -m \"fix\" && git push",
-    "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "dev": "vite dev --port 3000",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "format": "biome format",
+    "lint": "biome lint",
+    "check": "biome check"
   },
   "dependencies": {
-    "@fontsource/inter": "^5.2.8",
-    "@fontsource/noto-sans-jp": "^5.2.9",
-    "@radix-ui/react-popover": "^1.1.15",
-    "@radix-ui/react-slot": "^1.2.4",
     "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/react-devtools": "^0.7.0",
+    "@tanstack/react-router": "^1.132.0",
+    "@tanstack/react-router-devtools": "^1.132.0",
+    "@tanstack/react-router-ssr-query": "^1.131.7",
+    "@tanstack/react-start": "^1.132.0",
+    "@tanstack/router-plugin": "^1.132.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "embla-carousel-react": "^8.6.0",
-    "lucide-react": "^0.563.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "tailwind-merge": "^3.4.0",
+    "lucide-react": "^0.561.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.1.18",
-    "vaul": "^1.1.2"
+    "tw-animate-css": "^1.3.6"
   },
   "devDependencies": {
-    "@types/node": "^25.2.3",
-    "@types/react": "^19.2.10",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.4",
-    "tw-animate-css": "^1.4.0",
-    "vite": "^7.3.1"
+    "@biomejs/biome": "2.2.4",
+    "@tanstack/devtools-vite": "^0.3.11",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.2.0",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "jsdom": "^27.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^7.1.7",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.5"
   }
 }
