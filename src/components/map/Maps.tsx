@@ -91,7 +91,7 @@ const setScrollPosition = useMapStore(state => state.setScrollPosition);
           <FloorMap 
             className="p-2" 
             onRoomSelect={handleMapClick} 
-            activeRoomId={activeRoomId}
+            activeRoomId={isInitialAppLoad ? null : activeRoomId}
           />
         </div>
       </section>
