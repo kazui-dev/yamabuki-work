@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { Clock, Speech, ChevronUp, ChevronDown } from "lucide-react";
+import { useScrollStore } from "@/store/useScrollStore";
 import type { TimetableSession } from "@/types";
 
 interface SessionCardProps {
@@ -10,6 +11,9 @@ interface SessionCardProps {
 }
 
 export default function SessionCard({ session, onOpenDetail, isExpanded }: SessionCardProps) {
+  const clearScrollPosition = useScrollStore(state => state.clearScrollPosition);
+  const targetPath = session.action?.targetView === 'timetable' ? '/' : `/${session.action?.targetView}`;
+
   return (
     <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-slate-50 active:bg-slate-50 dark:hover:bg-slate-800/40 dark:active:bg-slate-800/40 transition-colors">
       {session.time && (
@@ -57,7 +61,8 @@ export default function SessionCard({ session, onOpenDetail, isExpanded }: Sessi
             asChild
           >
             <Link
-              to={(session.action.targetView === 'timetable' ? '/' : `/${session.action.targetView}`) as any}
+              to={targetPath as any}
+              onClick={() => clearScrollPosition(targetPath)}
             >
               {session.action.icon && <session.action.icon size={14} />}
               {session.action.label}

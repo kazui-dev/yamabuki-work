@@ -9,6 +9,9 @@ import { MapsData } from '@/constants/maps';
 import { POSTERS_BY_LOCATION } from '@/constants/posters';
 import { useTheme } from '@/lib/theme';
 import { usePosterStore } from '@/store/usePosterStore';
+import { useScrollStore } from '@/store/useScrollStore';
+import { useMapStore } from '@/store/useMapStore';
+import { formatRoomIdForUrl } from '@/lib/utils';
 import type { Poster } from '@/types';
 
 export default function Header() {
@@ -21,7 +24,11 @@ export default function Header() {
   const selectedPosterId = posterData?.poster.id ?? null;
   const isPosterDrawerOpen = !!posterData;
 
+  const lastRoomId = useMapStore(state => state.lastRoomId);
+
   const roomNameById = useMemo(() => Object.fromEntries(MapsData.map((room) => [room.id, room.name])), []);
+
+  const clearScrollPosition = useScrollStore(state => state.clearScrollPosition);
 
   const closeMenu = () => {
     if (scrollContainerRef.current) {
@@ -47,7 +54,14 @@ export default function Header() {
     if (window.location.pathname === '/') {
       event.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }else {
+      clearScrollPosition('timetable');
     }
+  };
+
+  const handleMapPinClick = (path: string) => {
+    clearScrollPosition(path);
+    closeMenu();
   };
 
   const posterListNodes = useMemo(() => {
@@ -61,8 +75,8 @@ export default function Header() {
         <div key={room.id} className="px-4 py-2">
           <Link
             to="/map"
-            search={{ r: room.id }}
-            onClick={closeMenu}
+            search={{ r: /^\d+$/.test(room.id) ? Number(room.id) : room.id }}
+            onClick={() => handleMapPinClick(`/map`)}
             className="mb-1 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 active:text-slate-700 dark:hover:text-slate-200 dark:active:text-slate-200"
           >
             <MapPin size={12} />
@@ -125,6 +139,7 @@ export default function Header() {
                 <Link
                   to="/map"
                   onClick={closeMenu}
+                  search={lastRoomId ? { r: formatRoomIdForUrl(lastRoomId) } : undefined}
                   className="w-full mb-2 flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200"
                   activeProps={{ className: 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200' }}
                 >
@@ -187,7 +202,6 @@ export default function Header() {
           </DrawerContent>
         </Drawer>
 
-        {/* 中央：ロゴ */}
         <h1 className="shrink truncate flex-1">
           <Link
             to="/"
@@ -198,7 +212,6 @@ export default function Header() {
           </Link>
         </h1>
         
-        {/* 右側：ページ切り替えナビゲーション */}
         <div className="w-24 sm:w-28 shrink-0">
           <nav className="grid w-full grid-cols-2 h-9 p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-md text-slate-500 dark:text-slate-400">
             <Link
@@ -206,14 +219,17 @@ export default function Header() {
               className="inline-flex items-center justify-center whitespace-nowrap rounded-sm h-full px-0 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 hover:text-slate-700 dark:hover:text-slate-200"
               activeProps={{ className: 'bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50' }}
               aria-label="タイムテーブル"
+              activeOptions={{ exact: true }}
             >
               <CalendarDays size={16} />
             </Link>
             <Link
               to="/map"
+              search={lastRoomId ? { r: formatRoomIdForUrl(lastRoomId) } : undefined}
               className="inline-flex items-center justify-center whitespace-nowrap rounded-sm h-full px-0 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 hover:text-slate-700 dark:hover:text-slate-200"
               activeProps={{ className: 'bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50' }}
               aria-label="フロアマップ"
+              activeOptions={{ includeSearch: false }}
             >
               <MapPinned size={16} />
             </Link>

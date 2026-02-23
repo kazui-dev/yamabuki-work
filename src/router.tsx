@@ -9,8 +9,14 @@ export const getRouter = () => {
     routeTree,
     context: {},
 
-    scrollRestoration: true,
+    //scrollRestoration: true,
     defaultPreloadStaleTime: 0,
+    defaultPreload: 'intent',
+    defaultNotFoundComponent: () => (
+      <div className="p-8 text-center">
+        <h1 className="text-2xl font-bold">404 - ページが見つかりません</h1>
+      </div>
+    ),
   })
 
   return router

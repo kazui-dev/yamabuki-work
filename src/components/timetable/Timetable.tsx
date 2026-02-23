@@ -10,9 +10,16 @@ import SessionCard from "./SessionCard";
 import SessionDetail from "./SessionDetail";
 import type { TimetableItem, TimetableSession } from "@/types";
 
+import { useMapStore } from '@/store/useMapStore';
+import { useScrollStore } from '@/store/useScrollStore';
+import { formatRoomIdForUrl } from '@/lib/utils';
+
 export default function Timetable() {
   const [selectedSession, setSelectedSession] = useState<TimetableSession | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const lastRoomId = useMapStore(state => state.lastRoomId);
+  const clearScrollPosition = useScrollStore(state => state.clearScrollPosition);
 
   const handleOpenDetail = (session: TimetableSession) => {
     setSelectedSession(session);
@@ -24,7 +31,12 @@ export default function Timetable() {
       <div className="flex justify-center w-full">
         <EventCard />
       </div>
-      {timetable.map((item: TimetableItem, index) => (
+      {timetable.map((item: TimetableItem, index) => {
+        const action = item.action;
+        const targetPath = action?.targetView === 'timetable' ? '/' : `/${action?.targetView}`;
+        const isMapTarget = action?.targetView === 'map';
+
+        return (
         <div key={`${item.title}-${index}`} className="relative pl-6 border-l-2 border-slate-200 dark:border-slate-700 last:border-transparent pb-4">
           {item.time && (
             <>
@@ -48,13 +60,27 @@ export default function Timetable() {
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">{item.description}</p>
               )}
 
-              {item.action && (
+              {action && (
                 <div className="mt-4">
                   <Button size="sm" asChild className="w-full bg-slate-200 hover:bg-slate-300 active:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-600 text-slate-800 dark:text-slate-100">
-                    <Link to={(item.action.targetView === 'timetable' ? '/' : `/${item.action.targetView}`) as any}>
-                      {item.action.icon && <item.action.icon size={16} />}
-                      {item.action.label}
-                    </Link>
+                    {isMapTarget ? (
+                      <Link 
+                        to="/map"
+                        search={lastRoomId ? { r: formatRoomIdForUrl(lastRoomId) } : undefined}
+                        onClick={() => clearScrollPosition('/map')}
+                      >
+                        {action.icon && <action.icon size={16} />}
+                        {action.label}
+                      </Link>
+                      ) : (
+                      <Link 
+                        to={targetPath as any}
+                        onClick={() => clearScrollPosition(targetPath)}
+                      >
+                        {action.icon && <action.icon size={16} />}
+                        {action.label}
+                      </Link>
+                      )}
                   </Button>
                 </div>
               )}
@@ -74,7 +100,8 @@ export default function Timetable() {
             )}
           </div>
         </div>
-      ))}
+        )
+      })}
 
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
         {selectedSession?.details && (
@@ -86,5 +113,6 @@ export default function Timetable() {
         )}
       </Drawer>
     </div>
+
   );
 }

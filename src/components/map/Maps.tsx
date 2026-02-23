@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo }from 'react';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import FloorMap from "./FloorMap";
 import PosterCard from "./PosterCard";
@@ -13,20 +13,30 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { MapsData } from "@/constants/maps";
+import { useMapStore } from '@/store/useMapStore'
+import { formatRoomIdForUrl } from '@/lib/utils';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function Maps() {
   const [api, setApi] = useState<CarouselApi>();
-  const listScrollPositions: Record<string, number> = {};
-  
-  // TanStack RouterとZustandのフック
-  const search = useSearch({ strict: false }) as { r?: string };
+  const isInitialAppLoad = useAppStore(state => state.isInitialAppLoad);
+
+  const search = useSearch({ strict: false }) as { r?: string | number };
+  const urlRoomId = search.r !== undefined ? String(search.r) : undefined;
+
   const navigate = useNavigate();
+  const setLastRoomId = useMapStore(state => state.setLastRoomId);
   const { data: posterData, openPoster } = usePosterStore();
 
-  const urlRoomId = search.r;
   const activeRoomId = useMemo(() => {
     return MapsData.some(r => r.id === urlRoomId) ? urlRoomId! : MapsData[0]?.id || null;
   }, [urlRoomId]);
+
+  useEffect(() => {
+    if (activeRoomId) {
+      setLastRoomId(activeRoomId);
+    }
+  }, [activeRoomId, setLastRoomId]);
 
   const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === activeRoomId)));
   const [current, setCurrent] = useState(initialIndex);
@@ -48,7 +58,7 @@ export default function Maps() {
       setCurrent(index);
       const room = MapsData[index];
       if (room && room.id !== urlRoomId) {
-        navigate({ to: '/map', search: { r: room.id }, replace: true });
+        navigate({ to: '/map', search: { r: formatRoomIdForUrl(room.id) }, replace: true });
       }
     };
     api.on("select", updateState);
@@ -67,8 +77,11 @@ export default function Maps() {
     api?.scrollTo(index);
   }, [api]);
 
+const scrollPositions = useMapStore(state => state.scrollPositions);
+const setScrollPosition = useMapStore(state => state.setScrollPosition);
+
   const handleMapClick = useCallback((roomId: string) => {
-    navigate({ to: '/map', search: { r: roomId }, replace: true });
+    navigate({ to: '/map', search: { r: formatRoomIdForUrl(roomId) }, replace: true });
   }, [navigate]);
 
   return (
@@ -83,64 +96,69 @@ export default function Maps() {
         </div>
       </section>
 
-      <Carousel setApi={setApi} className="w-full" opts={{ align: "center", loop: true, startIndex: initialIndex }}>
-        {/* CarouselPrevious 等の中身はそのまま維持 */}
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
-          <div className="flex gap-2">
-            {MapsData.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => scrollTo(index)}
-                className={`h-2.5 w-2.5 rounded-full border transition-colors ${
-                  index === current 
-                    ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200" 
-                    : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600"
-                }`}
-              />
-            ))}
+      <div 
+        className={`transition-opacity duration-300 ease-in-out ${
+          isInitialAppLoad ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        <Carousel setApi={setApi} className="w-full" opts={{ align: "center", loop: true, startIndex: initialIndex }}>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
+            <div className="flex gap-2">
+              {MapsData.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollTo(index)}
+                  className={`h-2.5 w-2.5 rounded-full border transition-colors ${
+                    index === current 
+                      ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200" 
+                      : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600"
+                  }`}
+                />
+              ))}
+            </div>
+            <CarouselNext className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
           </div>
-          <CarouselNext className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
-        </div>
 
-        <CarouselContent className="items-start">
-          {MapsData.map((room) => {
-            const RoomMapComponent = getRoomMapComponent(room.id);
-            return (
-              <CarouselItem key={room.id} className="pl-4">
-                <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-4">
-                  <div className="p-4 sm:p-6">
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">{room.name}</h2>
-                    {RoomMapComponent && (
-                      <RoomMapComponent 
-                        roomId={room.id} 
-                        onPosterClick={(posterId: string) => handleMapPosterClick(room.id, posterId)} 
-                      />
+          <CarouselContent className="items-start">
+            {MapsData.map((room) => {
+              const RoomMapComponent = getRoomMapComponent(room.id);
+              return (
+                <CarouselItem key={room.id} className="pl-4">
+                  <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-4">
+                    <div className="p-4 sm:p-6">
+                      <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">{room.name}</h2>
+                      {RoomMapComponent && (
+                        <RoomMapComponent 
+                          roomId={room.id} 
+                          onPosterClick={(posterId: string) => handleMapPosterClick(room.id, posterId)} 
+                        />
+                      )}
+                    </div>
+
+                    {room.posters && room.posters.length > 0 && (
+                        <div 
+                          className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
+                          onScroll={(e) => { setScrollPosition(room.id, e.currentTarget.scrollTop); }}
+                          ref={(el) => { if (el && scrollPositions[room.id] !== undefined) el.scrollTop = scrollPositions[room.id]; }}
+                        >
+                        {room.posters.map((poster) => (
+                          <PosterCard 
+                            key={poster.id} 
+                            poster={poster} 
+                            isExpanded={posterData?.poster.id === poster.id}
+                            onOpen={() => openPoster(poster, room.name)} 
+                          />
+                        ))}
+                      </div>
                     )}
                   </div>
-
-                  {room.posters && room.posters.length > 0 && (
-                    <div 
-                      className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
-                      onScroll={(e) => { listScrollPositions[room.id] = e.currentTarget.scrollTop; }}
-                      ref={(el) => { if (el && listScrollPositions[room.id] !== undefined) el.scrollTop = listScrollPositions[room.id]; }}
-                    >
-                      {room.posters.map((poster) => (
-                        <PosterCard 
-                          key={poster.id} 
-                          poster={poster} 
-                          isExpanded={posterData?.poster.id === poster.id}
-                          onOpen={() => openPoster(poster, room.name)} 
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </CarouselItem>
-            );
-          })}
-        </CarouselContent>
-      </Carousel>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+        </Carousel>
+      </div>
     </div>
   );
 }
