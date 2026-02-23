@@ -47,7 +47,6 @@ function RootComponent() {
   const { data, closePoster } = usePosterStore();
   const location = useLocation();
   const { positions, setScrollPosition } = useScrollStore();
-
   const completeInitialLoad = useAppStore(state => state.completeInitialLoad);
 
   useEffect(() => {
@@ -87,6 +86,12 @@ function RootComponent() {
     return () => clearTimeout(timer);
   }, [completeInitialLoad]);
   
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
   return (
     <ThemeProvider>
       <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
