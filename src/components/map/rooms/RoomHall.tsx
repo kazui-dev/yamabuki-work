@@ -48,7 +48,7 @@ export const RoomHall: React.FC<RoomMapProps> = ({ className = "", onPosterClick
         </g>
 
         <g id="posters">
-            <g data-poster-id="poster_hall_01">
+            <g data-poster-id="1">
               <rect x="150" y="24" width="160" height="60" />
               <text x="230" y="58">ポスターA</text>
             </g>
