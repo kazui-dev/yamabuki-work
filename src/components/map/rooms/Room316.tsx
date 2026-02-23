@@ -48,17 +48,17 @@ export const Room316: React.FC<RoomMapProps> = ({ className = "", onPosterClick 
         </g>
 
         <g id="posters">
-            <g data-poster-id="poster_316_01">
+            <g data-poster-id="8">
               <rect x="150" y="24" width="160" height="60" />
               <text x="230" y="58">ポスターA</text>
             </g>
 
-            <g data-poster-id="poster_316_02">
+            <g data-poster-id="9">
               <rect x="270" y="150" width="160" height="60" />
               <text x="350" y="184">ポスターB</text>
             </g>
 
-            <g data-poster-id="poster_316_03">
+            <g data-poster-id="10">
               <rect x="30" y="150" width="160" height="60" />
               <text x="110" y="184">ポスターC</text>
             </g>
