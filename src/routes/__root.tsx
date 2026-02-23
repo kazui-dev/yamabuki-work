@@ -28,6 +28,8 @@ export const Route = createRootRoute({
       { title: PAGE_METADATA.timetable.title },
       { name: 'description', content: PAGE_METADATA.timetable.description },
       
+      { property: 'og:title', content: PAGE_METADATA.timetable.ogTitle },
+      { property: 'og:description', content: PAGE_METADATA.timetable.ogDescription || PAGE_METADATA.timetable.description },
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: 'https://yamabuki.work/' },
       { property: 'og:image', content: 'https://yamabuki.work/ogp-image.png' },

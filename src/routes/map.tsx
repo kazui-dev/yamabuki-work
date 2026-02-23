@@ -14,8 +14,8 @@ export const Route = createFileRoute('/map')({
     meta: [
       { title: PAGE_METADATA.map.title },
       { name: 'description', content: PAGE_METADATA.map.description },
-      { property: 'og:title', content: PAGE_METADATA.map.ogTitle },
-      { property: 'og:description', content: PAGE_METADATA.map.description },
+      { property: 'og:title', content: PAGE_METADATA.map.ogTitle || PAGE_METADATA.map.title },
+      { property: 'og:description', content: PAGE_METADATA.map.ogDescription || PAGE_METADATA.map.description },
       { property: 'og:url', content: 'https://yamabuki.work/map' }, 
       { name: 'twitter:title', content: PAGE_METADATA.map.ogTitle },
       { name: 'twitter:description', content: PAGE_METADATA.map.description },

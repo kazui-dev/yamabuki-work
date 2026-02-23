@@ -7,8 +7,8 @@ export const Route = createFileRoute('/survey')({
     meta: [
       { title: PAGE_METADATA.survey.title },
       { name: 'description', content: PAGE_METADATA.survey.description },
-      { property: 'og:title', content: PAGE_METADATA.survey.ogTitle },
-      { property: 'og:description', content: PAGE_METADATA.survey.description },
+      { property: 'og:title', content: PAGE_METADATA.survey.ogTitle || PAGE_METADATA.survey.title },
+      { property: 'og:description', content: PAGE_METADATA.survey.ogDescription || PAGE_METADATA.survey.description },
       { name: 'twitter:title', content: PAGE_METADATA.survey.ogTitle },
       { name: 'twitter:description', content: PAGE_METADATA.survey.description },
     ],
