@@ -11,7 +11,6 @@ rect, polygon, path, line {
 .icon_EV { fill: #333333; stroke: none; }
 
 #active_area rect { cursor: pointer; transition: all 0.2s ease; fill: #ffff0044; }
-#active_area rect:hover { fill-opacity: 0.5; }
 
 text {
     pointer-events: none;

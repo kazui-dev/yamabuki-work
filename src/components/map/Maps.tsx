@@ -40,7 +40,7 @@ export default function Maps() {
   }, [activeRoomId, setLastRoomId]);
 
   const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === activeRoomId)));
-  const [current, setCurrent] = useState(initialIndex);
+  const current = Math.max(0, MapsData.findIndex(r => r.id === activeRoomId));
 
   // URLに合わせてカルーセルを動かす
   useEffect(() => {
@@ -56,7 +56,6 @@ export default function Maps() {
     if (!api) return;
     const updateState = () => {
       const index = api.selectedScrollSnap();
-      setCurrent(index);
       const room = MapsData[index];
       if (room && room.id !== urlRoomId) {
         navigate({ to: '/map', search: { r: formatRoomIdForUrl(room.id) }, replace: true });
@@ -110,9 +109,7 @@ const setScrollPosition = useMapStore(state => state.setScrollPosition);
                 <button
                   key={index}
                   onClick={() => scrollTo(index)}
-                  className={`h-2.5 w-2.5 rounded-full border transition-all duration-300 ${
-                    isInitialAppLoad ? "opacity-0" : "opacity-100"
-                  } ${
+                  className={`h-2.5 w-2.5 rounded-full border transition-colors ${
                     index === current 
                       ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200" 
                       : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600"
