@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo }from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import FloorMap from "./FloorMap";
 import PosterCard from "./PosterCard";
@@ -13,7 +13,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { MapsData } from "@/constants/maps";
-import { useMapStore } from '@/store/useMapStore'
+import { useMapStore } from '@/store/useMapStore';
 import { formatRoomIdForUrl } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
 import "./maps.css";
@@ -28,30 +28,18 @@ export default function Maps() {
   const navigate = useNavigate();
   const setLastRoomId = useMapStore(state => state.setLastRoomId);
   const { data: posterData, openPoster } = usePosterStore();
+  const scrollPositions = useMapStore(state => state.scrollPositions);
+  const setScrollPosition = useMapStore(state => state.setScrollPosition);
 
-  const activeRoomId = useMemo(() => {
-    return MapsData.some(r => r.id === urlRoomId) ? urlRoomId! : MapsData[0]?.id || null;
-  }, [urlRoomId]);
+  const targetRoomId = MapsData.some(r => r.id === urlRoomId) ? urlRoomId! : MapsData[0].id;
+  const targetIndex = Math.max(0, MapsData.findIndex(r => r.id === targetRoomId));
 
   useEffect(() => {
-    if (activeRoomId) {
-      setLastRoomId(activeRoomId);
+    if (targetRoomId) {
+      setLastRoomId(targetRoomId);
     }
-  }, [activeRoomId, setLastRoomId]);
+  }, [targetRoomId, setLastRoomId]);
 
-  const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === activeRoomId)));
-  const current = Math.max(0, MapsData.findIndex(r => r.id === activeRoomId));
-
-  // URLに合わせてカルーセルを動かす
-  useEffect(() => {
-    if (!api || !activeRoomId) return;
-    const targetIndex = MapsData.findIndex(r => r.id === activeRoomId);
-    if (targetIndex !== -1 && targetIndex !== api.selectedScrollSnap()) {
-      api.scrollTo(targetIndex);
-    }
-  }, [activeRoomId, api]);
-
-  // カルーセルが動いたらURLを更新
   useEffect(() => {
     if (!api) return;
     const updateState = () => {
@@ -65,6 +53,13 @@ export default function Maps() {
     return () => { api.off("select", updateState); };
   }, [api, navigate, urlRoomId]);
 
+  useEffect(() => {
+    if (!api || isInitialAppLoad) return;
+    if (targetIndex !== api.selectedScrollSnap()) {
+      api.scrollTo(targetIndex);
+    }
+  }, [targetIndex, api, isInitialAppLoad]);
+
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
     const room = MapsData.find(r => r.id === roomId);
     const poster = room?.posters?.find(p => p.id === posterId);
@@ -77,9 +72,6 @@ export default function Maps() {
     api?.scrollTo(index);
   }, [api]);
 
-const scrollPositions = useMapStore(state => state.scrollPositions);
-const setScrollPosition = useMapStore(state => state.setScrollPosition);
-
   const handleMapClick = useCallback((roomId: string) => {
     navigate({ to: '/map', search: { r: formatRoomIdForUrl(roomId) }, replace: true });
   }, [navigate]);
@@ -91,7 +83,7 @@ const setScrollPosition = useMapStore(state => state.setScrollPosition);
           <FloorMap 
             className="p-2" 
             onRoomSelect={handleMapClick} 
-            activeRoomId={isInitialAppLoad ? null : activeRoomId}
+            activeRoomId={isInitialAppLoad ? null : targetRoomId}
           />
         </div>
       </section>
@@ -101,16 +93,17 @@ const setScrollPosition = useMapStore(state => state.setScrollPosition);
           isInitialAppLoad ? "opacity-0" : "opacity-100"
         }`}
       >
-        <Carousel setApi={setApi} className="w-full" opts={{ align: "center", loop: true, startIndex: initialIndex }}>
+        <Carousel setApi={setApi} className="w-full" opts={{ align: "center", loop: true, startIndex: targetIndex }}>
           <div className="flex items-center justify-center gap-4 mb-4">
             <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
             <div className="flex gap-2">
               {MapsData.map((_, index) => (
                 <button
                   key={index}
+                  suppressHydrationWarning
                   onClick={() => scrollTo(index)}
                   className={`h-2.5 w-2.5 rounded-full border transition-colors ${
-                    index === current 
+                    index === targetIndex
                       ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200" 
                       : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600"
                   }`}
