@@ -131,6 +131,7 @@ export default function Header() {
                   onClick={closeMenu}
                   className="w-full mb-2 flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200"
                   activeProps={{ className: 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200' }}
+                  activeOptions={{ exact: true, includeSearch: false }}
                 >
                   <CalendarDays size={18} className="text-slate-600 dark:text-slate-300" />
                   タイムテーブル
@@ -142,6 +143,7 @@ export default function Header() {
                   search={lastRoomId ? { r: formatRoomIdForUrl(lastRoomId) } : undefined}
                   className="w-full mb-2 flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200"
                   activeProps={{ className: 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200' }}
+                  activeOptions={{ exact: true, includeSearch: false }}
                 >
                   <MapPinned size={18} className="text-slate-600 dark:text-slate-300" />
                   フロアマップ
@@ -152,6 +154,7 @@ export default function Header() {
                   onClick={closeMenu}
                   className="w-full flex items-center gap-2.5 px-4 py-3 rounded-lg transition-colors text-sm font-medium hover:bg-slate-100 active:bg-slate-100 dark:hover:bg-slate-800 dark:active:bg-slate-800 text-slate-800 dark:text-slate-200"
                   activeProps={{ className: 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200' }}
+                  activeOptions={{ exact: true, includeSearch: false }}
                 >
                   <ClipboardList size={18} className="text-slate-600 dark:text-slate-300" />
                   来場者アンケート
@@ -218,8 +221,8 @@ export default function Header() {
               to="/"
               className="inline-flex items-center justify-center whitespace-nowrap rounded-sm h-full px-0 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 hover:text-slate-700 dark:hover:text-slate-200"
               activeProps={{ className: 'bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50' }}
+              activeOptions={{ exact: true, includeSearch: false }}
               aria-label="タイムテーブル"
-              activeOptions={{ exact: true }}
             >
               <CalendarDays size={16} />
             </Link>
@@ -228,8 +231,8 @@ export default function Header() {
               search={lastRoomId ? { r: formatRoomIdForUrl(lastRoomId) } : undefined}
               className="inline-flex items-center justify-center whitespace-nowrap rounded-sm h-full px-0 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 hover:text-slate-700 dark:hover:text-slate-200"
               activeProps={{ className: 'bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50' }}
+              activeOptions={{ exact: true, includeSearch: false }}
               aria-label="フロアマップ"
-              activeOptions={{ includeSearch: false }}
             >
               <MapPinned size={16} />
             </Link>
