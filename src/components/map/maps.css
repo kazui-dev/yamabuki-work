@@ -1,0 +1,37 @@
+rect, polygon, path, line {
+    fill: #ffffff;
+    stroke: #333333;
+    stroke-width: 2px;
+}
+
+#passive_area rect, #passive_area polygon { fill: #f0f0f0; }
+#facilities rect, #facilities polygon, #facilities path { fill: #ffffff; }
+.icon_man, #icon_man { fill: #0066cc; stroke: none; }
+.icon_woman, #icon_woman { fill: #cc0066; stroke: none; }
+.icon_EV { fill: #333333; stroke: none; }
+
+#active_area rect { cursor: pointer; transition: all 0.2s ease; fill: #ffff0044; }
+#active_area rect:hover { fill-opacity: 0.5; }
+
+text {
+    pointer-events: none;
+    user-select: none;
+    fill: #333333;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+#posters g {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+#posters g:hover {
+    opacity: 0.7;
+}
+#posters rect {
+    fill: #dbeafe;
+}
+
+.dark #base { fill: #f0f0f0; }
+.dark #facilities rect, .dark #facilities polygon, .dark #facilities path { fill: #f0f0f0; }
+.dark #passive_area rect, .dark #passive_area polygon { fill: #e8e8e8; }

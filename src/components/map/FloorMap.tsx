@@ -45,30 +45,6 @@ export default function FloorMap({ className, onRoomSelect, activeRoomId }: Prop
       viewBox="-2 -2 458.5 259.1" 
       className={`w-full h-auto ${className}`}
     >
-      <style>{`
-        rect, polygon, path, line {
-          fill: #ffffff;
-          stroke: #333333;
-          stroke-width: 2px;
-        }
-
-        #passive_area rect, #passive_area polygon { fill: #f0f0f0; }
-        #facilities rect, #facilities polygon, #facilities path, #facilities line { fill: #ffffff; }
-        .icon_man, #icon_man { fill: #0066cc; stroke: none; }
-        .icon_woman, #icon_woman { fill: #cc0066; stroke: none; }
-        .icon_EV { fill: #333333; stroke: none; }
-        
-        #active_area rect { cursor: pointer; transition: all 0.2s ease; fill: #ffff0044; }
-        #active_area rect:hover { fill-opacity: 0.5; }
-        
-        .room_label {
-          pointer-events: none;
-          user-select: none;
-          fill: #333333;
-          font-weight: bold;
-        }
-      `}</style>
-
       <g id="base_area">
         <rect id="base" width="453.5" height="255.12"/>
       </g>

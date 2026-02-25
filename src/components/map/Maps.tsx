@@ -16,6 +16,7 @@ import { MapsData } from "@/constants/maps";
 import { useMapStore } from '@/store/useMapStore'
 import { formatRoomIdForUrl } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
+import "./maps.css";
 
 export default function Maps() {
   const [api, setApi] = useState<CarouselApi>();
