@@ -73,6 +73,11 @@ export const PAGE_METADATA: Record<PageID, PageMetadata> = {
               "startDate": "2026-03-13T14:50:00+09:00",
             }
           ],
+          "organizer": {
+            "@type": "Organization",
+            "name": "東京都立新宿山吹高等学校 情報科",
+            "url" : `${SITE_URL}/`
+          },
           "image": [ 
             "https://yamabuki.work/ogp-image.png"
           ],
