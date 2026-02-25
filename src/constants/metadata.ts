@@ -51,11 +51,19 @@ export const PAGE_METADATA: Record<PageID, PageMetadata> = {
               "@type": "Event",
               "name": "開会式",
               "startDate": "2026-03-13T12:30:00+09:00",
+              "location": {
+                "@type": "Place",
+                "name": "新宿山吹高校 大講義室",
+              },
             },
             {
               "@type": "Event",
               "name": "全体発表",
               "startDate": "2026-03-13T12:40:00+09:00",
+              "location": {
+                "@type": "Place",
+                "name": "新宿山吹高校 大講義室",
+              },
             },
             {
               "@type": "Event",
@@ -71,6 +79,10 @@ export const PAGE_METADATA: Record<PageID, PageMetadata> = {
               "@type": "Event",
               "name": "閉会式",
               "startDate": "2026-03-13T14:50:00+09:00",
+              "location": {
+                "@type": "Place",
+                "name": "新宿山吹高校 大講義室",
+              },
             }
           ],
           "organizer": {
