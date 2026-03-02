@@ -140,7 +140,7 @@ export default function Maps() {
 
                     {room.posters && room.posters.length > 0 && (
                       <div 
-                        className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
+                        className="border-t border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
                         onScroll={(e) => { setScrollPosition(room.id, e.currentTarget.scrollTop); }}
                         ref={(el) => { if (el && scrollPositions[room.id] !== undefined) el.scrollTop = scrollPositions[room.id]; }}
                       >

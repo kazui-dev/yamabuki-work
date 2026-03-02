@@ -40,7 +40,7 @@ export default function Timetable() {
         <div key={`${item.title}-${index}`} className="relative pl-6 border-l-2 border-slate-200 dark:border-slate-700 last:border-transparent pb-4">
           {item.time && (
             <>
-              <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-400 dark:bg-slate-500 border-2 border-white dark:border-slate-950 z-10"></div>
+              <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-500 border-2 border-white dark:border-slate-950 z-10"></div>
               <div className="flex items-center gap-1.5 leading-none text-sm text-slate-500 dark:text-slate-400 font-bold mb-3">
                 <Clock size={16} />
                 {item.time}
@@ -62,7 +62,7 @@ export default function Timetable() {
 
               {action && (
                 <div className="mt-4">
-                  <Button size="sm" asChild className="w-full bg-slate-200 hover:bg-slate-300 active:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-600 text-slate-800 dark:text-slate-100">
+                  <Button size="sm" asChild className="w-full bg-slate-100 hover:bg-slate-200 active:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-600 text-slate-800 dark:text-slate-100">
                     {isMapTarget ? (
                       <Link 
                         to="/map"
@@ -87,7 +87,7 @@ export default function Timetable() {
             </div>
 
             {item.sessions && (
-              <div className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
+              <div className="border-t border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-950/50">
                 {item.sessions.map((session, sIndex) => (
                   <SessionCard 
                     key={sIndex} 

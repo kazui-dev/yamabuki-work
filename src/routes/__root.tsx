@@ -8,7 +8,6 @@ import { Drawer } from '@/components/ui/drawer';
 import PosterDetail from '@/components/map/PosterDetail';
 import { ThemeProvider } from '@/lib/theme';
 import { PAGE_METADATA } from '@/constants/metadata';
-
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/700.css';
@@ -87,7 +86,7 @@ function RootComponent() {
     }, 50);
     return () => clearTimeout(timer);
   }, [completeInitialLoad]);
-  
+
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -96,7 +95,7 @@ function RootComponent() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950">
         <Header />
         
         <main className="p-4 sm:p-6 mb-16 flex-1 w-full max-w-md mx-auto">
@@ -133,7 +132,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 selection:bg-slate-400/30 dark:selection:bg-slate-700/30 antialiased">
+      <body className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 selection:bg-slate-300/30 dark:selection:bg-slate-700/30 antialiased">
         {children}
         <Scripts />
       </body>
