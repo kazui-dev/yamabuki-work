@@ -12,7 +12,6 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { MapsData } from "@/constants/maps";
-// ルーティング依存を除去
 
 interface MapsProps {
   selectedRoomId?: string | null;
