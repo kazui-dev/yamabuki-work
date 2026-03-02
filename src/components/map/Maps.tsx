@@ -120,7 +120,7 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
                 className={`h-2.5 w-2.5 rounded-full border transition-colors ${
                   index === current 
                     ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200" 
-                    : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 hover:border-slate-400 active:border-slate-400 dark:hover:border-slate-500 dark:active:border-slate-500"
+                    : "bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 hover:border-slate-400 active:border-slate-400 dark:hover:border-slate-500 dark:active:border-slate-500"
                 }`}
               />
             ))}
@@ -147,7 +147,7 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
 
                   {room.posters && room.posters.length > 0 && (
                     <div 
-                      className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
+                      className="border-t border-slate-100 dark:border-slate-800 bg-white/70 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
                       onScroll={(e) => {
                         listScrollPositions[room.id] = e.currentTarget.scrollTop;
                       }}

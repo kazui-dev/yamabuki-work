@@ -63,7 +63,7 @@ export const Timetable = ({ onNavigate, onResetScroll }: TimetableProps) => {
                   <Button 
                     size="sm"
                     asChild
-                    className="w-full bg-slate-200 hover:bg-slate-300 active:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-600 text-slate-800 dark:text-slate-100" 
+                    className="w-full bg-slate-100 hover:bg-slate-200 active:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-600 text-slate-800 dark:text-slate-100" 
                   >
                     <a
                       href={item.action.targetView === 'timetable' ? '/' : `/${item.action.targetView}`}
@@ -84,7 +84,7 @@ export const Timetable = ({ onNavigate, onResetScroll }: TimetableProps) => {
             </div>
 
             {item.sessions && (
-              <div className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
+              <div className="border-t border-slate-100 dark:border-slate-800 bg-white/70 dark:bg-slate-950/50">
                 {item.sessions.map((session, sIndex) => (
                   <SessionCard 
                     key={sIndex} 

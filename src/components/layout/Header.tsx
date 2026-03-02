@@ -34,7 +34,7 @@ export const Header = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 px-4 py-2">
+    <header className="sticky top-0 z-50 w-full bg-white/90 dark:bg-slate-950/90 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 px-4 py-2">
       <div className="max-w-md mx-auto flex items-center justify-between gap-3">
         <SideNav
           currentPage={currentPage}
@@ -57,7 +57,7 @@ export const Header = ({
         
         <div className="w-24 sm:w-28 shrink-0">
           <nav 
-            className="grid w-full grid-cols-2 h-9 p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-md text-slate-500 dark:text-slate-400"
+            className="grid w-full grid-cols-2 h-9 p-1 bg-slate-100/60 dark:bg-slate-800/50 rounded-md text-slate-500 dark:text-slate-400"
             aria-label="ページ切り替え"
           >
             <a

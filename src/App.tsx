@@ -44,11 +44,11 @@ export const App = ({ initialPage, initialPath }: AppProps) => {
   }, [currentPage, isReady]);
 
   if (!isReady) {
-    return <div className="min-h-screen bg-slate-50 dark:bg-slate-950" />;
+    return <div className="min-h-screen bg-white dark:bg-slate-950" />;
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950">
       <Header 
         currentPage={currentPage}
         onNavigate={navigate}
