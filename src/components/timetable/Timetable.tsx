@@ -39,17 +39,17 @@ export default function Timetable() {
         return (
         <div key={`${item.title}-${index}`} className="relative pl-6 border-l-2 border-slate-200 dark:border-slate-700 last:border-transparent pb-4">
           {item.time && (
-            <>
-              <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-500 border-2 border-white dark:border-slate-950 z-10"></div>
-              <div className="flex items-center gap-1.5 leading-none text-sm text-slate-500 dark:text-slate-400 font-bold mb-3">
-                <Clock size={16} />
-                {item.time}
-              </div>
-            </>
+            <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-500 border-2 border-white dark:border-slate-950 z-10"></div>
           )}
 
           <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <div className="p-5 pb-4">
+              {item.time && (
+                <div className="flex items-center gap-1.5 leading-none text-sm text-slate-700 dark:text-slate-100 font-bold mb-3">
+                  <Clock size={16} />
+                  {item.time}
+                </div>
+              )}
               <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">{item.title}</h2>
               {item.author && (
                 <p className="flex items-center gap-2 leading-none text-sm text-slate-600 dark:text-slate-300 mt-2">

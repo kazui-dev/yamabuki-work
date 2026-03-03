@@ -3,6 +3,7 @@ import { HeadContent, Scripts, createRootRoute, Outlet, useLocation } from '@tan
 import { useScrollStore } from '@/store/useScrollStore';
 import { usePosterStore } from '@/store/usePosterStore';
 import { useAppStore} from '@/store/useAppStore';
+import { useBackgroundStore } from '@/store/useBackgroundStore';
 import Header from '@/components/layout/Header';
 import { Drawer } from '@/components/ui/drawer';
 import PosterDetail from '@/components/map/PosterDetail';
@@ -49,6 +50,7 @@ function RootComponent() {
   const location = useLocation();
   const { positions, setScrollPosition } = useScrollStore();
   const completeInitialLoad = useAppStore(state => state.completeInitialLoad);
+  const backgroundImage = useBackgroundStore(state => state.backgroundImage);
 
   useEffect(() => {
     let timeoutId: number | undefined;
@@ -96,15 +98,32 @@ function RootComponent() {
   return (
     <ThemeProvider>
       <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950">
-        <Header />
-        
-        <main className="p-4 sm:p-6 mb-16 flex-1 w-full max-w-md mx-auto">
-          <Outlet />
-        </main>
-        
-        <Drawer open={!!data} onOpenChange={(open) => !open && closePoster()}>
-          {data && <PosterDetail poster={data.poster} roomName={data.roomName} />}
-        </Drawer>
+        {backgroundImage && (
+          <div
+            aria-hidden="true"
+            style={{
+              backgroundImage: `url(${backgroundImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundAttachment: 'fixed',
+              filter: 'blur(4px)',
+              position: 'fixed',
+              inset: '-8px',
+              zIndex: 0,
+            }}
+          />
+        )}
+        <div className="relative z-10 min-h-screen flex flex-col">
+          <Header />
+          
+          <main className="p-4 sm:p-6 mb-16 flex-1 w-full max-w-md mx-auto">
+            <Outlet />
+          </main>
+          
+          <Drawer open={!!data} onOpenChange={(open) => !open && closePoster()}>
+            {data && <PosterDetail poster={data.poster} roomName={data.roomName} />}
+          </Drawer>
+        </div>
       </div>
     </ThemeProvider>
   )
