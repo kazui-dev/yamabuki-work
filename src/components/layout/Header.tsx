@@ -112,7 +112,7 @@ export default function Header() {
   }, [isPosterDrawerOpen, selectedPosterId, openPoster, roomNameById]);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 dark:bg-slate-950/90 backdrop-blur-sm border-b border-slate-100 dark:border-slate-800 px-4 py-2">
+    <header className="sticky top-0 z-50 w-full bg-white dark:bg-slate-950/90 backdrop-blur-sm border-b border-slate-100 dark:border-slate-800 px-4 py-2">
       <div className="max-w-md mx-auto flex items-center justify-between gap-3">
         
         <Drawer direction="left" open={isOpen} onOpenChange={handleOpenChange}>
