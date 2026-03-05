@@ -43,7 +43,7 @@ export const timetable: TimetableItem[] = [
     ]
   },
   {
-    time: "14:00",
+    time: "13:45",
     title: "ポスター発表",
     description: "ここに説明を入れる",
     action: {
