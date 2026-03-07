@@ -7,7 +7,7 @@ export default function Survey() {
             来場者アンケート
           </h2>
           <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-            iframeか外部リンクのどちらかで表示予定
+            準備中
           </p>
         </div>
       </div>

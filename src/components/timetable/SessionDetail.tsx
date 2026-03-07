@@ -34,11 +34,11 @@ export default function SessionDetail({ title, author, details }: SessionDetailP
             {details.description}
           </div>
           {details.image && (
-            <div className="rounded-md overflow-hidden border border-border bg-muted/30 aspect-video relative mt-4">
+            <div className="rounded-md overflow-hidden border border-border bg-muted/30 mt-4">
               <img
                 src={details.image}
                 alt={title}
-                className="object-cover w-full h-full"
+                className="w-full h-auto"
               />
             </div>
           )}

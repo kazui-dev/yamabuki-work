@@ -40,11 +40,11 @@ export default function PosterDetail({ poster, roomName }: PosterDetailProps) {
             {poster.details?.description || poster.description || "詳細情報"}
           </div>
           {poster.details?.image && (
-            <div className="rounded-md overflow-hidden border border-border bg-muted/30 aspect-video relative mt-4">
+            <div className="rounded-md overflow-hidden border border-border bg-muted/30 mt-4">
               <img
                 src={poster.details.image}
                 alt={poster.title}
-                className="object-cover w-full h-full"
+                className="w-full h-auto"
               />
             </div>
           )}
