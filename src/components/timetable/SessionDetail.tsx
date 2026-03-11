@@ -33,13 +33,13 @@ export default function SessionDetail({ title, author, details }: SessionDetailP
           <div className="text-sm text-foreground whitespace-pre-wrap">
             {details.description}
           </div>
-          {details.image && (
-            <div className="rounded-md overflow-hidden border border-border bg-muted/30 mt-4">
-              <img
-                src={details.image}
-                alt={title}
-                className="w-full h-auto"
-              />
+          {details.images && details.images.length > 0 && (
+            <div className="flex flex-col gap-3 mt-4">
+              {details.images.map((src, i) => (
+                <div key={i} className="rounded-md overflow-hidden border border-border bg-muted/30">
+                  <img src={src} alt={`${title} ${i + 1}`} className="w-full h-auto" />
+                </div>
+              ))}
             </div>
           )}
         </div>

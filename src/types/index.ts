@@ -2,7 +2,7 @@ export type PageID = 'timetable' | 'map' | 'survey';
 
 export interface SessionDetails {
   description: string;
-  image?: string;
+  images?: string[];
 }
 
 export interface ActionButton {

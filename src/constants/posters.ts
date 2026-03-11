@@ -8,178 +8,177 @@ export const POSTERS_BY_LOCATION: Record<string, Poster[]> = {
       author: "情報科2部6組 森村舜",
       location: "hall",
       details: {
-        description: "自分の「新しい世代のコントローラは高く、買うのをためらってしまう」「自宅でモーションキャプチャーゲームを遊ぼうとしたが、必要な広さが足りなかった」などの経験をもとにUnityを使用し、ゲームを制作しました。モーションキャプチャーを題材にしているので体を動かすことが重要で、比較的場所を必要とせず、また個人的な趣味から、コントローラを振るとパンチが出てくるボクシングに近いゲームを作りました。",
-        image: "/images/poster1.png",
+        description: "「新しい世代のコントローラは高く、買うのをためらってしまう」「自宅でモーションキャプチャーゲームを遊ぼうとしたが、必要な広さが足りなかった」などの経験をもとにゲームを制作しました。モーションキャプチャーを題材にしているので体を動かすことが重要で、比較的場所を必要とせず、また個人的な趣味から、ボクシングに近いゲームを作りました。",
+        images: ["/images/poster1.png"],
       },
     },
   ],
   "318": [
     {
       id: "2",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "山吹祭在庫管理システム",
+      author: "情報科2部6組 篠原悠希",
       location: "318",
       details: {
-        description: "ここに説明を入れる2",
-        image: "/images/poster2.jpg"
+        description: "山吹祭の食品販売では、毎回レジの金額が合わなかったり、食券を売り忘れたりといったトラブルが発生しています。そんな悩みを解決するために製作したのが「山吹祭在庫管理システム」です。このシステムは店舗ごとの情報を一括管理でき、今までより使いやすくなっています。",
+        images: ["/images/poster2.png"]
       },
     },
     {
       id: "3",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "履修登録用アプリの開発",
+      author: "情報科2部6組 美輪和維",
       location: "318",
       details: {
-        description: "ここに説明を入れる3",
-        image: "/images/poster3.jpg"
+        description:  "山吹の履修登録の「紙媒体の不便さ」「比較や修整の手間」「複雑な履修要件」を解消するために、履修登録用アプリを開発しました。一人一台端末から使えるデスクトップアプリで、「時間割作成」「授業検索」「履修違反の自動検証」などの機能があり、履修違反を防止して快適に履修登録を行うことができます。",
+        images: ["/images/session4.png"]
       },
     },
   ],
   "317": [
     {
       id: "4",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "ポスター制作で新宿山吹を伝える",
+      author: "情報科2部5組 白石雪乃",
       location: "317",
       details: {
-        description: "ここに説明を入れる4",
-        image: "/images/poster4.jpg"
+        description: "普通の高校とは違う山吹のイメージを中学生に伝えたいという目的のもと、山吹のポスターを制作しました。幾何図形を用いたポスターを3種類作り、フィードバックと改善を重ね、形や色といったアプローチで山吹を伝えるための研究を続けました。",
+        images: ["/images/poster4.png"]
       },
     },
     {
       id: "5",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "時間割,欠時数管理LINE Bot",
+      author: "情報科2部5組 田中海暉",
       location: "317",
       details: {
-        description: "ここに説明を入れる5",
-        image: "/images/poster5.jpg"
+        description: "皆さんも新宿山吹で生活していて、一度は欠時数が管理しにくいと感じたことがあるでしょう。このシステムはその問題を解決するために作りました。普段使っているLINE上で動作し、簡単に欠時数を編集、確認できます。",
+        images: ["/images/session3.png"]
       },
     },
   ],
   "316": [
     {
       id: "6",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "学校説明会で使えるアプリの開発",
+      author: "情報科4部4組 小野寺航士",
       location: "316",
       details: {
-        description: "ここに説明を入れる6",
-        image: "/images/poster6.jpg"
+        description: "学校説明会や学校案内パンフレットで中学生やその保護者が部活動や山吹生の日常生活の情報を知る機会がないという課題がありました。この課題を解決するために、山吹生が情報を発信できるWebアプリを開発しました。検索機能、ジャンル別の絞り込み機能を実装し、誰でも使いやすくするために色弱者に配慮した配色にしました。",
+        images: ["/images/poster6.jpg"]
       },
     },
     {
       id: "7",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "AfterEffects学習支援AIの開発",
+      author: "情報科2部6組 天野匠",
       location: "316",
       details: {
-        description: "ここに説明を入れる7",
-        image: "/images/poster7.jpg"
+        description: "動画制作のパワフルで便利な相棒のAfterEffectsですが、それを使いこなすまでには学習期間が必要です。その期間が退屈で挫折してしまった経験がある人も多いと思います。その挫折を減らし一般にAfterEffectsを普及させることを目的にした課題研究発展の発表です。",
+        images: ["/images/session2.png"]
       },
     },
     {
       id: "8",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "スマブラ大会の通知システムの開発",
+      author: "情報科4部4組 曽野隆伸",
       location: "316",
       details: {
-        description: "ここに説明を入れる8",
-        image: "/images/poster8.jpg"
+        description: "大乱闘スマッシュブラザーズSPECIALのユーザー主体の大会において、「気づいたら応募期間が終了している」「手軽に参加者募集を確認したい」などのお悩みを解決するために、LINEBot「大会通知システム」を開発しました。このシステムは毎日17時にBotが自動で大会情報を送信します。",
+        images: ["/images/poster8.jpg"]
       },
     },
   ],
   "315": [
     {
       id: "9",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "Unityでレイトレーシング",
+      author: "情報科2部3組 手塚陽久",
       location: "315",
       details: {
-        description: "ここに説明を入れる9",
-        image: "/images/poster9.jpg"
+        description: "UnityのCompute Shaderを用いてレイトレーシングレンダラーを開発し、シェーダーの開発に関する理解を深める取り組みを行いました。より品質の高い画像を得るために、パストレーシングやTemporal Anti-Aliasingを実装し、間接光の影響なども取り入れたレンダリングをリアルタイムで実現しました。",
+        images: ["/images/poster9.png"]
       },
     },
     {
       id: "10",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "パスワード診断セキュリティサイトの制作",
+      author: "情報科2部6組 志賀歩美",
       location: "315",
       details: {
-        description: "ここに説明を入れる10",
-        image: "/images/poster10.jpg"
+        description: "このサイトは、入力したパスワードの危険性をジャッジし、その危険性に相応した頼もしいアドバイスをしてくれます。「掲示板」のボタンをクリックするとクエスチョンアンサー式で解説する安全性の高いパスワードの作り方を学ぶことができます。",
+        images: ["/images/poster10.png"]
       },
     },
     {
       id: "11",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "プログラミング基礎",
+      author: "情報科1年次",
       location: "315",
       details: {
-        description: "ここに説明を入れる11",
-        image: "/images/poster11.jpg"
+        description: "①サーバネット長期定点評価システム    相馬立汰​\nサーバ常駐プログラムにより10分間隔で外部サーバへ接続し、遅延や上り下り速度等を計測してcsvに蓄積します。GUIによる状態可視化や平均値算出等によりサーバ品質を評価します。サードパーティのcsvファイルであってもデータの統合が可能です。これにより難しいサーバの維持管理および異常検知を容易にします。\n\n②PC各パーツ使用状況確認アプリ    小濱伶斗\nパソコン上でCPUやメモリ等の使用状況を見るためには、複数のアプリを立ち上げる必要があります。これをまとめて確認出来るアプリを作りました。個別確認機能では、それぞれのパーツの使用状況を精細に確認することができ、一斉確認機能では現在どの程度空いているかなどを確認することができます。\n\n③単位取得情報確認アプリ    米原穂佳\n山吹の履修登録の際に現在の取得単位状況を簡単にまとめることのできるアプリです。入力した内容をエクセルに出力でき、追加で編集することも可能です。卒業までに必要な各科目の単位等も自動で表示することができます。必履修や必履修でないものを分けたUIにしてあります。",
+        images: ["/images/poster11-1.png", "/images/poster11-2.png", "/images/poster11-3.png"]
       },
     },
   ],
   "pc_3": [
     {
       id: "12",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "文字だけで進行するゲーム",
+      author: "情報科2部3組 阿部杏祐",
       location: "pc_3",
       details: {
-        description: "ここに説明を入れる12",
-        image: "/images/poster12.jpg"
+        description: "このゲームではキャラクターやマップの画像は一切出てこず、オートマッピング機能も敵の行動予測も存在しません。プレイヤーは画面に表示された情報をもとに、自分だけの地図や敵の行動パターンを記録したオリジナルの図鑑を作り、状況に合わせた適切な操作を行う必要があります。",
+        images: ["/images/poster12.png"]
       },
     },
     {
       id: "13",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "勉強用タイマーアプリの開発",
+      author: "情報科2部3組 三上夏希",
       location: "pc_3",
       details: {
-        description: "ここに説明を入れる13",
-        image: "/images/poster13.jpg"
+        description: "既存の学習用タイマーアプリに対して不便だと感じることが増えたので、学生の視点からタイマーアプリを制作しました。勉強方法や学習環境について調べ、勉強時の使いやすさにフォーカスした、場所、デバイス、時間を選ばないアプリを目指しました。タイマー機能とタスク管理機能があり、タイマーで測った時間をグラフにして、可視化することもできます。",
+        images: ["/images/poster13.png"]
       },
     },
     {
       id: "14",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "なんとなくで理解する宅内VPN",
+      author: "情報科2部4組 蓬田海翔",
       location: "pc_3",
       details: {
-        description: "ここに説明を入れる14",
-        image: "/images/poster14.jpg"
+        description: "ゼロトラストの仕組みを利用して、宅内VPNを構築する。一般的なVPNとは違い、限られたIPアドレスのみ自宅内経由で通信し、インターネットを利用する際には、Cloudflare経由で高速に通信する。これらの仕組みによって、インターネットが利用できれば、場所を選ばずにセキュアな通信が可能となる。",
+        images: ["/images/poster14.png"]
       },
     },
     {
       id: "15",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "人間とAIの分業制作ゲーム ウラヌス",
+      author: "情報科2部4組 北田琢磨",
       location: "pc_3",
       details: {
-        description: "ここに説明を入れる15",
-        image: "/images/poster15.jpg"
+        description: "ファミコン風シューティングゲームを制作して、完成させたがプログラムコードを基本AIに出力させてできた研究作品。",
+        images: ["/images/poster15.png"]
       },
     },
     {
       id: "16",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "Pythonにおけるソフトウェア開発の簡略化",
+      author: "情報科4部2組 稲垣育磨",
       location: "pc_3",
       details: {
-        description: "ここに説明を入れる16",
-        image: "/images/poster16.jpg"
+        description: "「ゲームを作りたい」という思いの障壁として「プログラミング」があります。その障壁を取り除くために「容易性」「拡張性」を兼ね備えたゲームエンジンを開発しています。初心者に適した言語とされているPythonをベースとしています。エンジン本体の機能をできるだけ削ぎ、拡張性を持たせています。",
       },
     },
     {
       id: "17",
-      title: "タイトル",
-      author: "情報科○部○組 ○○",
+      title: "シスプロ_ウからの挑戦状",
+      author: "情報システムのプログラミング",
       location: "pc_3",
       details: {
-        description: "ここに説明を入れる17",
-        image: "/images/poster17.jpg"
+        description: "今年度情報システムのプログラミング_ウを履修した生徒たちによる、pygameで作成したゲームを1つにまとめました。みんなが知っているあのゲームもあります。当日参加者でスコアを競おう！",
+        images: ["/images/poster17.png"]
       },
     },
   ],

@@ -22,16 +22,16 @@ export const RoomHall: React.FC<RoomMapProps> = ({ className = "", onPosterClick
         <rect id="base" width="453.54" height="255.12"/>
       </g>
       <g id="passive_area">
-        <rect id="table_1" x="243.02" y="124.73" width="157.5" height="24.51"/>
-        <rect id="table_2" x="53.02" y="124.73" width="157.5" height="24.51"/>
-        <rect id="table_3" x="243.02" y="72.97" width="157.5" height="24.51"/>
-        <rect id="table_4" x="53.02" y="72.97" width="157.5" height="24.51"/>
+        <rect id="table_1" x="243.02" y="112.62" width="157.5" height="24.51"/>
+        <rect id="table_2" x="53.02" y="112.62" width="157.5" height="24.51"/>
+        <rect id="table_3" x="243.02" y="66.91" width="157.5" height="24.51"/>
+        <rect id="table_4" x="53.02" y="66.91" width="157.5" height="24.51"/>
         <rect id="table_5" x="243.02" y="21.2" width="157.5" height="24.51"/>
         <rect id="table_6" x="53.02" y="21.2" width="157.5" height="24.51"/>
       </g>
       <g data-poster-id="1" id="posters">
-        <rect x="141.73" y="175" width="170.08" height="56.69"/>
-        <text x="225.73" y="210">1. 場所と金銭面を…</text>
+        <rect x="136.73" y="167.78" width="180.08" height="56.69"/>
+        <text x="226.77" y="202.78">1. 場所と金銭面を考…</text>
       </g>
     </svg>
   );

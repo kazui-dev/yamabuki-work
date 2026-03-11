@@ -23,44 +23,30 @@ export const RoomPC3: React.FC<RoomMapProps> = ({ className = "", onPosterClick 
       </g>
       <g id="posters">
         <g data-poster-id="12">
-          <rect x="25.42" y="53.78" width="116.32" height="56.69"/>
+          <rect x="25.42" y="53.78" width="117.29" height="56.69"/>
+          <text x="84.07" y="88.78">12. 文字だけ…</text>
         </g>
         <g data-poster-id="13">
-          <rect x="168.62" y="53.78" width="116.32" height="56.69"/>
+          <rect x="168.13" y="53.78" width="117.29" height="56.69"/>
+          <text x="226.78" y="88.78">13. 勉強用タ…</text>
         </g>
         <g data-poster-id="14">
-          <rect x="311.8" y="53.78" width="116.32" height="56.69"/>
+          <rect x="310.84" y="53.78" width="117.29" height="56.69"/>
+          <text x="369.49" y="88.78">14. 宅内VPN</text>
         </g>
         <g data-poster-id="15">
-          <rect x="25.42" y="144.65" width="116.32" height="56.69"/>
+          <rect x="25.42" y="144.65" width="117.29" height="56.69"/>
+          <text x="84.07" y="179.65">15. 人間とAI…</text>
         </g>
         <g data-poster-id="16">
-          <rect x="168.62" y="144.65" width="116.32" height="56.69"/>
+          <rect x="168.13" y="144.65" width="117.29" height="56.69"/>
+          <text x="226.78" y="179.65">16. Python…</text>
         </g>
         <g data-poster-id="17">
-          <rect x="311.81" y="144.65" width="116.32" height="56.69"/>
+          <rect x="310.84" y="144.65" width="117.29" height="56.69"/>
+          <text x="369.49" y="179.65">17. シスプロ…</text>
         </g>
       </g>
-      {/* <g id="posters">
-        <g data-poster-id="12">
-          <rect x="61.99" y="99.21" width="170.08" height="56.69"/>
-        </g>
-        <g data-poster-id="13">
-          <rect x="258.04" y="25.43" width="170.08" height="56.69"/>
-        </g>
-        <g data-poster-id="12">
-          <rect x="61.99" y="25.43" width="170.08" height="56.69"/>
-        </g>
-        <g data-poster-id="15">
-          <rect x="258.04" y="172.99" width="170.08" height="56.69"/>
-        </g>
-        <g data-poster-id="16">
-          <rect x="61.99" y="172.99" width="170.08" height="56.69"/>
-        </g>
-        <g data-poster-id="17">
-          <rect x="258.04" y="99.21" width="170.08" height="56.69"/>
-        </g>
-      </g> */}
     </svg>
   );
 };

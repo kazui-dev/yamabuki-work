@@ -39,13 +39,13 @@ export default function PosterDetail({ poster, roomName }: PosterDetailProps) {
           <div className="text-sm text-foreground whitespace-pre-wrap">
             {poster.details?.description || poster.description || "詳細情報"}
           </div>
-          {poster.details?.image && (
-            <div className="rounded-md overflow-hidden border border-border bg-muted/30 mt-4">
-              <img
-                src={poster.details.image}
-                alt={poster.title}
-                className="w-full h-auto"
-              />
+          {poster.details?.images && poster.details.images.length > 0 && (
+            <div className="flex flex-col gap-3 mt-4">
+              {poster.details.images.map((src, i) => (
+                <div key={i} className="rounded-md overflow-hidden border border-border bg-muted/30">
+                  <img src={src} alt={`${poster.title} ${i + 1}`} className="w-full h-auto" />
+                </div>
+              ))}
             </div>
           )}
         </div>
