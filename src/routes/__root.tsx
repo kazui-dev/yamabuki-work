@@ -105,7 +105,6 @@ function RootComponent() {
               backgroundImage: `url(${backgroundImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundAttachment: 'fixed',
               filter: 'blur(4px)',
               position: 'fixed',
               inset: '-8px',
