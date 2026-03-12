@@ -22,29 +22,29 @@ export const RoomPC3: React.FC<RoomMapProps> = ({ className = "", onPosterClick 
         <rect id="base" width="453.54" height="255.12"/>
       </g>
       <g id="posters">
-        <g data-poster-id="12">
-          <rect x="25.42" y="53.78" width="117.29" height="56.69"/>
-          <text x="84.07" y="88.78">12. 文字だけ…</text>
-        </g>
-        <g data-poster-id="13">
-          <rect x="168.13" y="53.78" width="117.29" height="56.69"/>
-          <text x="226.78" y="88.78">13. 勉強用タ…</text>
-        </g>
         <g data-poster-id="14">
-          <rect x="310.84" y="53.78" width="117.29" height="56.69"/>
-          <text x="369.49" y="88.78">14. 宅内VPN</text>
+          <rect x="25.42" y="53.78" width="117.29" height="56.69"/>
+          <text x="84.07" y="88.78">14. 宅内VPN</text>
         </g>
         <g data-poster-id="15">
-          <rect x="25.42" y="144.65" width="117.29" height="56.69"/>
-          <text x="84.07" y="179.65">15. 人間とAI…</text>
+          <rect x="168.13" y="53.78" width="117.29" height="56.69"/>
+          <text x="226.78" y="88.78">15. 人間とAI…</text>
         </g>
         <g data-poster-id="16">
-          <rect x="168.13" y="144.65" width="117.29" height="56.69"/>
-          <text x="226.78" y="179.65">16. Python…</text>
+          <rect x="310.84" y="53.78" width="117.29" height="56.69"/>
+          <text x="369.49" y="88.78">16. Python…</text>
         </g>
         <g data-poster-id="17">
+          <rect x="25.42" y="144.65" width="117.29" height="56.69"/>
+          <text x="84.07" y="179.65">17. 文字だけ…</text>
+        </g>
+        <g data-poster-id="18">
+          <rect x="168.13" y="144.65" width="117.29" height="56.69"/>
+          <text x="226.78" y="179.65">18. 勉強用タ…</text>
+        </g>
+        <g data-poster-id="19">
           <rect x="310.84" y="144.65" width="117.29" height="56.69"/>
-          <text x="369.49" y="179.65">17. シスプロ…</text>
+          <text x="369.49" y="179.65">19. シスプロ…</text>
         </g>
       </g>
     </svg>

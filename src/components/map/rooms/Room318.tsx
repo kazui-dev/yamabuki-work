@@ -25,11 +25,15 @@ export const Room318: React.FC<RoomMapProps> = ({ className = "", onPosterClick 
       <g id="posters">
         <g data-poster-id="2">
           <rect x="30.65" y="30.65" width="180.08" height="56.69"/>
-          <text x="120.69" y="65.65">2. 山吹祭在庫管理…</text>
+          <text x="120.69" y="65.65">2. 山吹祭在庫管理シ…</text>
         </g>
         <g data-poster-id="3">
           <rect x="242.81" y="30.65" width="180.08" height="56.69"/>
           <text x="332.85" y="65.65">3. 履修登録用アプリ…</text>
+        </g>
+        <g data-poster-id="4">
+          <rect x="136.73" y="167.78" width="180.08" height="56.69"/>
+          <text x="226.77" y="202.78">4. ポスター制作で新…</text>
         </g>
       </g>
     </svg>
