@@ -11,8 +11,8 @@ export const timetable: TimetableItem[] = [
     title: "全体発表",
     sessions: [
       {
-        title: "全国産業教育フェア",
-        author: "さんフェア",
+        title: "全国産業教育フェア 参加報告",
+        author: "STプロジェクト",
       },
       {
         title: "AfterEffects学習支援AIの開発",
