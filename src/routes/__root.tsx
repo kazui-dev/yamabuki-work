@@ -105,7 +105,7 @@ function RootComponent() {
           style={{ backgroundImage: `url(${bgImage})` }}
         >
           {/* dark mode only: keep the photo from glowing against dark content */}
-          <div className="absolute inset-0 hidden dark:block bg-slate-950/70" />
+          <div className="absolute inset-0 hidden dark:block bg-slate-950/45" />
         </div>
 
         <aside className="hidden lg:flex flex-col fixed inset-y-0 left-0 z-40 w-64 bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border-r border-slate-100 dark:border-slate-800">
@@ -139,7 +139,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       document.documentElement.classList.toggle('dark', isDark);
       document.getElementById('themeColorMeta')?.setAttribute(
         'content',
-        isDark ? '#190e16' : '#ffffff'
+        isDark ? '#231521' : '#ffffff'
       );
     })();
   `;
