@@ -22,7 +22,7 @@ export const timetable: TimetableItem[] = [
         author: "情報科2部6組 天野匠",
         details: {
           description: "動画制作のパワフルで便利な相棒のAfterEffectsですが、それを使いこなすまでには学習期間が必要です。その期間が退屈で挫折してしまった経験がある人も多いと思います。その挫折を減らし一般にAfterEffectsを普及させることを目的にした課題研究発展の発表です。",
-          images: ["/images/session2.png"],
+          images: ["/images/session2.webp"],
         }
       },
       {
@@ -30,7 +30,7 @@ export const timetable: TimetableItem[] = [
         author: "情報科2部5組 田中海暉",
         details: {
           description: "皆さんも新宿山吹で生活していて、一度は欠時数が管理しにくいと感じたことがあるでしょう。このシステムはその問題を解決するために作りました。普段使っているLINE上で動作し、簡単に欠時数を編集、確認できます。",
-          images: ["/images/session3.png"],
+          images: ["/images/session3.webp"],
         }
       },
       {
@@ -38,7 +38,7 @@ export const timetable: TimetableItem[] = [
         author: "情報科2部6組 美輪和維",
         details: {
           description: "山吹の履修登録の「紙媒体の不便さ」「比較や修整の手間」「複雑な履修要件」を解消するために、履修登録用アプリを開発しました。一人一台端末から使えるデスクトップアプリで、「時間割作成」「授業検索」「履修違反の自動検証」などの機能があり、履修違反を防止して快適に履修登録を行うことができます。",
-          images: ["/images/session4.png"],
+          images: ["/images/session4.webp"],
         }
       }
     ]
