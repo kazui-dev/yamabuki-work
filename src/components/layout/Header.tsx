@@ -46,13 +46,13 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-4 py-2">
+    <header className="sticky top-0 z-50 w-full bg-white/85 dark:bg-mauve-950/85 backdrop-blur-md border-b border-mauve-100 dark:border-mauve-800 px-4 py-2">
       <div className="max-w-md md:max-w-2xl mx-auto flex items-center justify-between gap-3">
 
         <Drawer direction="left" open={isOpen} onOpenChange={handleOpenChange}>
           <DrawerTrigger asChild>
-            <Button variant="ghost" size="icon" className="lg:hidden h-9 w-9 p-0 hover:bg-slate-100/50 active:bg-slate-100/50 dark:hover:bg-slate-800/50 dark:active:bg-slate-800/50 [&_svg]:size-5">
-              <MenuIcon className="text-slate-700 dark:text-slate-300" />
+            <Button variant="ghost" size="icon" className="lg:hidden h-9 w-9 p-0 hover:bg-mauve-100/50 active:bg-mauve-100/50 dark:hover:bg-mauve-800/50 dark:active:bg-mauve-800/50 [&_svg]:size-5">
+              <MenuIcon className="text-mauve-700 dark:text-mauve-300" />
             </Button>
           </DrawerTrigger>
 
@@ -69,18 +69,18 @@ export default function Header() {
           <Link
             to="/"
             onClick={handleLogoClick}
-            className="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200 hover:opacity-80 active:opacity-80 transition-opacity block"
+            className="text-sm sm:text-base font-bold text-mauve-800 dark:text-mauve-200 hover:opacity-80 active:opacity-80 transition-opacity block"
           >
             新宿山吹高校情報科発表会
           </Link>
         </h1>
 
         <div className="w-24 sm:w-28 shrink-0 lg:hidden">
-          <nav className="grid w-full grid-cols-2 h-9 p-1 bg-slate-100/50 dark:bg-slate-800/50 rounded-md text-slate-500 dark:text-slate-400">
+          <nav className="grid w-full grid-cols-2 h-9 p-1 bg-mauve-100/50 dark:bg-mauve-800/50 rounded-md text-mauve-500 dark:text-mauve-400">
             <Link
               to="/"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-sm h-full px-0 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 hover:text-slate-700 dark:hover:text-slate-200"
-              activeProps={{ className: 'bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50' }}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-sm h-full px-0 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mauve-400 focus-visible:ring-offset-2 hover:text-mauve-700 dark:hover:text-mauve-200"
+              activeProps={{ className: 'bg-white dark:bg-mauve-950 text-mauve-900 dark:text-mauve-50' }}
               activeOptions={{ exact: true, includeSearch: false }}
               aria-label="タイムテーブル"
             >
@@ -89,8 +89,8 @@ export default function Header() {
             <Link
               to="/map"
               search={lastRoomId ? { r: formatRoomIdForUrl(lastRoomId) } : undefined}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-sm h-full px-0 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 hover:text-slate-700 dark:hover:text-slate-200"
-              activeProps={{ className: 'bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50' }}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-sm h-full px-0 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mauve-400 focus-visible:ring-offset-2 hover:text-mauve-700 dark:hover:text-mauve-200"
+              activeProps={{ className: 'bg-white dark:bg-mauve-950 text-mauve-900 dark:text-mauve-50' }}
               activeOptions={{ exact: true, includeSearch: false }}
               aria-label="フロアマップ"
             >

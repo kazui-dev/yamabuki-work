@@ -98,17 +98,17 @@ function RootComponent() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-mauve-950">
         <div
           aria-hidden="true"
           className="app-background z-0"
           style={{ backgroundImage: `url(${bgImage})` }}
         >
           {/* dark mode only: keep the photo from glowing against dark content */}
-          <div className="absolute inset-0 hidden dark:block bg-slate-950/45" />
+          <div className="absolute inset-0 hidden dark:block bg-mauve-950/45" />
         </div>
 
-        <aside className="hidden lg:flex flex-col fixed inset-y-0 left-0 z-40 w-64 bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border-r border-slate-100 dark:border-slate-800">
+        <aside className="hidden lg:flex flex-col fixed inset-y-0 left-0 z-40 w-64 bg-white/85 dark:bg-mauve-950/85 backdrop-blur-md border-r border-mauve-100 dark:border-mauve-800">
           <SideNavContent />
         </aside>
 
@@ -150,7 +150,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 selection:bg-slate-300/30 dark:selection:bg-slate-700/30 antialiased">
+      <body className="min-h-screen bg-white dark:bg-mauve-950 text-mauve-900 dark:text-mauve-50 selection:bg-mauve-300/30 dark:selection:bg-mauve-700/30 antialiased">
         {children}
         <Scripts />
       </body>

@@ -3,7 +3,7 @@ import { CalendarDays, Clock, MapPin } from "lucide-react";
 export default function EventCard() {
   return (
      <div className="inline-flex flex-col bg-card rounded-xl border border-border shadow-sm p-5 transition-shadow hover:shadow-md">
-        <time dateTime="2026-03-13" className="flex items-center justify-center gap-2 text-xl font-bold mb-3 text-slate-800 dark:text-slate-200">
+        <time dateTime="2026-03-13" className="flex items-center justify-center gap-2 text-xl font-bold mb-3 text-mauve-800 dark:text-mauve-200">
           <CalendarDays className="text-muted-foreground" size={24} />
           2026.03.13 <span className="text-muted-foreground text-sm">(Fri)</span>
         </time>

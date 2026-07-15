@@ -46,7 +46,7 @@ export default function SessionDetail({ title, author, details }: SessionDetailP
 
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline" className="text-slate-700 dark:text-slate-300">閉じる</Button>
+            <Button variant="outline" className="text-mauve-700 dark:text-mauve-300">閉じる</Button>
           </DrawerClose>
         </DrawerFooter>
       </div>

@@ -15,27 +15,27 @@ export default function SessionCard({ session, onOpenDetail, isExpanded }: Sessi
   const targetPath = session.action?.targetView === 'timetable' ? '/' : `/${session.action?.targetView}`;
 
   return (
-    <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-white active:bg-white dark:hover:bg-slate-800/40 dark:active:bg-slate-800/40 transition-colors">
+    <div className="p-5 border-b border-mauve-100 dark:border-mauve-800 last:border-transparent hover:bg-white active:bg-white dark:hover:bg-mauve-800/40 dark:active:bg-mauve-800/40 transition-colors">
       {session.time && (
-        <div className="flex items-center gap-1.5 leading-none text-xs text-slate-700 dark:text-slate-100 font-bold mb-2">
+        <div className="flex items-center gap-1.5 leading-none text-xs text-mauve-700 dark:text-mauve-100 font-bold mb-2">
           <Clock size={14} />
           {session.time}
         </div>
       )}
 
-      <h3 className="font-bold text-slate-800 dark:text-slate-200 text-sm mb-2">
+      <h3 className="font-bold text-mauve-800 dark:text-mauve-200 text-sm mb-2">
         {session.title}
       </h3>
 
       {session.author && (
-        <p className="flex items-center gap-1.5 leading-none text-xs text-slate-600 dark:text-slate-300 mb-2">
+        <p className="flex items-center gap-1.5 leading-none text-xs text-mauve-600 dark:text-mauve-300 mb-2">
           <Speech size={14} />
           {session.author}
         </p>
       )}
 
       {session.description && (
-        <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+        <p className="text-xs text-mauve-500 dark:text-mauve-400 mb-2">
           {session.description}
         </p>
       )}
@@ -45,10 +45,10 @@ export default function SessionCard({ session, onOpenDetail, isExpanded }: Sessi
           <Button 
             variant="outline" 
             size="sm" 
-            className="w-full h-8 text-xs bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300"
+            className="w-full h-8 text-xs bg-white dark:bg-mauve-900 text-mauve-700 dark:text-mauve-300"
             onClick={() => onOpenDetail?.(session)}
           >
-            {isExpanded ? <ChevronDown size={14} className="text-slate-700 dark:text-slate-300" /> : <ChevronUp size={14} className="text-slate-700 dark:text-slate-300" />}
+            {isExpanded ? <ChevronDown size={14} className="text-mauve-700 dark:text-mauve-300" /> : <ChevronUp size={14} className="text-mauve-700 dark:text-mauve-300" />}
             詳細を見る
           </Button>
         </div>
@@ -57,7 +57,7 @@ export default function SessionCard({ session, onOpenDetail, isExpanded }: Sessi
           <Button 
             variant="outline" 
             size="sm" 
-            className="w-full h-8 text-xs bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 [&_svg]:text-slate-700 [&_svg]:dark:text-slate-300" 
+            className="w-full h-8 text-xs bg-white dark:bg-mauve-900 text-mauve-700 dark:text-mauve-300 [&_svg]:text-mauve-700 [&_svg]:dark:text-mauve-300" 
             asChild
           >
             <Link

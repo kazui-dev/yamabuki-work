@@ -84,7 +84,7 @@ export default function Maps() {
   return (
     <div className="w-full">
       <section className="px-4 mb-8">
-        <div className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden bg-white/85 dark:bg-slate-900/85 backdrop-blur-md shadow-sm">
+        <div className="border border-mauve-200 dark:border-mauve-800 rounded-lg overflow-hidden bg-white/85 dark:bg-mauve-900/85 backdrop-blur-md shadow-sm">
           <FloorMap 
             className="p-2" 
             onRoomSelect={handleMapClick} 
@@ -100,7 +100,7 @@ export default function Maps() {
       >
         <Carousel setApi={setApi} className="w-full" opts={{ align: "center", loop: true, startIndex: initialIndex }}>
           <div className="flex items-center justify-center gap-4 mb-4">
-            <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
+            <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white dark:bg-mauve-900 border-mauve-200 dark:border-mauve-700 h-9 w-9 shadow-sm" />
             <div className="flex gap-2">
               {MapsData.map((_, index) => {
                 const isActive = index === current;
@@ -110,16 +110,16 @@ export default function Maps() {
                     onClick={() => scrollTo(index)}
                     className={`h-2.5 w-2.5 rounded-full border ${
                       isInitialAppLoad 
-                        ? "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 transition-none" 
+                        ? "bg-white dark:bg-mauve-900 border-mauve-300 dark:border-mauve-600 transition-none" 
                         : isActive
-                          ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200 transition-colors"
-                          : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 transition-colors"
+                          ? "bg-mauve-800 dark:bg-mauve-200 border-mauve-800 dark:border-mauve-200 transition-colors"
+                          : "bg-white dark:bg-mauve-900 border-mauve-300 dark:border-mauve-600 transition-colors"
                     }`}
                   />
                 );
               })}
             </div>
-            <CarouselNext className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
+            <CarouselNext className="static translate-y-0 translate-x-0 bg-white dark:bg-mauve-900 border-mauve-200 dark:border-mauve-700 h-9 w-9 shadow-sm" />
           </div>
 
           <CarouselContent className="items-start">
@@ -127,9 +127,9 @@ export default function Maps() {
               const RoomMapComponent = getRoomMapComponent(room.id);
               return (
                 <CarouselItem key={room.id} className="pl-4">
-                  <div className="bg-white/85 dark:bg-slate-900/85 backdrop-blur-md rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-4">
+                  <div className="bg-white/85 dark:bg-mauve-900/85 backdrop-blur-md rounded-lg border border-mauve-200 dark:border-mauve-800 shadow-sm overflow-hidden mb-4">
                     <div className="p-4 sm:p-6">
-                      <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">{room.name}</h2>
+                      <h2 className="text-lg font-bold text-mauve-800 dark:text-mauve-200">{room.name}</h2>
                       {RoomMapComponent && (
                         <RoomMapComponent 
                           roomId={room.id} 
@@ -140,7 +140,7 @@ export default function Maps() {
 
                     {room.posters && room.posters.length > 0 && (
                       <div 
-                        className="border-t border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
+                        className="border-t border-mauve-100 dark:border-mauve-800 bg-white/50 dark:bg-mauve-950/50 max-h-[58vh] overflow-y-auto"
                         onScroll={(e) => { setScrollPosition(room.id, e.currentTarget.scrollTop); }}
                         ref={(el) => { if (el && scrollPositions[room.id] !== undefined) el.scrollTop = scrollPositions[room.id]; }}
                       >
