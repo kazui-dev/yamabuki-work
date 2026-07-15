@@ -14,45 +14,25 @@ export const RoomHall: React.FC<RoomMapProps> = ({ className = "", onPosterClick
 
   return (
     <svg
-      viewBox="-2 -2 464 264"
+      viewBox="-2 -2 458.5 259.1"
       className={`w-full h-auto ${className}`}
       onClick={handleClick}
     >
-        <style>{`
-            rect {
-              fill: #ffffff;
-              stroke: #333333;
-              stroke-width: 2px;
-            }
-            #posters g {
-              cursor: pointer;
-              transition: opacity 0.2s ease;
-            }
-            #posters g:hover {
-              opacity: 0.7;
-            }
-            #posters rect {
-              fill: #dbeafe;
-            }
-            text { 
-              font-size: 16px; 
-              text-anchor: middle; 
-              fill: #1f2937; 
-              font-weight: bold; 
-              pointer-events: none;
-            }
-        `}</style>
-
-        <g id="base_area">
-            <rect id="base" x="0" y="0" width="460" height="260" />
-        </g>
-
-        <g id="posters">
-            <g data-poster-id="poster_hall_01">
-              <rect x="150" y="24" width="160" height="60" />
-              <text x="230" y="58">ポスターA</text>
-            </g>
-        </g>
+      <g id="base_area">
+        <rect id="base" width="453.54" height="255.12"/>
+      </g>
+      <g id="passive_area">
+        <rect id="table_1" x="243.02" y="112.62" width="157.5" height="24.51"/>
+        <rect id="table_2" x="53.02" y="112.62" width="157.5" height="24.51"/>
+        <rect id="table_3" x="243.02" y="66.91" width="157.5" height="24.51"/>
+        <rect id="table_4" x="53.02" y="66.91" width="157.5" height="24.51"/>
+        <rect id="table_5" x="243.02" y="21.2" width="157.5" height="24.51"/>
+        <rect id="table_6" x="53.02" y="21.2" width="157.5" height="24.51"/>
+      </g>
+      <g data-poster-id="1" id="posters">
+        <rect x="136.73" y="167.78" width="180.08" height="56.69"/>
+        <text x="226.77" y="202.78">1. 場所と金銭面を考…</text>
+      </g>
     </svg>
   );
 };

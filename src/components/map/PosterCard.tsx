@@ -8,11 +8,12 @@ interface PosterCardProps {
   isExpanded: boolean;
 }
 
-export const PosterCard = ({ poster, onOpen, isExpanded }: PosterCardProps) => {
+export default function PosterCard({ poster, onOpen, isExpanded }: PosterCardProps) {
   return (
-    <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-white active:bg-white dark:hover:bg-slate-800/40 dark:active:bg-slate-800/40 transition-colors">
-      <h3 className="font-bold text-slate-800 dark:text-slate-200 text-sm mb-2">
-        {poster.title}
+    <div className="p-5 border-b border-slate-100 dark:border-slate-800 last:border-transparent hover:bg-slate-50 active:bg-slate-50 dark:hover:bg-slate-800/40 dark:active:bg-slate-800/40 transition-colors">
+      <h3 className="font-bold text-slate-800 dark:text-slate-200 text-sm mb-2 flex">
+        <span className="w-7">{poster.id}.</span>
+        <span>{poster.title}</span>
       </h3>
 
       {poster.author && (

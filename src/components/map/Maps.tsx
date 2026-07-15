@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { FloorMap } from "./FloorMap";
-import { PosterCard } from "./PosterCard";
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate, useSearch } from '@tanstack/react-router';
+import FloorMap from "./FloorMap";
+import PosterCard from "./PosterCard";
 import { getRoomMapComponent } from "./rooms";
-import type { Poster } from "@/types";
+import { usePosterStore } from '@/store/usePosterStore';
 import {
   Carousel,
   CarouselContent,
@@ -12,84 +13,73 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { MapsData } from "@/constants/maps";
+import { useMapStore } from '@/store/useMapStore';
+import { formatRoomIdForUrl } from '@/lib/utils';
+import { useAppStore } from '@/store/useAppStore';
+import "./maps.css";
 
-interface MapsProps {
-  selectedRoomId?: string | null;
-  onSelectedRoomHandled?: () => void;
-  onOpenPoster: (poster: Poster, roomName: string) => void;
-  selectedPosterId?: string | null;
-  initialPath?: string;
-}
-
-const resolveInitialRoomId = (initialPath?: string) => {
-  // initialPathがroomIdならそれを返す。なければ最初の部屋。
-  if (initialPath && MapsData.some(r => r.id === initialPath)) {
-    return initialPath;
-  }
-  return MapsData[0]?.id || null;
-};
-
-export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandled, onOpenPoster, selectedPosterId, initialPath }) => {
+export default function Maps() {
   const [api, setApi] = useState<CarouselApi>();
+  const isInitialAppLoad = useAppStore(state => state.isInitialAppLoad);
 
-  const listScrollPositions: Record<string, number> = {};
+  const search = useSearch({ strict: false }) as { r?: string | number };
+  const urlRoomId = search.r !== undefined ? String(search.r) : undefined;
 
-  const initialRoomId = resolveInitialRoomId(initialPath);
-  const [activeRoomId, setActiveRoomId] = useState<string | null>(initialRoomId);
-  const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === initialRoomId)));
-  const [current, setCurrent] = useState(initialIndex);
+  const navigate = useNavigate();
+  const setLastRoomId = useMapStore(state => state.setLastRoomId);
+  const { data: posterData, openPoster } = usePosterStore();
+  const scrollPositions = useMapStore(state => state.scrollPositions);
+  const setScrollPosition = useMapStore(state => state.setScrollPosition);
 
-  // ルーティング副作用を除去
+  const activeRoomId = useMemo(() => {
+    return MapsData.some(r => r.id === urlRoomId) ? urlRoomId! : MapsData[0]?.id || null;
+  }, [urlRoomId]);
+
+  useEffect(() => {
+    if (activeRoomId) {
+      setLastRoomId(activeRoomId);
+    }
+  }, [activeRoomId, setLastRoomId]);
+
+  const [initialIndex] = useState(() => Math.max(0, MapsData.findIndex(r => r.id === activeRoomId)));
+  const current = Math.max(0, MapsData.findIndex(r => r.id === activeRoomId));
+
+  useEffect(() => {
+    if (!api || !activeRoomId) return;
+    const targetIndex = MapsData.findIndex(r => r.id === activeRoomId);
+    if (targetIndex !== -1 && targetIndex !== api.selectedScrollSnap()) {
+      api.scrollTo(targetIndex);
+    }
+  }, [activeRoomId, api]);
 
   useEffect(() => {
     if (!api) return;
-
     const updateState = () => {
       const index = api.selectedScrollSnap();
-      setCurrent(index);
       const room = MapsData[index];
-      
-      if (room) {
-        setActiveRoomId(room.id);
+      if (room && room.id !== urlRoomId) {
+        navigate({ to: '/map', search: { r: formatRoomIdForUrl(room.id) }, replace: true });
       }
     };
-
     api.on("select", updateState);
-    return () => {
-      api.off("select", updateState);
-    };
-  }, [api]);
-
-  useEffect(() => {
-    if (selectedRoomId) {
-      const index = MapsData.findIndex(r => r.id === selectedRoomId);
-      if (index !== -1) {
-        setActiveRoomId(selectedRoomId);
-        setCurrent(index);
-        api?.scrollTo(index);
-      }
-      onSelectedRoomHandled?.();
-    }
-  }, [selectedRoomId, api, onSelectedRoomHandled]);
+    return () => { api.off("select", updateState); };
+  }, [api, navigate, urlRoomId]);
 
   const handleMapPosterClick = useCallback((roomId: string, posterId: string) => {
     const room = MapsData.find(r => r.id === roomId);
     const poster = room?.posters?.find(p => p.id === posterId);
     if (room && poster) {
-      onOpenPoster(poster, room.name);
+      openPoster(poster, room.name);
     }
-  }, [onOpenPoster]);
+  }, [openPoster]);
 
   const scrollTo = useCallback((index: number) => {
     api?.scrollTo(index);
   }, [api]);
 
   const handleMapClick = useCallback((roomId: string) => {
-    const index = MapsData.findIndex(r => r.id === roomId);
-    if (index !== -1) {
-      scrollTo(index);
-    }
-  }, [scrollTo]);
+    navigate({ to: '/map', search: { r: formatRoomIdForUrl(roomId) }, replace: true });
+  }, [navigate]);
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -98,80 +88,79 @@ export const Maps: React.FC<MapsProps> = ({ selectedRoomId, onSelectedRoomHandle
           <FloorMap 
             className="p-2" 
             onRoomSelect={handleMapClick} 
-            activeRoomId={activeRoomId}
+            activeRoomId={isInitialAppLoad ? null : activeRoomId}
           />
         </div>
       </section>
 
-      <Carousel 
-        setApi={setApi} 
-        className="w-full" 
-        opts={{ align: "center", loop: true, startIndex: initialIndex }}
+      <div 
+        className={`transition-opacity duration-300 ease-in-out ${
+          isInitialAppLoad ? "opacity-0" : "opacity-100"
+        }`}
       >
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
-          
-          <div className="flex gap-2">
-            {MapsData.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => scrollTo(index)}
-                className={`h-2.5 w-2.5 rounded-full border transition-colors ${
-                  index === current 
-                    ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200" 
-                    : "bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 hover:border-slate-400 active:border-slate-400 dark:hover:border-slate-500 dark:active:border-slate-500"
-                }`}
-              />
-            ))}
+        <Carousel setApi={setApi} className="w-full" opts={{ align: "center", loop: true, startIndex: initialIndex }}>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
+            <div className="flex gap-2">
+              {MapsData.map((_, index) => {
+                const isActive = index === current;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => scrollTo(index)}
+                    className={`h-2.5 w-2.5 rounded-full border ${
+                      isInitialAppLoad 
+                        ? "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 transition-none" 
+                        : isActive
+                          ? "bg-slate-800 dark:bg-slate-200 border-slate-800 dark:border-slate-200 transition-colors"
+                          : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 transition-colors"
+                    }`}
+                  />
+                );
+              })}
+            </div>
+            <CarouselNext className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
           </div>
 
-          <CarouselNext className="static translate-y-0 translate-x-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 h-9 w-9 shadow-sm" />
-        </div>
+          <CarouselContent className="items-start">
+            {MapsData.map((room) => {
+              const RoomMapComponent = getRoomMapComponent(room.id);
+              return (
+                <CarouselItem key={room.id} className="pl-4">
+                  <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-4">
+                    <div className="p-4 sm:p-6">
+                      <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">{room.name}</h2>
+                      {RoomMapComponent && (
+                        <RoomMapComponent 
+                          roomId={room.id} 
+                          onPosterClick={(posterId: string) => handleMapPosterClick(room.id, posterId)} 
+                        />
+                      )}
+                    </div>
 
-        <CarouselContent className="items-start">
-          {MapsData.map((room) => {
-            const RoomMapComponent = getRoomMapComponent(room.id);
-            return (
-              <CarouselItem key={room.id} className="pl-4">
-                <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-4">
-                  <div className="p-4 sm:p-6">
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">{room.name}</h2>
-                    {RoomMapComponent && (
-                      <RoomMapComponent 
-                        roomId={room.id} 
-                        onPosterClick={(posterId: string) => handleMapPosterClick(room.id, posterId)} 
-                      />
+                    {room.posters && room.posters.length > 0 && (
+                      <div 
+                        className="border-t border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
+                        onScroll={(e) => { setScrollPosition(room.id, e.currentTarget.scrollTop); }}
+                        ref={(el) => { if (el && scrollPositions[room.id] !== undefined) el.scrollTop = scrollPositions[room.id]; }}
+                      >
+                        {room.posters.map((poster) => (
+                          <PosterCard 
+                            key={poster.id} 
+                            poster={poster} 
+                            isExpanded={posterData?.poster.id === poster.id}
+                            onOpen={() => openPoster(poster, room.name)} 
+                          />
+                        ))}
+                      </div>
                     )}
                   </div>
-
-                  {room.posters && room.posters.length > 0 && (
-                    <div 
-                      className="border-t border-slate-100 dark:border-slate-800 bg-white/70 dark:bg-slate-950/50 max-h-[58vh] overflow-y-auto"
-                      onScroll={(e) => {
-                        listScrollPositions[room.id] = e.currentTarget.scrollTop;
-                      }}
-                      ref={(el) => {
-                        if (el && listScrollPositions[room.id] !== undefined) {
-                          el.scrollTop = listScrollPositions[room.id];
-                        }
-                      }}
-                    >
-                      {room.posters.map((poster) => (
-                        <PosterCard 
-                          key={poster.id} 
-                          poster={poster} 
-                          isExpanded={selectedPosterId === poster.id}
-                          onOpen={() => onOpenPoster(poster, room.name)} 
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </CarouselItem>
-            );
-          })}
-        </CarouselContent>
-      </Carousel>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+        </Carousel>
+      </div>
     </div>
   );
-};
+}

@@ -14,55 +14,39 @@ export const RoomPC3: React.FC<RoomMapProps> = ({ className = "", onPosterClick 
 
   return (
     <svg
-      viewBox="-2 -2 464 264"
+      viewBox="-2 -2 458.5 259.1"
       className={`w-full h-auto ${className}`}
       onClick={handleClick}
     >
-        <style>{`
-            rect {
-              fill: #ffffff;
-              stroke: #333333;
-              stroke-width: 2px;
-            }
-            #posters g {
-              cursor: pointer;
-              transition: opacity 0.2s ease;
-            }
-            #posters g:hover {
-              opacity: 0.7;
-            }
-            #posters rect {
-              fill: #dbeafe;
-            }
-            text { 
-              font-size: 16px; 
-              text-anchor: middle; 
-              fill: #1f2937; 
-              font-weight: bold; 
-              pointer-events: none;
-            }
-        `}</style>
-
-        <g id="base_area">
-            <rect id="base" x="0" y="0" width="460" height="260" />
+      <g id="base_area">
+        <rect id="base" width="453.54" height="255.12"/>
+      </g>
+      <g id="posters">
+        <g data-poster-id="14">
+          <rect x="25.42" y="53.78" width="117.29" height="56.69"/>
+          <text x="84.07" y="88.78">14. 宅内VPN</text>
         </g>
-
-        <g id="posters">
-            <g data-poster-id="poster_pc_3_01">
-              <rect x="150" y="24" width="160" height="60" />
-              <text x="230" y="58">ポスターA</text>
-            </g>
-
-            <g data-poster-id="poster_pc_3_02">
-              <rect x="270" y="150" width="160" height="60" />
-              <text x="350" y="184">ポスターB</text>
-            </g>
-
-            <g data-poster-id="poster_pc_3_03">
-              <rect x="30" y="150" width="160" height="60" />
-              <text x="110" y="184">ポスターC</text>
-            </g>
+        <g data-poster-id="15">
+          <rect x="168.13" y="53.78" width="117.29" height="56.69"/>
+          <text x="226.78" y="88.78">15. 人間とAI…</text>
         </g>
+        <g data-poster-id="16">
+          <rect x="310.84" y="53.78" width="117.29" height="56.69"/>
+          <text x="369.49" y="88.78">16. Python…</text>
+        </g>
+        <g data-poster-id="17">
+          <rect x="25.42" y="144.65" width="117.29" height="56.69"/>
+          <text x="84.07" y="179.65">17. 文字だけ…</text>
+        </g>
+        <g data-poster-id="18">
+          <rect x="168.13" y="144.65" width="117.29" height="56.69"/>
+          <text x="226.78" y="179.65">18. 勉強用タ…</text>
+        </g>
+        <g data-poster-id="19">
+          <rect x="310.84" y="144.65" width="117.29" height="56.69"/>
+          <text x="369.49" y="179.65">19. シスプロ…</text>
+        </g>
+      </g>
     </svg>
   );
 };

@@ -16,7 +16,7 @@ interface SessionDetailProps {
   details: SessionDetails;
 }
 
-export const SessionDetail = ({ title, author, details }: SessionDetailProps) => {
+export default function SessionDetail({ title, author, details }: SessionDetailProps) {
   return (
     <DrawerContent>
       <div className="mx-auto w-full max-w-md">
@@ -33,13 +33,13 @@ export const SessionDetail = ({ title, author, details }: SessionDetailProps) =>
           <div className="text-sm text-foreground whitespace-pre-wrap">
             {details.description}
           </div>
-          {details.image && (
-            <div className="rounded-md overflow-hidden border border-border bg-muted/30 aspect-video relative mt-4">
-              <img
-                src={details.image}
-                alt={title}
-                className="object-cover w-full h-full"
-              />
+          {details.images && details.images.length > 0 && (
+            <div className="flex flex-col gap-3 mt-4">
+              {details.images.map((src, i) => (
+                <div key={i} className="rounded-md overflow-hidden border border-border bg-muted/30">
+                  <img src={src} alt={`${title} ${i + 1}`} className="w-full h-auto" />
+                </div>
+              ))}
             </div>
           )}
         </div>

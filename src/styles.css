@@ -130,7 +130,6 @@
     scroll-margin-top: 4rem;
   }
   
-  /* テーマ切り替え時は transition を無効化 */
   html.theme-transitioning,
   html.theme-transitioning * {
     transition: none !important;
