@@ -1,9 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useEffect } from 'react'
 import Maps from '@/components/map/Maps'
 import { PAGE_METADATA } from '@/constants/metadata'
-import { useBackgroundStore } from '@/store/useBackgroundStore'
-import bgImage from '@/assets/bg-image.webp'
 
 type MapSearch = {
   r?: string | number;
@@ -37,10 +34,5 @@ export const Route = createFileRoute('/map')({
 })
 
 function MapPage() {
-  const setBackground = useBackgroundStore(state => state.setBackground)
-  useEffect(() => {
-    setBackground(bgImage)
-    return () => setBackground(null)
-  }, [setBackground])
   return <Maps />
 }

@@ -3,7 +3,6 @@ import { HeadContent, Scripts, createRootRoute, Outlet, useLocation } from '@tan
 import { useScrollStore } from '@/store/useScrollStore';
 import { usePosterStore } from '@/store/usePosterStore';
 import { useAppStore} from '@/store/useAppStore';
-import { useBackgroundStore } from '@/store/useBackgroundStore';
 import Header from '@/components/layout/Header';
 import { Drawer } from '@/components/ui/drawer';
 import PosterDetail from '@/components/map/PosterDetail';
@@ -17,13 +16,14 @@ import '@fontsource/noto-sans-jp/500.css';
 import '@fontsource/noto-sans-jp/700.css';
 
 import appCss from '../styles.css?url'
+import bgImage from '@/assets/bg-image-blur.webp'
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-      { name: 'theme-color', id: 'themeColorMeta', content: '#fafaf8' },
+      { name: 'theme-color', id: 'themeColorMeta', content: '#ffffff' },
       
       { title: PAGE_METADATA.timetable.title },
       { name: 'description', content: PAGE_METADATA.timetable.description },
@@ -39,6 +39,7 @@ export const Route = createRootRoute({
     links: [
       { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
       { rel: 'stylesheet', href: appCss },
+      { rel: 'preload', as: 'image', href: bgImage },
     ],
   }),
   component: RootComponent,
@@ -50,7 +51,6 @@ function RootComponent() {
   const location = useLocation();
   const { positions, setScrollPosition } = useScrollStore();
   const completeInitialLoad = useAppStore(state => state.completeInitialLoad);
-  const backgroundImage = useBackgroundStore(state => state.backgroundImage);
 
   useEffect(() => {
     let timeoutId: number | undefined;
@@ -98,24 +98,17 @@ function RootComponent() {
   return (
     <ThemeProvider>
       <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950">
-        {backgroundImage && (
-          <div
-            aria-hidden="true"
-            style={{
-              backgroundImage: `url(${backgroundImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              filter: 'blur(4px)',
-              position: 'fixed',
-              inset: '-8px',
-              zIndex: 0,
-            }}
-          />
-        )}
+        <div
+          aria-hidden="true"
+          className="app-background z-0"
+          style={{ backgroundImage: `url(${bgImage})` }}
+        >
+          <div className="absolute inset-0 bg-white/60 dark:bg-slate-950/75" />
+        </div>
         <div className="relative z-10 min-h-screen flex flex-col">
           <Header />
           
-          <main className="p-4 sm:p-6 mb-16 flex-1 w-full max-w-md mx-auto">
+          <main className="p-4 sm:p-6 md:p-8 mb-16 flex-1 w-full max-w-md md:max-w-2xl mx-auto">
             <Outlet />
           </main>
           
@@ -139,7 +132,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       document.documentElement.classList.toggle('dark', isDark);
       document.getElementById('themeColorMeta')?.setAttribute(
         'content',
-        isDark ? '#0f172a' : '#fafaf8'
+        isDark ? '#0f172a' : '#ffffff'
       );
     })();
   `;
