@@ -18,7 +18,7 @@ interface PosterDetailProps {
 export default function PosterDetail({ poster, roomName }: PosterDetailProps) {
   return (
     <DrawerContent>
-      <div className="mx-auto w-full max-w-md">
+      <div className="mx-auto w-full max-w-md md:max-w-2xl">
         <DrawerHeader>
           <DrawerTitle>{poster.title}</DrawerTitle>
           <DrawerDescription className="flex flex-wrap items-center w-full px-6 gap-y-2 mt-2">

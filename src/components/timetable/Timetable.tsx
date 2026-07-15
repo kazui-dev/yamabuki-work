@@ -27,7 +27,7 @@ export default function Timetable() {
   };
 
   return (
-    <div className="max-w-md mx-auto space-y-8 relative">
+    <div className="w-full space-y-8 relative">
       <div className="flex justify-center w-full">
         <EventCard />
       </div>

@@ -82,7 +82,7 @@ export default function Maps() {
   }, [navigate]);
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full">
       <section className="px-4 mb-8">
         <div className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden bg-white dark:bg-slate-900 shadow-sm">
           <FloorMap 
