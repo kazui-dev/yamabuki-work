@@ -84,7 +84,7 @@ export default function Maps() {
   return (
     <div className="w-full">
       <section className="px-4 mb-8">
-        <div className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden bg-white dark:bg-slate-900 shadow-sm">
+        <div className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden bg-white/85 dark:bg-slate-900/85 backdrop-blur-md shadow-sm">
           <FloorMap 
             className="p-2" 
             onRoomSelect={handleMapClick} 
@@ -127,7 +127,7 @@ export default function Maps() {
               const RoomMapComponent = getRoomMapComponent(room.id);
               return (
                 <CarouselItem key={room.id} className="pl-4">
-                  <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-4">
+                  <div className="bg-white/85 dark:bg-slate-900/85 backdrop-blur-md rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-4">
                     <div className="p-4 sm:p-6">
                       <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">{room.name}</h2>
                       {RoomMapComponent && (

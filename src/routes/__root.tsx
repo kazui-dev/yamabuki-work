@@ -4,6 +4,7 @@ import { useScrollStore } from '@/store/useScrollStore';
 import { usePosterStore } from '@/store/usePosterStore';
 import { useAppStore} from '@/store/useAppStore';
 import Header from '@/components/layout/Header';
+import SideNavContent from '@/components/layout/SideNavContent';
 import { Drawer } from '@/components/ui/drawer';
 import PosterDetail from '@/components/map/PosterDetail';
 import { ThemeProvider } from '@/lib/theme';
@@ -103,9 +104,15 @@ function RootComponent() {
           className="app-background z-0"
           style={{ backgroundImage: `url(${bgImage})` }}
         >
-          <div className="absolute inset-0 bg-white/60 dark:bg-slate-950/75" />
+          {/* dark mode only: keep the photo from glowing against dark content */}
+          <div className="absolute inset-0 hidden dark:block bg-slate-950/70" />
         </div>
-        <div className="relative z-10 min-h-screen flex flex-col">
+
+        <aside className="hidden lg:flex flex-col fixed inset-y-0 left-0 z-40 w-64 bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border-r border-slate-100 dark:border-slate-800">
+          <SideNavContent />
+        </aside>
+
+        <div className="relative z-10 min-h-screen flex flex-col lg:pl-64">
           <Header />
           
           <main className="p-4 sm:p-6 md:p-8 mb-16 flex-1 w-full max-w-md md:max-w-2xl mx-auto">
@@ -132,7 +139,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       document.documentElement.classList.toggle('dark', isDark);
       document.getElementById('themeColorMeta')?.setAttribute(
         'content',
-        isDark ? '#0f172a' : '#ffffff'
+        isDark ? '#190e16' : '#ffffff'
       );
     })();
   `;

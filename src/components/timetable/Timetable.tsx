@@ -42,7 +42,7 @@ export default function Timetable() {
             <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-500 border-2 border-white dark:border-slate-950 z-10"></div>
           )}
 
-          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div className="bg-white/85 dark:bg-slate-900/85 backdrop-blur-md rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <div className="p-5 pb-4">
               {item.time && (
                 <div className="flex items-center gap-1.5 leading-none text-sm text-slate-700 dark:text-slate-100 font-bold mb-3">

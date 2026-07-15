@@ -6,7 +6,7 @@ export type ResolvedTheme = 'light' | 'dark';
 const THEME_STORAGE_KEY = 'theme-preference';
 const THEME_COLORS = {
   light: '#ffffff',
-  dark: '#0f172a',
+  dark: '#190e16',
 } as const;
 
 type ThemeContextValue = {

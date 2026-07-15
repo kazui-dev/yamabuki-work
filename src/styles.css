@@ -130,6 +130,38 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+/* Pink-toned dark mode: remap the slate scale (used by all dark: utilities)
+   and the shadcn tokens from blue-gray to mauve/plum. */
+.dark {
+  --color-slate-50: #faf6f8;
+  --color-slate-100: #f3eaef;
+  --color-slate-200: #e6d6df;
+  --color-slate-300: #d2b9c7;
+  --color-slate-400: #a98a9b;
+  --color-slate-500: #87687a;
+  --color-slate-600: #6b4f60;
+  --color-slate-700: #543c4b;
+  --color-slate-800: #3c2836;
+  --color-slate-900: #2a1a25;
+  --color-slate-950: #190e16;
+
+  --background: oklch(0.15 0.028 350);
+  --foreground: oklch(0.985 0.005 350);
+  --card: oklch(0.21 0.034 350);
+  --card-foreground: oklch(0.985 0.005 350);
+  --popover: oklch(0.21 0.034 350);
+  --popover-foreground: oklch(0.985 0.005 350);
+  --primary: oklch(0.928 0.01 350);
+  --primary-foreground: oklch(0.21 0.034 350);
+  --secondary: oklch(0.278 0.033 350);
+  --secondary-foreground: oklch(0.985 0.005 350);
+  --muted: oklch(0.278 0.033 350);
+  --muted-foreground: oklch(0.707 0.03 350);
+  --accent: oklch(0.278 0.033 350);
+  --accent-foreground: oklch(0.985 0.005 350);
+  --ring: oklch(0.551 0.03 350);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
