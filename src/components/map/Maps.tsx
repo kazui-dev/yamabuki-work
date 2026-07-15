@@ -15,12 +15,10 @@ import {
 import { MapsData } from "@/constants/maps";
 import { useMapStore } from '@/store/useMapStore';
 import { formatRoomIdForUrl } from '@/lib/utils';
-import { useAppStore } from '@/store/useAppStore';
 import "./maps.css";
 
 export default function Maps() {
   const [api, setApi] = useState<CarouselApi>();
-  const isInitialAppLoad = useAppStore(state => state.isInitialAppLoad);
 
   const search = useSearch({ strict: false }) as { r?: string | number };
   const urlRoomId = search.r !== undefined ? String(search.r) : undefined;
@@ -85,19 +83,15 @@ export default function Maps() {
     <div className="w-full">
       <section className="px-4 mb-8">
         <div className="border border-mauve-200 dark:border-mauve-800 rounded-lg overflow-hidden bg-white/85 dark:bg-mauve-900/85 backdrop-blur-md shadow-sm">
-          <FloorMap 
-            className="p-2" 
-            onRoomSelect={handleMapClick} 
-            activeRoomId={isInitialAppLoad ? null : activeRoomId}
+          <FloorMap
+            className="p-2"
+            onRoomSelect={handleMapClick}
+            activeRoomId={activeRoomId}
           />
         </div>
       </section>
 
-      <div 
-        className={`transition-opacity duration-300 ease-in-out ${
-          isInitialAppLoad ? "opacity-0" : "opacity-100"
-        }`}
-      >
+      <div>
         <Carousel setApi={setApi} className="w-full" opts={{ align: "center", loop: true, startIndex: initialIndex }}>
           <div className="flex items-center justify-center gap-4 mb-4">
             <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white dark:bg-mauve-900 border-mauve-200 dark:border-mauve-700 h-9 w-9 shadow-sm" />
@@ -108,12 +102,10 @@ export default function Maps() {
                   <button
                     key={index}
                     onClick={() => scrollTo(index)}
-                    className={`h-2.5 w-2.5 rounded-full border ${
-                      isInitialAppLoad 
-                        ? "bg-white dark:bg-mauve-900 border-mauve-300 dark:border-mauve-600 transition-none" 
-                        : isActive
-                          ? "bg-mauve-800 dark:bg-mauve-200 border-mauve-800 dark:border-mauve-200 transition-colors"
-                          : "bg-white dark:bg-mauve-900 border-mauve-300 dark:border-mauve-600 transition-colors"
+                    className={`h-2.5 w-2.5 rounded-full border transition-colors ${
+                      isActive
+                        ? "bg-mauve-800 dark:bg-mauve-200 border-mauve-800 dark:border-mauve-200"
+                        : "bg-white dark:bg-mauve-900 border-mauve-300 dark:border-mauve-600"
                     }`}
                   />
                 );
@@ -122,7 +114,13 @@ export default function Maps() {
             <CarouselNext className="static translate-y-0 translate-x-0 bg-white dark:bg-mauve-900 border-mauve-200 dark:border-mauve-700 h-9 w-9 shadow-sm" />
           </div>
 
-          <CarouselContent className="items-start">
+          {/* pre-hydration: position the strip on the target slide so the
+              prerendered HTML already shows the right room (embla replaces
+              this transform on init) */}
+          <CarouselContent
+            className="items-start"
+            style={{ transform: `translate3d(-${initialIndex * 100}%, 0, 0)` }}
+          >
             {MapsData.map((room) => {
               const RoomMapComponent = getRoomMapComponent(room.id);
               return (
