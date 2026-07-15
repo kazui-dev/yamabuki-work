@@ -8,6 +8,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { User, MapPin } from "lucide-react";
+import { DetailImage } from "@/components/ui/detail-image";
 import type { Poster } from "@/types";
 
 interface PosterDetailProps {
@@ -42,9 +43,7 @@ export default function PosterDetail({ poster, roomName }: PosterDetailProps) {
           {poster.details?.images && poster.details.images.length > 0 && (
             <div className="flex flex-col gap-3 mt-4">
               {poster.details.images.map((src, i) => (
-                <div key={i} className="rounded-md overflow-hidden border border-border bg-muted/30">
-                  <img src={src} alt={`${poster.title} ${i + 1}`} className="w-full h-auto" />
-                </div>
+                <DetailImage key={i} src={src} alt={`${poster.title} ${i + 1}`} />
               ))}
             </div>
           )}

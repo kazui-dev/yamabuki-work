@@ -29,3 +29,5 @@ pnpm run deploy   # ビルドして Cloudflare Workers にデプロイ
 - 背景画像は `src/assets/bg-image-blur.webp`(事前ブラー済み)。差し替える場合は
   元画像を sharp で `resize(1440).blur(10)` して再生成する。
 - ポスター画像は `public/images/*.webp`(最大幅1200px)。追加時も webp 推奨。
+- 画像を追加・差し替えたら `pnpm run gen:images` を実行してサイズマニフェスト
+  (`src/constants/imageDimensions.ts`)を更新する(初回表示時のレイアウトずれ防止用)。

@@ -8,6 +8,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Speech } from "lucide-react";
+import { DetailImage } from "@/components/ui/detail-image";
 import type { SessionDetails } from "@/types";
 
 interface SessionDetailProps {
@@ -36,9 +37,7 @@ export default function SessionDetail({ title, author, details }: SessionDetailP
           {details.images && details.images.length > 0 && (
             <div className="flex flex-col gap-3 mt-4">
               {details.images.map((src, i) => (
-                <div key={i} className="rounded-md overflow-hidden border border-border bg-muted/30">
-                  <img src={src} alt={`${title} ${i + 1}`} className="w-full h-auto" />
-                </div>
+                <DetailImage key={i} src={src} alt={`${title} ${i + 1}`} />
               ))}
             </div>
           )}
