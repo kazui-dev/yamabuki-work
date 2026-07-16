@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect } from 'react';
 import { HeadContent, Scripts, createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
 import { useScrollStore } from '@/store/useScrollStore';
 import { usePosterStore } from '@/store/usePosterStore';
+import { useAppStore} from '@/store/useAppStore';
 import Header from '@/components/layout/Header';
 import SideNavContent from '@/components/layout/SideNavContent';
 import { Drawer } from '@/components/ui/drawer';
@@ -50,6 +51,7 @@ function RootComponent() {
   const { data, closePoster } = usePosterStore();
   const location = useLocation();
   const { positions, setScrollPosition } = useScrollStore();
+  const completeInitialLoad = useAppStore(state => state.completeInitialLoad);
 
   useEffect(() => {
     let timeoutId: number | undefined;
@@ -80,6 +82,13 @@ function RootComponent() {
       }
     });
   }, [location.pathname]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      completeInitialLoad();
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [completeInitialLoad]);
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
