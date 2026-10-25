@@ -6,3 +6,6 @@ onlyBuiltDependencies:
   - esbuild
   - sharp
   - workerd
+overrides:
+  "solid-js>seroval": "1.6.3"
+  "tsx>esbuild": "0.28.2"
