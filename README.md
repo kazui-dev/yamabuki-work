@@ -31,3 +31,7 @@ pnpm run deploy   # ビルドして Cloudflare Workers にデプロイ
 - ポスター画像は `public/images/*.webp`(最大幅1200px)。追加時も webp 推奨。
 - 画像を追加・差し替えたら `pnpm run gen:images` を実行してサイズマニフェスト
   (`src/constants/imageDimensions.ts`)を更新する(初回表示時のレイアウトずれ防止用)。
+
+## 公開先
+
+本番はCloudflare Workersの https://yamabuki.work/ です。旧Pages URLは pages-redirect/_redirects で同じパスの本番URLへ301転送します。Cloudflare PagesのBuild commandは空、Build output directoryは pages-redirect に設定します。Workerのbuild/deploy設定は既存のものを使用します。
