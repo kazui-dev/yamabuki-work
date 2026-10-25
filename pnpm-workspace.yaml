@@ -6,3 +6,7 @@ onlyBuiltDependencies:
   - esbuild
   - sharp
   - workerd
+overrides:
+  "miniflare>undici": "7.30.1"
+  "solid-js>seroval": "1.6.3"
+  "tsx>esbuild": "0.28.2"
